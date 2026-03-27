@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moving Timeline · Cade & Casey</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0f0f0f;
+      color: #e8e0d4;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    #header {
+      border-bottom: 1px solid #2a2a2a;
+      padding: 32px 32px 24px;
+      background: #111;
+    }
+    #header .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-family: monospace;
+    }
+    #header h1 {
+      font-size: clamp(22px, 5vw, 40px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #f0e8dc;
+      display: inline;
+    }
+    #header .target {
+      display: inline-block;
+      margin-left: 16px;
+      font-size: 13px;
+      color: #c8441a;
+      font-family: monospace;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+    }
+    #progress-wrap {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    #progress-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: #222;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    #progress-bar-fill {
+      height: 100%;
+      background: #c8441a;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    #progress-label {
+      font-size: 12px;
+      font-family: monospace;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    /* LAYOUT */
+    #layout {
+      display: flex;
+      min-height: calc(100vh - 130px);
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: clamp(120px, 22vw, 200px);
+      border-right: 1px solid #1e1e1e;
+      background: #0d0d0d;
+      flex-shrink: 0;
+    }
+    .phase-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .phase-btn:hover { background: #161616; }
+    .phase-btn.active { background: #1a1a1a; }
+    .phase-btn .phase-label {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      font-family: monospace;
+      margin-bottom: 4px;
+      color: #555;
+    }
+    .phase-btn.active .phase-label { /* color set inline */ }
+    .phase-btn .phase-title {
+      font-size: 13px;
+      color: #666;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .phase-btn.active .phase-title { color: #f0e8dc; font-weight: 600; }
+    .phase-mini-bar-bg {
+      height: 2px;
+      background: #1e1e1e;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .phase-mini-bar-fill {
+      height: 100%;
+      opacity: 0.8;
+      transition: width 0.3s ease;
+    }
+    .phase-count {
+      font-size: 9px;
+      color: #444;
+      font-family: monospace;
+      margin-top: 4px;
+    }
+
+    /* MAIN */
+    #main {
+      flex: 1;
+      padding: 32px;
+      overflow: auto;
+    }
+    .phase-date {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      font-family: monospace;
+      margin-bottom: 6px;
+    }
+    .phase-heading {
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 0;
+    }
+    .divider {
+      height: 1px;
+      background: #1e1e1e;
+      margin: 16px 0 24px;
+    }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      font-family: monospace;
+      margin-bottom: 12px;
+    }
+    .section-label.priority { color: #c8441a; }
+    .section-label.standard { color: #555; }
+
+    /* TASK ROW */
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      margin-bottom: 6px;
+      border-radius: 4px;
+      background: #141414;
+      border: 1px solid #1a1a1a;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .task-row:hover { background: #181818; }
+    .task-row.done { background: #151515; border-color: #1e1e1e; }
+    .task-row.priority-task { border-color: #2a1a10; }
+    .task-row.done.priority-task { border-color: #1e1e1e; }
+
+    .task-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #333;
+      background: transparent;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 10px;
+      color: #fff;
+      line-height: 1;
+    }
+    .task-row.done .task-circle { background: var(--phase-color); border-color: var(--phase-color); }
+
+    .task-text {
+      font-size: 14px;
+      color: #c8c0b4;
+      line-height: 1.5;
+      transition: color 0.2s;
+    }
+    .task-row.done .task-text {
+      color: #444;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div class="eyebrow">Moving Plan · Cade & Casey</div>
+  <div>
+    <h1>North Sandy Springs → New Home</h1>
+    <span class="target">TARGET: JULY 1, 2026</span>
+  </div>
+  <div id="progress-wrap">
+    <div id="progress-bar-bg"><div id="progress-bar-fill"></div></div>
+    <div id="progress-label">0/0 tasks · 0%</div>
+  </div>
+</div>
+
+<div id="layout">
+  <div id="sidebar"></div>
+  <div id="main"></div>
+</div>
+
+<script>
+const phases = [
+  {
+    id: 1, label: "NOW", date: "Mar 27 – Apr 13", title: "Search & Secure", color: "#c8441a",
+    tasks: [
+      { id: "t1", text: "Tour remaining apartment options (Wesley St. James & others)", priority: true },
+      { id: "t2", text: "Submit application for chosen unit", priority: true },
+      { id: "t3", text: "Request quotes from Big & Small Moving, Two Men and a Truck, and Easy Moving Services", priority: true },
+      { id: "t4", text: "Confirm July 1 move-in date with new landlord", priority: false },
+      { id: "t5", text: "Review lease terms carefully before signing", priority: false },
+    ]
+  },
+  {
+    id: 2, label: "6 WKS OUT", date: "Apr 14 – May 11", title: "Plan & Book", color: "#b5621f",
+    tasks: [
+      { id: "t6", text: "Book movers — lock in July 1 date", priority: true },
+      { id: "t7", text: "Create a full inventory of big items to be moved", priority: true },
+      { id: "t8", text: "Begin researching packing supplies (boxes, bubble wrap, tape)", priority: false },
+      { id: "t9", text: "Measure furniture vs. new unit doorways & rooms", priority: false },
+      { id: "t10", text: "Notify current landlord of July 14 move-out date in writing", priority: true },
+      { id: "t11", text: "Arrange storage if any items won't fit in new place", priority: false },
+    ]
+  },
+  {
+    id: 3, label: "4 WKS OUT", date: "May 12 – Jun 1", title: "Prep & Purge", color: "#8a6a30",
+    tasks: [
+      { id: "t12", text: "Start packing non-essential items (books, off-season clothes)", priority: false },
+      { id: "t13", text: "Sell, donate, or toss anything you won't move", priority: false },
+      { id: "t14", text: "Transfer or cancel utilities at current address", priority: true },
+      { id: "t15", text: "Set up utilities at new address (internet, electric, gas)", priority: true },
+      { id: "t16", text: "Confirm internet provider / Google Fiber availability at new unit", priority: true },
+      { id: "t17", text: "Update address with USPS (mail forwarding)", priority: false },
+    ]
+  },
+  {
+    id: 4, label: "2 WKS OUT", date: "Jun 2 – Jun 21", title: "Final Push", color: "#5a7a4a",
+    tasks: [
+      { id: "t18", text: "Pack all remaining non-daily-use items", priority: false },
+      { id: "t19", text: "Confirm mover arrival time, truck size, and crew count", priority: true },
+      { id: "t20", text: "Update address: bank, employer, subscriptions, USPS", priority: false },
+      { id: "t21", text: "Update drivers license / ID address", priority: false },
+      { id: "t22", text: "Defrost & clean fridge if moving it", priority: false },
+      { id: "t23", text: "Arrange to be off work on July 1 (move day)", priority: true },
+    ]
+  },
+  {
+    id: 5, label: "MOVE WEEK", date: "Jun 22 – Jun 30", title: "Final Week", color: "#3a7a6a",
+    tasks: [
+      { id: "t24", text: "Pack a 'first night' bag (essentials you'll need immediately)", priority: true },
+      { id: "t25", text: "Disassemble large furniture that movers won't break down", priority: false },
+      { id: "t26", text: "Do a final walkthrough and check all rooms, closets, cabinets", priority: false },
+      { id: "t27", text: "Charge all devices the night before move day", priority: false },
+      { id: "t28", text: "Confirm movers once more 24 hrs before", priority: true },
+    ]
+  },
+  {
+    id: 6, label: "MOVE DAY", date: "July 1, 2026", title: "Move Day 🎉", color: "#2a6a8a",
+    tasks: [
+      { id: "t29", text: "Be present to direct movers at both locations", priority: true },
+      { id: "t30", text: "Do a final walkthrough of old place before leaving", priority: true },
+      { id: "t31", text: "Photograph any existing damage at new place on arrival", priority: true },
+      { id: "t32", text: "Tip movers (typically $20–$50/mover)", priority: false },
+      { id: "t33", text: "Get keys and confirm parking/elevator access with new building", priority: false },
+    ]
+  },
+  {
+    id: 7, label: "WIND DOWN", date: "Jul 2 – Jul 14", title: "Old Place Close-Out", color: "#4a4a6a",
+    tasks: [
+      { id: "t34", text: "Deep clean old apartment", priority: true },
+      { id: "t35", text: "Return keys and complete move-out inspection with landlord", priority: true },
+      { id: "t36", text: "Document the condition of the unit with photos/video", priority: true },
+      { id: "t37", text: "Follow up on security deposit return timeline", priority: false },
+      { id: "t38", text: "Cancel any services tied to old address", priority: false },
+    ]
+  },
+];
+
+// State
+const done = {};
+phases.forEach(p => p.tasks.forEach(t => { done[t.id] = false; }));
+let activePhase = 1;
+
+function totalTasks() { return phases.flatMap(p => p.tasks).length; }
+function totalDone() { return Object.values(done).filter(Boolean).length; }
+function phaseDone(phase) { return phase.tasks.filter(t => done[t.id]).length; }
+function phasePct(phase) { return Math.round((phaseDone(phase) / phase.tasks.length) * 100); }
+
+function updateProgress() {
+  const total = totalTasks(), d = totalDone();
+  const pct = Math.round((d / total) * 100);
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${d}/${total} tasks · ${pct}%`;
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = '';
+  phases.forEach(phase => {
+    const btn = document.createElement('button');
+    btn.className = 'phase-btn' + (phase.id === activePhase ? ' active' : '');
+    btn.style.borderLeftColor = phase.id === activePhase ? phase.color : 'transparent';
+    btn.innerHTML = `
+      <div class="phase-label" style="color:${phase.id === activePhase ? phase.color : '#555'}">${phase.label}</div>
+      <div class="phase-title">${phase.title}</div>
+      <div class="phase-mini-bar-bg">
+        <div class="phase-mini-bar-fill" style="width:${phasePct(phase)}%;background:${phase.color}"></div>
+      </div>
+      <div class="phase-count">${phaseDone(phase)}/${phase.tasks.length}</div>
+    `;
+    btn.addEventListener('click', () => { activePhase = phase.id; render(); });
+    sidebar.appendChild(btn);
+  });
+}
+
+function renderMain() {
+  const main = document.getElementById('main');
+  const phase = phases.find(p => p.id === activePhase);
+  if (!phase) return;
+
+  const priorityTasks = phase.tasks.filter(t => t.priority);
+  const standardTasks = phase.tasks.filter(t => !t.priority);
+
+  let html = `
+    <div class="phase-date" style="color:${phase.color}">${phase.date}</div>
+    <h2 class="phase-heading">${phase.title}</h2>
+    <div class="divider"></div>
+  `;
+
+  if (priorityTasks.length) {
+    html += `<div class="section-label priority">◆ PRIORITY</div>`;
+    priorityTasks.forEach(task => { html += taskHTML(task, phase.color, true); });
+  }
+  if (standardTasks.length) {
+    html += `<div class="section-label standard" style="margin-top:${priorityTasks.length ? '20px' : '0'}">○ STANDARD</div>`;
+    standardTasks.forEach(task => { html += taskHTML(task, phase.color, false); });
+  }
+
+  main.innerHTML = html;
+
+  // Attach click handlers
+  phase.tasks.forEach(task => {
+    const row = document.getElementById('row-' + task.id);
+    if (row) row.addEventListener('click', () => { done[task.id] = !done[task.id]; render(); });
+  });
+}
+
+function taskHTML(task, color, isPriority) {
+  const isDone = done[task.id];
+  return `
+    <div id="row-${task.id}" class="task-row${isDone ? ' done' : ''}${isPriority ? ' priority-task' : ''}" style="--phase-color:${color}">
+      <div class="task-circle">${isDone ? '✓' : ''}</div>
+      <span class="task-text">${task.text}</span>
+    </div>
+  `;
+}
+
+function render() {
+  renderSidebar();
+  renderMain();
+  updateProgress();
+}
+
+render();
+</script>
+</body>
+</html>
