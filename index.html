@@ -8,27 +8,27 @@
 <style>
   /* ── PALETTE ── */
   :root {
-    --bg: #f5f4f0;
-    --surface: #ffffff;
-    --surface2: #eeece8;
-    --border: #d8d4cc;
+    --bg: #0d0d1a;
+    --surface: #16162a;
+    --surface2: #1c1c2f;
+    --border: #2d2d48;
     --accent: #1e1e2e;
     --accent2: #3a3a5c;
     --gold: #d97706;
     --green: #059669;
     --red: #dc2626;
-    --text: #1a1a28;
-    --muted: #64748b;
+    --text: #e8e4f0;
+    --muted: #9090b8;
     --pcm: #7c3aed;
     --pjm: #0369a1;
     --both: #b45309;
     --ce: #0f766e;
     --all3: #be123c;
-    --nav-bg: #0f0f1a;
+    --nav-bg: #070710;
     --nav-text: #f5f4f0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+  body { background: #0d0d1a; color: #e8e4f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
 
   /* ── NAV — dark / typographic ── */
   .nav {
@@ -86,14 +86,14 @@
   .fc-header h2 {
     font-size: 28px; font-weight: 900; flex: 1;
     letter-spacing: -0.03em; text-transform: uppercase;
-    color: var(--text);
+    color: #e8e4f0;
   }
   .fc-stats { display: flex; gap: 6px; }
   .fc-stat {
-    background: var(--nav-bg); border: none;
+    background: #0f0f1a; border: none;
     border-radius: 4px; padding: 6px 14px;
     font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
-    text-transform: uppercase; color: rgba(255,255,255,0.55);
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
   }
   .fc-stat span { font-size: 18px; font-weight: 900; display: block; line-height: 1.1; }
   .stat-known span { color: #34d399; }
@@ -109,11 +109,11 @@
     background: transparent;
     cursor: pointer; font-size: 11px; font-weight: 800;
     letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--text);
+    color: #e8e4f0;
     transition: all 0.12s;
   }
-  .fc-filter:hover { background: var(--text); color: #fff; }
-  .fc-filter.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .fc-filter:hover { background: #2a2a40; color: #e8e4f0; }
+  .fc-filter.active { background: #e8e4f0; color: #0d0d1a; border-color: #e8e4f0; }
   .fc-filter.f-all3 { border-color: var(--all3); color: var(--all3); }
   .fc-filter.f-all3:hover, .fc-filter.f-all3.active { background: var(--all3); color: #fff; }
   .fc-filter.f-both { border-color: var(--both); color: var(--both); }
@@ -128,25 +128,25 @@
   .fc-filter.f-review:hover, .fc-filter.f-review.active { background: var(--red); color: #fff; }
 
   .fc-progress {
-    height: 6px; background: var(--surface2); border-radius: 0;
+    height: 6px; background: #1c1c2f; border-radius: 0;
     margin-bottom: 20px; overflow: hidden; border: none;
   }
   .fc-progress-bar { height: 100%; background: var(--all3); border-radius: 0; transition: width 0.3s; }
 
   /* ── FLASHCARD ── */
   .card {
-    background: var(--surface);
+    background: #16162a;
     border: none;
     border-radius: 0;
-    border-left: 6px solid var(--border);
+    border-left: 6px solid #3a3a58;
     min-height: 280px;
     cursor: pointer;
     transition: box-shadow 0.18s, border-left-color 0.18s;
     user-select: none;
     position: relative;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.12);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
   }
-  .card:hover { box-shadow: 6px 6px 0 rgba(0,0,0,0.2); }
+  .card:hover { box-shadow: 6px 6px 0 rgba(0,0,0,0.7); }
 
   /* Division-colored left border set by JS */
   .card.div-all3 { border-left-color: var(--all3); }
@@ -173,13 +173,13 @@
     position: absolute; top: 12px; left: 20px;
     font-size: 10px; font-weight: 900;
     letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted);
+    color: #9090b8;
   }
   .card-watermark {
     position: absolute; bottom: 0; left: 0; right: 0;
     font-size: 52px; font-weight: 900;
     letter-spacing: -0.04em; text-transform: uppercase;
-    color: rgba(0,0,0,0.04);
+    color: rgba(255,255,255,0.04);
     padding: 0 16px 8px;
     line-height: 1;
     pointer-events: none;
@@ -193,9 +193,9 @@
     font-size: 17px; font-weight: 700; line-height: 1.55;
     text-align: center; min-height: 72px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--text);
+    color: #e8e4f0;
   }
-  .card-hint { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 10px; padding-bottom: 12px; }
+  .card-hint { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9090b8; margin-top: 10px; padding-bottom: 12px; }
   .card.flipped .card-hint { display: none; }
 
   /* Answer panel: dark background, colored top bar */
@@ -206,8 +206,8 @@
     border-radius: 0;
     font-size: 14px; line-height: 1.75;
     color: #f5f4f0;
-    background: var(--nav-bg);
-    border-top: 4px solid var(--border);
+    background: #0f0f1a;
+    border-top: 4px solid #3a3a58;
   }
   .card.div-all3 .card-a { border-top-color: var(--all3); }
   .card.div-both .card-a { border-top-color: var(--both); }
@@ -224,21 +224,21 @@
     letter-spacing: 0.08em; text-transform: uppercase;
     transition: all 0.12s;
   }
-  .btn-know { background: #d1fae5; border-color: var(--green); color: var(--green); }
+  .btn-know { background: #052e16; border-color: var(--green); color: var(--green); }
   .btn-know:hover { background: var(--green); color: #fff; }
-  .btn-review { background: #fee2e2; border-color: var(--red); color: var(--red); }
+  .btn-review { background: #2d0a0a; border-color: var(--red); color: var(--red); }
   .btn-review:hover { background: var(--red); color: #fff; }
-  .btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
-  .btn-outline:hover { border-color: var(--text); }
-  .btn-ghost { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
-  .btn-ghost:hover { color: var(--text); }
+  .btn-outline { background: transparent; border-color: var(--border); color: #e8e4f0; }
+  .btn-outline:hover { border-color: #e8e4f0; }
+  .btn-ghost { background: transparent; border: none; color: #9090b8; cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+  .btn-ghost:hover { color: #e8e4f0; }
   .btn:disabled { opacity: 0.28; cursor: not-allowed; }
   .btn-primary { background: var(--nav-bg); color: #fff; border-color: var(--nav-bg); }
   .btn-primary:hover { background: var(--accent2); }
-  .fc-counter { font-size: 12px; color: var(--muted); min-width: 70px; text-align: center; font-weight: 900; letter-spacing: 0.06em; }
+  .fc-counter { font-size: 12px; color: #9090b8; min-width: 70px; text-align: center; font-weight: 900; letter-spacing: 0.06em; }
   .fc-complete { text-align: center; padding: 60px 20px; }
-  .fc-complete h3 { font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 8px; }
-  .fc-complete p { color: var(--muted); margin-bottom: 20px; font-size: 14px; }
+  .fc-complete h3 { font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 8px; color: #e8e4f0; }
+  .fc-complete p { color: #9090b8; margin-bottom: 20px; font-size: 14px; }
 
   /* ── TABLES ── */
   #tables { padding: 24px 20px; max-width: 1080px; margin: 0 auto; }
@@ -246,22 +246,22 @@
   .table-nav { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; }
   .table-btn {
     padding: 6px 14px; border-radius: 0;
-    border: 2px solid var(--border);
+    border: 2px solid #3a3a58;
     background: transparent; cursor: pointer;
     font-size: 11px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--muted); transition: all 0.12s;
+    color: #9090b8; transition: all 0.12s;
   }
-  .table-btn:hover { border-color: var(--text); color: var(--text); }
-  .table-btn.active { background: var(--nav-bg); border-color: var(--nav-bg); color: #fff; }
+  .table-btn:hover { border-color: #e8e4f0; color: #e8e4f0; }
+  .table-btn.active { background: #e8e4f0; border-color: #e8e4f0; color: #0d0d1a; }
   .table-section { display: none; }
   .table-section.active { display: block; }
   .table-section h3 {
     font-size: 18px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase;
-    margin-bottom: 14px; color: var(--text);
+    margin-bottom: 14px; color: #e8e4f0;
     padding-bottom: 8px;
     border-bottom: 3px solid var(--text);
   }
-  .tbl-wrap { overflow-x: auto; border-radius: 0; border: 2px solid var(--text); background: var(--surface); box-shadow: 4px 4px 0 rgba(0,0,0,0.1); margin-bottom: 24px; }
+  .tbl-wrap { overflow-x: auto; border-radius: 0; border: 2px solid var(--text); background: #16162a; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); margin-bottom: 24px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
     background: var(--nav-bg);
@@ -278,17 +278,17 @@
   th[style*="color:var(--ce)"]  { background: var(--ce)  !important; color: #fff !important; }
   th[style*="color:var(--all3)"]{ background: var(--all3)!important; color: #fff !important; }
 
-  td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  td { padding: 11px 14px; border-bottom: 1px solid #2d2d48; vertical-align: top; line-height: 1.5; color: #e8e4f0; }
   tr:last-child td { border-bottom: none; }
-  tr:nth-child(even) td { background: var(--surface2); }
-  tr:hover td { background: #e8e5de !important; }
-  .priority-row td { background: #fff8f0; border-left: 3px solid var(--both); }
-  .priority-row:hover td { background: #fef3e0 !important; }
+  tr:nth-child(even) td { background: #1c1c2f; }
+  tr:hover td { background: #22223a !important; }
+  .priority-row td { background: #1e1508; border-left: 3px solid var(--both); }
+  .priority-row:hover td { background: #262010 !important; }
   .priority-row td:first-child { border-left: 3px solid var(--both); }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 0; font-size: 11px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; }
-  .pill-yes { background: #d1fae5; color: var(--green); }
-  .pill-no { background: var(--surface2); color: var(--muted); }
-  .pill-pri { background: var(--both); color: #fff; }
+  .pill { display: inline-block; padding: 2px 4px; border-radius: 0; font-size: 12px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; }
+  .pill-yes { background: none; color: #34d399; }
+  .pill-no { background: #1c1c2f; color: #9090b8; }
+  .pill-pri { background: #d97706; color: #fff; padding: 2px 8px; }
   .star { color: var(--both); }
 
   /* ── SUMMARY ── */
@@ -297,11 +297,11 @@
   .sum-header h2 {
     font-size: 32px; font-weight: 900; letter-spacing: -0.04em;
     text-transform: uppercase; margin-bottom: 4px;
-    color: var(--nav-bg);
+    color: #e8e4f0;
   }
-  .sum-header p { color: var(--muted); font-size: 13px; }
+  .sum-header p { color: #9090b8; font-size: 13px; }
   .sum-toc {
-    background: var(--nav-bg); border: none;
+    background: #0f0f1a; border: none;
     border-radius: 0;
     padding: 18px 20px; margin-bottom: 32px;
     box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
@@ -327,7 +327,7 @@
     padding-bottom: 12px;
     border-bottom: 3px solid var(--text);
   }
-  .sum-section-header h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
+  .sum-section-header h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; color: #e8e4f0; }
   .sum-section-tag { font-size: 9px; padding: 4px 10px; border-radius: 0; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
 
   /* Section header border-bottom matches division color */
@@ -343,28 +343,28 @@
   .sum-subsection { margin-bottom: 22px; }
   .sum-subsection h4 {
     font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--text); margin-bottom: 10px;
+    color: #e8e4f0; margin-bottom: 10px;
     display: flex; align-items: center; gap: 8px;
   }
-  .sum-subsection h4::before { content: ''; display: block; width: 4px; height: 14px; background: var(--text); border-radius: 0; flex-shrink: 0; }
-  .sum-body { font-size: 13px; line-height: 1.8; color: var(--text); }
+  .sum-subsection h4::before { content: ''; display: block; width: 4px; height: 14px; background: #e8e4f0; border-radius: 0; flex-shrink: 0; }
+  .sum-body { font-size: 13px; line-height: 1.8; color: #e8e4f0; }
   .sum-body p { margin-bottom: 10px; }
-  .sum-body strong { color: var(--accent2); }
+  .sum-body strong { color: #b0aadc; }
   .sum-body ul { padding-left: 20px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 4px; }
 
   .callout {
-    background: #eef2ff; border-left: 4px solid var(--accent2);
+    background: #14142a; border-left: 4px solid #6366f1;
     border-radius: 0; padding: 12px 16px;
     margin: 12px 0; font-size: 13px; line-height: 1.65;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.06);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
   }
-  .callout.warn { background: #fff1f2; border-left-color: var(--red); }
-  .callout.gold { background: #fffbeb; border-left-color: var(--both); }
+  .callout.warn { background: #1e0a0c; border-left-color: #f87171; }
+  .callout.gold { background: #1a1204; border-left-color: #d97706; }
 
-  .inline-table { width: 100%; font-size: 12px; margin: 10px 0 16px; border-collapse: collapse; border: 2px solid var(--text); overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.08); }
+  .inline-table { width: 100%; font-size: 12px; margin: 10px 0 16px; border-collapse: collapse; border: 2px solid var(--text); overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.5); }
   .inline-table th { background: var(--nav-bg); color: #fff; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 900; padding: 8px 10px; text-align: left; border-bottom: none; }
-  .inline-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  .inline-table tr:nth-child(even) td { background: var(--surface2); }
+  .inline-table td { padding: 8px 10px; border-bottom: 1px solid #2d2d48; vertical-align: top; color: #e8e4f0; }
+  .inline-table tr:nth-child(even) td { background: #1c1c2f; }
   .inline-table tr:last-child td { border-bottom: none; }
 
   .new-badge {
@@ -377,10 +377,10 @@
   /* ── SEARCH ── */
   #sumSearch {
     border-radius: 0 !important;
-    border: 2px solid var(--border) !important;
+    border: 2px solid #3a3a58 !important;
     font-size: 14px !important;
   }
-  #sumSearch:focus { border-color: var(--nav-bg) !important; }
+  #sumSearch:focus { border-color: #9090b8 !important; }
 </style>
 </head>
 <body>
@@ -638,7 +638,7 @@
         <tr><td><strong>Negotiated bid</strong></td><td>Single GC works with architect from start</td><td>Negotiated price with owner</td><td>Highest quality; trusted relationship; higher cost</td></tr>
       </tbody>
     </table></div>
-    <p style="font-size:12px;color:var(--muted);margin:6px 0 12px"><strong>Bid process:</strong> Owner issues RFP → pre-bid conference → questions answered via addenda → bids opened publicly → award. A <em>responsive</em> bid addresses all requirements; a <em>responsible</em> bidder is qualified to perform the work.</p>
+    <p style="font-size:12px;color: #9090b8;margin:6px 0 12px"><strong>Bid process:</strong> Owner issues RFP → pre-bid conference → questions answered via addenda → bids opened publicly → award. A <em>responsive</em> bid addresses all requirements; a <em>responsible</em> bidder is qualified to perform the work.</p>
     <h3 style="margin-top:4px">Owner-Contractor Payment Structures <span class="new-badge">NEW</span></h3>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Structure</th><th>How it works</th><th>Owner cost risk</th></tr></thead>
@@ -817,10 +817,10 @@
     <h2>PcM + PjM + CE Study Summary</h2>
     <p>Compiled from NCARB ARE 5.0 Guidelines (April 2026), AHPP 15th ed., NCARB Professional Conduct CE Series, PPI Review Manuals. ✦ = updated with new wiki content.</p>
     <div style="position:relative;margin-top:12px;">
-      <input id="sumSearch" type="text" placeholder="🔍  Search summary…" oninput="filterSummary(this.value)" style="width:100%;padding:10px 36px 10px 14px;background:#fff;border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
-      <button onclick="clearSearch()" title="Clear" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;line-height:1;">✕</button>
+      <input id="sumSearch" type="text" placeholder="🔍  Search summary…" oninput="filterSummary(this.value)" style="width:100%;padding:10px 36px 10px 14px;background:#fff;border:1.5px solid var(--border);border-radius:10px;color: #e8e4f0;font-size:14px;outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      <button onclick="clearSearch()" title="Clear" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color: #9090b8;font-size:16px;line-height:1;">✕</button>
     </div>
-    <div id="sumSearchMsg" style="display:none;margin-top:8px;font-size:13px;color:var(--muted);"></div>
+    <div id="sumSearchMsg" style="display:none;margin-top:8px;font-size:13px;color: #9090b8;"></div>
   </div>
 
   <div class="sum-toc">
@@ -844,7 +844,7 @@
       <li><a href="#s-pjm-contracts"><span class="toc-tag toc-pjm">PjM</span> Contracts (Section 3) ✦</a></li>
       <li><a href="#s-pjm-exec"><span class="toc-tag toc-pjm">PjM</span> Project Execution (Section 4)</a></li>
       <li><a href="#s-pjm-qc"><span class="toc-tag toc-pjm">PjM</span> Project Quality Control (Section 5)</a></li>
-      <li><a href="#s-legend"><span class="toc-tag" style="background:#f1f3f8;color:#64748b;">REF</span> Abbreviations Legend</a></li>
+      <li><a href="#s-legend"><span class="toc-tag" style="background:#2a2a40;color:#9090b8;">REF</span> Abbreviations Legend</a></li>
     </ul>
   </div>
 
@@ -1286,9 +1286,9 @@
 
   <!-- Abbreviations Legend -->
   <div class="sum-section" id="s-legend" style="border-top:2px solid var(--border);padding-top:24px">
-    <div class="sum-section-header"><span class="sum-section-tag" style="background:#f1f3f8;color:#64748b;">REF</span><h3>Abbreviations Legend</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag" style="background:#2a2a40;color:#9090b8;">REF</span><h3>Abbreviations Legend</h3></div>
     <div class="sum-body">
-      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">All abbreviations used in this study aid, grouped by category.</p>
+      <p style="font-size:12px;color: #9090b8;margin-bottom:14px">All abbreviations used in this study aid, grouped by category.</p>
 
       <div class="sum-subsection"><h4>ARE Divisions</h4></div>
       <div class="tbl-wrap"><table>
@@ -1668,7 +1668,7 @@ function highlightText(node, q) {
     const before = document.createTextNode(node.textContent.slice(0, idx));
     const mark = document.createElement('mark');
     mark.className = 'sh';
-    mark.style.cssText = 'background:#fef08a;color:#1e2132;border-radius:2px;padding:0 1px;';
+    mark.style.cssText = 'background:#d97706;color:#fff;border-radius:2px;padding:0 1px;';
     mark.textContent = node.textContent.slice(idx, idx + q.length);
     const after = document.createTextNode(node.textContent.slice(idx + q.length));
     const parent = node.parentNode;
