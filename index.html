@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARE PcM + PjM Study Aid</title>
+<title>ARE PcM + PjM + CE Study Aid</title>
 <style>
   :root {
     color-scheme: light;
@@ -22,6 +22,7 @@
     --pjm: #0284c7;
     --both: #d97706;
     --ce: #0f766e;
+    --all3: #be123c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
@@ -50,6 +51,7 @@
   .fc-filter { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--muted); transition: all 0.15s; }
   .fc-filter:hover { border-color: var(--accent); color: var(--accent); }
   .fc-filter.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .fc-filter.f-all3.active { background: var(--all3); border-color: var(--all3); color: #fff; }
   .fc-filter.f-both.active { background: var(--both); border-color: var(--both); color: #fff; }
   .fc-filter.f-pcm.active { background: var(--pcm); border-color: var(--pcm); color: #fff; }
   .fc-filter.f-pjm.active { background: var(--pjm); border-color: var(--pjm); color: #fff; }
@@ -62,6 +64,7 @@
   .card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; min-height: 260px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; user-select: none; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
   .card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.12); }
   .card-division-badge { position: absolute; top: 14px; right: 14px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .badge-all3 { background: #ffe4e6; color: var(--all3); border: 1px solid #fecdd3; }
   .badge-both { background: #fef3c7; color: var(--both); border: 1px solid #fde68a; }
   .badge-pcm { background: #ede9fe; color: var(--pcm); border: 1px solid #ddd6fe; }
   .badge-pjm { background: #e0f2fe; color: var(--pjm); border: 1px solid #bae6fd; }
@@ -127,6 +130,7 @@
   .sum-toc li a { color: var(--text); font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; padding: 3px 0; }
   .sum-toc li a:hover { color: var(--accent); }
   .toc-tag { font-size: 10px; padding: 2px 7px; border-radius: 8px; font-weight: 700; flex-shrink: 0; }
+  .toc-all3 { background: #ffe4e6; color: var(--all3); }
   .toc-both { background: #fef3c7; color: var(--both); }
   .toc-pcm { background: #ede9fe; color: var(--pcm); }
   .toc-pjm { background: #e0f2fe; color: var(--pjm); }
@@ -176,7 +180,8 @@
   </div>
   <div class="fc-filters">
     <div class="fc-filter active" onclick="setFilter('all',this)">All Cards</div>
-    <div class="fc-filter f-both" onclick="setFilter('both',this)">⭐ Both Divisions</div>
+    <div class="fc-filter f-all3" onclick="setFilter('all3',this)">🔺 All 3 Exams</div>
+    <div class="fc-filter f-both" onclick="setFilter('both',this)">⭐ PcM + PjM</div>
     <div class="fc-filter f-pcm" onclick="setFilter('pcm',this)">PcM Only</div>
     <div class="fc-filter f-pjm" onclick="setFilter('pjm',this)">PjM Only</div>
     <div class="fc-filter f-ce" onclick="setFilter('ce',this)">CE / CA</div>
@@ -219,55 +224,59 @@
     <div class="table-btn" onclick="showTable('t-rules',this)">NCARB Rules</div>
     <div class="table-btn" onclick="showTable('t-pcm',this)">PcM Exclusive</div>
     <div class="table-btn" onclick="showTable('t-pjm',this)">PjM Exclusive</div>
+    <div class="table-btn" onclick="showTable('t-ce',this)" style="color:var(--ce);border-color:#99f6e4;">CE Exclusive ✦</div>
   </div>
 
   <!-- Division Snapshot -->
   <div class="table-section active" id="t-snapshot">
     <h3>Division Snapshot</h3>
     <div class="tbl-wrap"><table>
-      <thead><tr><th></th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th></tr></thead>
+      <thead><tr><th></th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th><th style="color:var(--ce)">CE</th></tr></thead>
       <tbody>
-        <tr><td>Total items</td><td>65 (59 scored + 6 pretest)</td><td>75 (68 scored + 7 pretest)</td></tr>
-        <tr><td>Test duration</td><td>2 hr 40 min</td><td>3 hr</td></tr>
-        <tr><td>Optional break</td><td>30 min</td><td>30 min</td></tr>
-        <tr><td>Total appointment</td><td>3 hr 20 min</td><td>3 hr 40 min</td></tr>
-        <tr><td>Case studies</td><td>Up to 6 / up to 14 items</td><td>Up to 7 / up to 16 items</td></tr>
-        <tr><td><strong>Biggest section</strong></td><td><strong>Section 2: Finances (29–35%)</strong></td><td><strong>Section 3: Contracts (25–31%)</strong></td></tr>
-        <tr><td>Primary references</td><td>AHPP, Law for Architects</td><td>AHPP, CSI Practice Guide</td></tr>
+        <tr><td>Total items</td><td>65 (59 scored + 6 pretest)</td><td>75 (68 scored + 7 pretest)</td><td>75 (68 scored + 7 pretest)</td></tr>
+        <tr><td>Test duration</td><td>2 hr 40 min</td><td>3 hr</td><td>3 hr</td></tr>
+        <tr><td>Optional break</td><td>30 min</td><td>30 min</td><td>30 min</td></tr>
+        <tr><td>Total appointment</td><td>3 hr 20 min</td><td>3 hr 40 min</td><td>3 hr 40 min</td></tr>
+        <tr><td>Case studies</td><td>Up to 6 / up to 14 items</td><td>Up to 7 / up to 16 items</td><td>Up to 7 / up to 16 items</td></tr>
+        <tr><td><strong>Biggest section(s)</strong></td><td><strong>Section 2: Finances (29–35%)</strong></td><td><strong>Section 3: Contracts (25–31%)</strong></td><td><strong>Sections 2 &amp; 3 tied (each 32–38%)</strong></td></tr>
+        <tr><td>Content mix</td><td>Finance, ethics, HR, marketing, firm structure</td><td>Contracts, scheduling, QC, coordination</td><td>~70% pro practice + ~30% technical</td></tr>
+        <tr><td>Primary references</td><td>AHPP, Law for Architects, NCARB Rules</td><td>AHPP, CSI Practice Guide, AIA contracts</td><td>AHPP, AIA contract documents, NCARB</td></tr>
       </tbody>
     </table></div>
     <h3>Section-by-Section Overview</h3>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Section</th><th style="color:var(--pcm)">PcM (%)</th><th style="color:var(--pjm)">PjM (%)</th><th>Overlap?</th></tr></thead>
+      <thead><tr><th>Topic / Section</th><th style="color:var(--pcm)">PcM (%)</th><th style="color:var(--pjm)">PjM (%)</th><th style="color:var(--ce)">CE (%)</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Business/Firm Operations</td><td>Section 1 (20–26%)</td><td>—</td><td>—</td></tr>
-        <tr><td>Finances, Risk, Legal</td><td>Section 2 (29–35%)</td><td>—</td><td>Partial</td></tr>
-        <tr><td>Delivery of Services</td><td>Section 3 (22–28%)</td><td>—</td><td>—</td></tr>
-        <tr><td>Practice Methodologies</td><td>Section 4 (17–23%)</td><td>—</td><td>—</td></tr>
-        <tr><td>Resource Management</td><td>—</td><td>Section 1 (7–13%)</td><td>—</td></tr>
-        <tr><td>Project Work Planning</td><td>—</td><td>Section 2 (17–23%)</td><td>—</td></tr>
-        <tr class="priority-row"><td><strong>⭐ Contracts</strong></td><td>PcM 3.2 (part of 22–28%)</td><td>Section 3 (25–31%)</td><td><span class="pill pill-pri">PRIORITY</span></td></tr>
-        <tr><td>Project Execution</td><td>—</td><td>Section 4 (17–23%)</td><td>—</td></tr>
-        <tr class="priority-row"><td><strong>⭐ Quality Control</strong></td><td>PcM 4.2 (part of 17–23%)</td><td>Section 5 (19–25%)</td><td><span class="pill pill-pri">PRIORITY</span></td></tr>
+        <tr><td>Business/Firm Operations</td><td>S1 (20–26%)</td><td>—</td><td>—</td><td>Staffing, HR, ethics, Standard of Care</td></tr>
+        <tr><td>Finances, Risk, Legal</td><td>S2 (29–35%)</td><td>—</td><td>—</td><td>Largest PcM section; metrics, fee types, NOR</td></tr>
+        <tr><td>Delivery of Services / Contracts</td><td>S3 (22–28%)</td><td>—</td><td>—</td><td>Fee proposals, delivery methods, risk</td></tr>
+        <tr><td>Practice Methodologies</td><td>S4 (17–23%)</td><td>—</td><td>—</td><td>Firm structures, policies, documentation standards</td></tr>
+        <tr><td>Resource Management</td><td>—</td><td>S1 (7–13%)</td><td>—</td><td>Smallest PjM section; staffing, consultant fees</td></tr>
+        <tr><td>Project Work Planning</td><td>—</td><td>S2 (17–23%)</td><td>—</td><td>Gantt, CPM, float, PDCA, work plan</td></tr>
+        <tr class="priority-row"><td><strong>🔺 Contracts</strong></td><td>PcM S3 (part of 22–28%)</td><td>S3 (25–31%)</td><td>S1 Preconstruction (17–23%)</td><td>B101, A201, C401; delivery methods; bid process</td></tr>
+        <tr><td>Project Execution</td><td>—</td><td>S4 (17–23%)</td><td>—</td><td>Budget monitoring, AHJ approvals, scope changes</td></tr>
+        <tr class="priority-row"><td><strong>🔺 Quality Control / Observation</strong></td><td>PcM S4 (part of 17–23%)</td><td>S5 (19–25%)</td><td>S2 Construction Observation (32–38%)</td><td>Site visits, submittal review, conformance checking; CE's largest section</td></tr>
+        <tr class="priority-row"><td><strong>🔺 CA Procedures</strong></td><td>Risk element of S2</td><td>S3 change instruments</td><td>S3 Admin Procedures (32–38%)</td><td>RFIs, change orders, pay applications, submittals; tied largest CE section</td></tr>
+        <tr><td>Project Closeout &amp; Evaluation</td><td>—</td><td>—</td><td>S4 (7–13%)</td><td>Warranties, record drawings, punch list, commissioning, POE</td></tr>
       </tbody>
     </table></div>
   </div>
 
   <!-- Overlapping Topics -->
   <div class="table-section" id="t-overlap">
-    <h3>⭐ Overlapping Topics — Study These First</h3>
+    <h3>🔺 Overlapping Topics — Study These First (All 3 Exams)</h3>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Topic</th><th style="color:var(--pcm)">PcM tests</th><th style="color:var(--pjm)">PjM tests</th><th>Key fact</th></tr></thead>
+      <thead><tr><th>Topic</th><th style="color:var(--pcm)">PcM tests</th><th style="color:var(--pjm)">PjM tests</th><th style="color:var(--ce)">CE tests</th><th>Key facts (expanded)</th></tr></thead>
       <tbody>
-        <tr class="priority-row"><td><strong>B101</strong></td><td>Analyze contract types; assess risk of changes (PcM 3.2)</td><td>Evaluate adherence; differentiate services; phase billing (PjM 3.1)</td><td>13 articles; 5 basic phases; copyright stays with architect</td></tr>
-        <tr class="priority-row"><td><strong>Standard of care</strong></td><td>Apply appropriate standard (PcM 1.4)</td><td>QC processes for risk reduction (PjM 5.2)</td><td>Never elevate language — uninsurable</td></tr>
-        <tr class="priority-row"><td><strong>Delivery methods</strong></td><td>Analyze applicability; estimate risk (PcM 3.2, 3.3)</td><td>Implement documentation for a specified method (PjM 4.3)</td><td>DBB = B101+A101; CMc = A133; IPD = A195</td></tr>
-        <tr class="priority-row"><td><strong>Risk &amp; insurance</strong></td><td>Identify legal exposures; practice-level risk (PcM 2.2)</td><td>Insurance strategies; project-level liability (PjM 5.2)</td><td>5 required B101 insurance types; waiver of subrogation per A201</td></tr>
-        <tr class="priority-row"><td><strong>Scope creep</strong></td><td>Strategies for scope adjustments (PcM 2.3)</td><td>Evaluate changes; impact on fee/schedule (PjM 4.2)</td><td>Document every change in writing; get owner consent first</td></tr>
-        <tr class="priority-row"><td><strong>Quality control</strong></td><td>Processes for documentation (PcM 4.2)</td><td>QC for coordination, constructability, design integrity (PjM 5.3–5.4)</td><td>Process-based (BIM) + inspection-based (human) = best programs</td></tr>
-        <tr class="priority-row"><td><strong>Ethics — Model Rules</strong></td><td>Apply ethical standards (PcM 1.3)</td><td>Laws and regulations; protect the public (PjM 5.1)</td><td>Rules 1–5: Competence, Conflict, Disclosure, Laws, Sealing</td></tr>
-        <tr class="priority-row"><td><strong>Budget and cost</strong></td><td>Firm financial well-being (PcM 2.1)</td><td>Monitor project for compliance with construction budget (PjM 4.1)</td><td>PcM = firm overhead/profit; PjM = estimate vs. owner budget</td></tr>
-        <tr class="priority-row"><td><strong>SPI / earned value</strong></td><td>Evaluate firm financial metrics (PcM 2.1)</td><td>Project controls (PjM 5.2)</td><td>SPI = schedule; CPI = cost. SPI &lt; 1.0 = behind schedule</td></tr>
+        <tr class="priority-row"><td><strong>B101</strong></td><td>Analyze contract types; assess risk of changes; fee proposals (PcM 3.2)</td><td>Evaluate adherence; differentiate basic/supplemental/additional services; phase billing (PjM 3.1)</td><td>Bidding docs, contractor selection, preconstruction requirements (CE S1); CA duties during construction (CE S2–3)</td><td>13 articles. 5 basic phases (SD→DD→CD→Bid→CA). Copyright stays with architect — owner gets limited license. Owner can terminate for convenience any time. If architect terminates for cause, owner loses drawing access. Claims period: 10 years from substantial completion.</td></tr>
+        <tr class="priority-row"><td><strong>Standard of care</strong></td><td>Apply appropriate standard (PcM 1.4); never modify in contracts (PcM 2.2)</td><td>QC processes, risk reduction, coordinate constructability (PjM 5.2)</td><td>Defines architect's CA obligations — observe not supervise; review shop drawings for intent not accuracy (CE S2)</td><td>Skill, care, and diligence of other architects in the same locality at the same time on similar projects. "Highest standard of care" language is nearly uninsurable. Responsible control ≠ reviewing every line — it means having sufficient knowledge of and authority over the work.</td></tr>
+        <tr class="priority-row"><td><strong>Delivery methods</strong></td><td>Analyze applicability; estimate risk; fee structure implications (PcM 3.2, 3.3)</td><td>Implement documentation requirements for specified method; manage multiple contractors (PjM 4.3)</td><td>Determines which AIA documents apply, who bids, and what CDs look like; D-B may use performance specs (CE S1)</td><td>DBB = B101+A101+A201. CMc (at-risk) = A133, GMP by end of SD. IPD = A195, shared risk/reward. Negotiated bid → quality. Competitive bid → low cost. Invited bid → qualifications-based. Fast-track always = additional service.</td></tr>
+        <tr class="priority-row"><td><strong>Risk &amp; insurance</strong></td><td>Identify legal exposures; practice-level risk; evaluate litigation risk by project type (PcM 2.2)</td><td>Insurance strategies for project; project-level liability; QC as risk mitigation (PjM 5.2)</td><td>Surety bonds (bid/performance/payment); mechanics liens; liquidated vs. consequential damages (CE S2–3)</td><td>5 B101-required types: General Liability, E&amp;O, Auto, Workers Comp, Employer's Liability. Waiver of subrogation required by A201. Consequential damages (lost rent, loan costs) mutually waived. Liquidated damages = per-day penalty agreed in advance. Bid bond (A310) pays difference if winner walks. Performance bond → surety completes if GC defaults.</td></tr>
+        <tr class="priority-row"><td><strong>Change management</strong></td><td>Scope adjustments, written consent, fee impacts; addenda during bidding (PcM 2.3, 3.1)</td><td>Evaluate changes; impact on fee/schedule; owner notification required (PjM 4.2)</td><td>Classifies and issues the right instrument: ASI vs. CO vs. CCD; reviews and approves pay apps (CE S3)</td><td>Addendum = before contract signed (baked into bids). ASI (G710) = after contract, no cost/schedule, architect signs only. CO (G701) = after contract, all three parties sign. CCD (G714) = owner + architect sign, cost disputed but keep working. High RFI volume = poor drawing quality signal. G702/G703 for pay apps; retainage 10%/5%.</td></tr>
+        <tr class="priority-row"><td><strong>Quality control</strong></td><td>Process vs. checking methods; documentation standards; corporate memory (PcM 4.2)</td><td>QC for coordination, constructability, design integrity; project perfection syndrome (PjM 5.3–5.4)</td><td>Shop drawing review (design intent only); confirming construction conforms to contract docs (CE S2)</td><td>Best QC = process-based (checklists, BIM clash detection) + inspection-based (third-party drawing review). Architect is NOT liable for catching all nonconforming work — contractor built it. If architect observes non-conformance: notify in writing, copy owner, withhold payment certification. Never: ASI to correct design errors (use CO).</td></tr>
+        <tr class="priority-row"><td><strong>Ethics — NCARB Rules</strong></td><td>Apply ethical standards; AIA complaint process; no fines (PcM 1.3)</td><td>Laws and regulations; protect the public; licensing obligations (PjM 5.1)</td><td>Responsible control (Rule 5.1); impartial contract interpreter (Rule 2.4); report violations (Rule 3.5) (CE S2)</td><td>Rule 1: Competence — ordinary vs. gross negligence. Rule 2.2: Never take supplier compensation — no waiver. Rule 2.4: Act impartially as contract interpreter even though paid by owner. Rule 5.1: Seal only work under responsible control. Plan-stamping = top disciplinary violation. AIA penalties: admonishment, suspension, termination — no fines. State boards CAN fine and revoke.</td></tr>
+        <tr class="priority-row"><td><strong>Budget and cost</strong></td><td>Firm overhead, profit, NOR; distinguish firm-level from project-level (PcM 2.1)</td><td>Monitor design/documentation compliance with construction budget; notify owner immediately if exceeded (PjM 4.1)</td><td>Review contractor's application for payment; retainage management; identify when bids exceed budget and redesign obligation triggers (CE S1, S3)</td><td>Cost of the Work = contractor materials + labor + overhead + profit. Does NOT include arch fee, land, or contingency. Fee percentage calculated on owner's budget — not final construction cost. If bids exceed budget: architect redesigns at no additional cost to owner. Retainage: 10% work-in-place, 5% stored materials. Releases at substantial completion.</td></tr>
+        <tr class="priority-row"><td><strong>SPI / earned value</strong></td><td>Evaluate firm financial health; project-level metrics (PcM 2.1)</td><td>Project controls, schedule monitoring; CPI for budget (PjM 5.2)</td><td>Review contractor's schedule relative to schedule of values and completed work (CE S3)</td><td>SPI (Schedule Performance Index) = EV ÷ PV. SPI &lt; 1.0 = behind schedule. CPI (Cost Performance Index) = EV ÷ AC. CPI &lt; 1.0 = over budget. Both target ≥ 1.0. SPI ≠ CPI — a common exam trap. Float = slack before impacting the critical path.</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -276,21 +285,25 @@
   <div class="table-section" id="t-aia">
     <h3>AIA Contract Documents — Which Division Tests Them</h3>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Document</th><th>Description</th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th></tr></thead>
+      <thead><tr><th>Document</th><th>Description</th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th><th style="color:var(--ce)">CE</th></tr></thead>
       <tbody>
-        <tr class="priority-row"><td><strong>B101-2017</strong></td><td>Owner-Architect Agreement (DBB)</td><td><span class="pill pill-pri">Primary</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
-        <tr><td><strong>A101-2017</strong></td><td>Owner-Contractor (stipulated sum)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>A201-2017</strong></td><td>General Conditions (incorporated into B101 by reference)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>A132</strong></td><td>Owner-Contractor when CM is advisor/agent</td><td>Delivery</td><td>Delivery</td></tr>
-        <tr><td><strong>A133-2019</strong></td><td>Owner-CM as Constructor (cost plus + GMP)</td><td>Delivery</td><td>Delivery</td></tr>
-        <tr><td><strong>A141-2014</strong></td><td>Owner-Design-Builder</td><td>Delivery</td><td>Delivery</td></tr>
-        <tr><td><strong>A195-2008</strong></td><td>Owner-Contractor for IPD</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>A701</strong></td><td>Instructions to Bidders (complements A201)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>C401-2017</strong></td><td>Architect-Consultant Agreement (mirrors B101)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
-        <tr><td><strong>G701-2017</strong></td><td>Change Order</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>G702-1992</strong></td><td>Application and Certificate for Payment</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>G704-2017</strong></td><td>Certificate of Substantial Completion</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
-        <tr><td><strong>G802</strong></td><td>Amendment to Professional Services Agreement (scope changes to B101)</td><td>Scope changes</td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr class="priority-row"><td><strong>B101-2017</strong></td><td>Owner-Architect Agreement (DBB) — 13 articles; defines basic, supplemental, and additional services; governs copyright, termination, dispute resolution</td><td><span class="pill pill-pri">Primary</span></td><td><span class="pill pill-pri">Primary</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>A101-2017</strong></td><td>Owner-Contractor Agreement (stipulated sum) — sets contract sum, schedule, and payment terms between owner and GC</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>A201-2017</strong></td><td>General Conditions — incorporated by reference into B101 and A101; defines architect's CA role; requires waiver of subrogation; governs means/methods vs. design intent distinction</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>A132</strong></td><td>Owner-Contractor when CM is advisor/agent</td><td>Delivery</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A133-2019</strong></td><td>Owner-CM as Constructor (cost plus + GMP) — GMP set by end of SD</td><td>Delivery</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A141-2014</strong></td><td>Owner-Design-Builder — single entity contract</td><td>Delivery</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A195-2008</strong></td><td>Owner-Contractor for IPD — shared risk/reward; no-sue clause</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>A310</strong></td><td>Bid Bond — guarantees bidder enters contract if selected; pays difference if winner walks</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>A701</strong></td><td>Instructions to Bidders — pre-bid meeting, bid distribution, evaluation procedures</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>C401-2017</strong></td><td>Architect-Consultant Agreement — mirrors B101; consultant owns their instruments of service; cannot sub without written permission</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td><td><span class="pill pill-no">—</span></td></tr>
+        <tr class="priority-row"><td><strong>G701-2017</strong></td><td>Change Order — post-contract change altering scope, cost, or schedule; all three parties sign</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr class="priority-row"><td><strong>G702-1992</strong></td><td>Application and Certificate for Payment — contractor submits; architect certifies; owner pays; lists change orders, retainage, amount due</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr class="priority-row"><td><strong>G704-2017</strong></td><td>Certificate of Substantial Completion — architect certifies; starts 1-year warranty; triggers retainage release; often coincides with Certificate of Occupancy</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>G710</strong></td><td>ASI — minor change; no cost or schedule impact; architect signs only</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>G714</strong></td><td>CCD — owner + architect sign (NOT contractor); cost TBD; keeps project moving</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>G716</strong></td><td>RFI — contractor asks architect for clarification; not a contract document; response may trigger CO</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>G802</strong></td><td>Amendment to Professional Services Agreement — used to add POE and other additional services after B101 execution; statute of limitations clock does not restart</td><td>Scope changes</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
       </tbody>
     </table></div>
     <h3 style="margin-top:4px">Key Terms</h3>
@@ -529,12 +542,42 @@
       </tbody>
     </table></div>
   </div>
+
+  <!-- CE Exclusive -->
+  <div class="table-section" id="t-ce">
+    <h3 style="color:var(--ce)">CE Exclusive Topics <span class="new-badge">NEW</span></h3>
+    <div class="callout gold" style="margin-bottom:16px">CE is ~70% professional practice + ~30% technical. The professional practice portion overlaps heavily with PcM and PjM — that's why these three divisions pair well for study and scheduling.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Topic</th><th>Section</th><th>% Weight</th><th>Key facts</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>Meetings &amp; observations</strong></td><td>1</td><td>12–18%</td><td>Pre-construction meeting, progress meetings, site visits; field reports (G711); architect observes but does not supervise</td></tr>
+        <tr class="priority-row"><td><strong>Change management</strong></td><td>1</td><td>12–18%</td><td>ASI (minor, no cost/schedule) → CO (all parties, cost known) → CCD (owner + architect only, cost TBD). CCD keeps schedule moving while dispute is resolved.</td></tr>
+        <tr class="priority-row"><td><strong>Pay applications</strong></td><td>1</td><td>12–18%</td><td>G702 (Application &amp; Certificate for Payment); G703 (Schedule of Values); retainage 10% work-in-place / 5% stored materials; releases at substantial completion</td></tr>
+        <tr><td><strong>Nonconforming work</strong></td><td>1</td><td>12–18%</td><td>Notify contractor in writing; copy owner; withhold payment for affected portion. Contractor bears full responsibility for building per contract docs.</td></tr>
+        <tr><td><strong>Substantial completion</strong></td><td>1</td><td>12–18%</td><td>G704; starts 1-year warranty; triggers retainage release; often coincides with Certificate of Occupancy</td></tr>
+        <tr><td><strong>Building commissioning</strong></td><td>2</td><td>14–20%</td><td>3 stages: (1) Establish OPR + BOD, (2) Draft commissioning plan, (3) Functional testing + training. CxA is a third party. LEED Fundamental Cx = prerequisite.</td></tr>
+        <tr><td><strong>OPR vs. BOD</strong></td><td>2</td><td>14–20%</td><td>OPR = owner's project requirements (what the building must do). BOD = basis of design (how the design achieves it). OPR written first; BOD translates OPR into design decisions.</td></tr>
+        <tr><td><strong>Post-occupancy evaluation</strong></td><td>2</td><td>14–20%</td><td>Additional service; added via G802 Amendment. Typically 3–6 months after occupancy. Confirms building delivers on original program. Business development tool — maintains client contact.</td></tr>
+        <tr><td><strong>Project closeout</strong></td><td>1</td><td>12–18%</td><td>Punch list (contractor prepares); as-constructed record drawings (contractor, Division 01); operation manuals (contractor provides, 3 loose-leaf binders); warranty period begins at substantial completion</td></tr>
+        <tr><td><strong>Surety bonds</strong></td><td>1</td><td>12–18%</td><td>Bid bond (AIA A310) — difference if winner walks. Performance bond — surety completes project if contractor defaults. Payment bond — protects subs. All purchased by contractor.</td></tr>
+        <tr><td><strong>Weather days &amp; delay</strong></td><td>1</td><td>12–18%</td><td>Past data sets expected weather days. Architect decides if extras warranted. Owner-caused delay → schedule extended by CO. GC mistake → no extra time; owner can require extra labor at no cost.</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:16px">CE Content Split</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Category</th><th>Approx. %</th><th>Where it overlaps</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>Professional practice (CA, contracts, delivery)</strong></td><td>~70%</td><td>PcM + PjM — study once, test three times</td></tr>
+        <tr><td><strong>Technical (commissioning, systems, specs)</strong></td><td>~30%</td><td>PPD / PDD building systems content</td></tr>
+      </tbody>
+    </table></div>
+  </div>
 </div>
 
 <!-- SUMMARY -->
 <div id="summary" class="panel">
   <div class="sum-header">
-    <h2>PcM + PjM Study Summary</h2>
+    <h2>PcM + PjM + CE Study Summary</h2>
     <p>Compiled from NCARB ARE 5.0 Guidelines (April 2026), AHPP 15th ed., NCARB Professional Conduct CE Series, PPI Review Manuals. ✦ = updated with new wiki content.</p>
     <div style="position:relative;margin-top:12px;">
       <input id="sumSearch" type="text" placeholder="🔍  Search summary…" oninput="filterSummary(this.value)" style="width:100%;padding:10px 36px 10px 14px;background:#fff;border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
@@ -546,14 +589,16 @@
   <div class="sum-toc">
     <h4>Contents</h4>
     <ul>
-      <li><a href="#s-b101"><span class="toc-tag toc-both">⭐ BOTH</span> B101 Owner-Architect Agreement</a></li>
-      <li><a href="#s-soc"><span class="toc-tag toc-both">⭐ BOTH</span> Standard of Care</a></li>
-      <li><a href="#s-delivery"><span class="toc-tag toc-both">⭐ BOTH</span> Project Delivery Methods</a></li>
-      <li><a href="#s-risk"><span class="toc-tag toc-both">⭐ BOTH</span> Risk Management &amp; Insurance</a></li>
-      <li><a href="#s-scope"><span class="toc-tag toc-both">⭐ BOTH</span> Scope Creep &amp; Scope Changes</a></li>
-      <li><a href="#s-qc"><span class="toc-tag toc-both">⭐ BOTH</span> Quality Control</a></li>
-      <li><a href="#s-ethics"><span class="toc-tag toc-both">⭐ BOTH</span> Ethics — NCARB Model Rules</a></li>
+      <li><a href="#s-b101"><span class="toc-tag toc-all3">🔺 ALL 3</span> B101 Owner-Architect Agreement</a></li>
+      <li><a href="#s-soc"><span class="toc-tag toc-all3">🔺 ALL 3</span> Standard of Care</a></li>
+      <li><a href="#s-delivery"><span class="toc-tag toc-all3">🔺 ALL 3</span> Project Delivery Methods</a></li>
+      <li><a href="#s-risk"><span class="toc-tag toc-all3">🔺 ALL 3</span> Risk Management &amp; Insurance</a></li>
+      <li><a href="#s-scope"><span class="toc-tag toc-all3">🔺 ALL 3</span> Scope Creep &amp; Scope Changes</a></li>
+      <li><a href="#s-qc"><span class="toc-tag toc-all3">🔺 ALL 3</span> Quality Control</a></li>
+      <li><a href="#s-ethics"><span class="toc-tag toc-all3">🔺 ALL 3</span> Ethics — NCARB Model Rules</a></li>
+      <li><a href="#s-ce-strategy"><span class="toc-tag toc-ce">CE</span> CE Exam Strategy &amp; Content Split ✦</a></li>
       <li><a href="#s-ca"><span class="toc-tag toc-ce">CE / CA</span> Construction Administration ✦</a></li>
+      <li><a href="#s-commissioning"><span class="toc-tag toc-ce">CE</span> Building Commissioning &amp; POE ✦</a></li>
       <li><a href="#s-aia"><span class="toc-tag toc-pjm">PjM</span> AIA Contract Documents — Detail ✦</a></li>
       <li><a href="#s-pcm-fin"><span class="toc-tag toc-pcm">PcM</span> Finances, Risk &amp; Development (Section 2) ✦</a></li>
       <li><a href="#s-pcm-ops"><span class="toc-tag toc-pcm">PcM</span> Business Operations &amp; Agency ✦</a></li>
@@ -562,12 +607,13 @@
       <li><a href="#s-pjm-contracts"><span class="toc-tag toc-pjm">PjM</span> Contracts (Section 3) ✦</a></li>
       <li><a href="#s-pjm-exec"><span class="toc-tag toc-pjm">PjM</span> Project Execution (Section 4)</a></li>
       <li><a href="#s-pjm-qc"><span class="toc-tag toc-pjm">PjM</span> Project Quality Control (Section 5)</a></li>
+      <li><a href="#s-legend"><span class="toc-tag" style="background:#f1f3f8;color:#64748b;">REF</span> Abbreviations Legend</a></li>
     </ul>
   </div>
 
   <!-- B101 -->
   <div class="sum-section" id="s-b101">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>B101 Owner-Architect Agreement</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>B101 Owner-Architect Agreement</h3></div>
     <div class="sum-body">
       <p>B101 is the most tested document across both divisions. PcM tests <strong>analysis</strong> of contract types and delivery methods (PcM 3.2). PjM tests <strong>application</strong> — evaluate adherence, identify phase completions, determine billing (PjM 3.1).</p>
       <div class="sum-subsection"><h4>The 13 Articles</h4>
@@ -604,7 +650,7 @@
 
   <!-- Standard of Care -->
   <div class="sum-section" id="s-soc">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Standard of Care</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Standard of Care</h3></div>
     <div class="sum-body">
       <p>Skill, care, and diligence consistent with other architects in the <strong>same locality</strong> on <strong>similar projects</strong> at <strong>the same time</strong>. Not a guarantee of outcomes.</p>
       <div class="callout warn">Never modify standard of care language. "Highest standard of care" is nearly uninsurable.</div>
@@ -614,7 +660,7 @@
 
   <!-- Delivery Methods -->
   <div class="sum-section" id="s-delivery">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Project Delivery Methods ✦</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Project Delivery Methods ✦</h3></div>
     <div class="sum-body">
       <table class="inline-table">
         <thead><tr><th>Method</th><th>Key characteristic</th><th>Contract</th><th>Architect risk</th></tr></thead>
@@ -654,7 +700,7 @@
 
   <!-- Risk Management -->
   <div class="sum-section" id="s-risk">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Risk Management &amp; Insurance</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Risk Management &amp; Insurance</h3></div>
     <div class="sum-body">
       <div class="sum-subsection"><h4>Four Risk Methods</h4>
         <ul><li><strong>Avoid</strong> — turn down risky project types</li><li><strong>Assume</strong> — accept what you can cover</li><li><strong>Transfer</strong> — to insurance or consultants</li><li><strong>Control</strong> — QA/QC processes</li></ul>
@@ -676,7 +722,7 @@
 
   <!-- Scope Creep -->
   <div class="sum-section" id="s-scope">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Scope Creep &amp; Scope Changes</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Scope Creep &amp; Scope Changes</h3></div>
     <div class="sum-body">
       <p>Scope creep = incremental program additions during design that accumulate into significant budget and schedule impacts.</p>
       <div class="callout">Document every change → get written owner agreement → tie to fee and schedule → use AIA G802 to amend the agreement. Never proceed on verbal instructions.</div>
@@ -685,7 +731,7 @@
 
   <!-- QC -->
   <div class="sum-section" id="s-qc">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Quality Control</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Quality Control</h3></div>
     <div class="sum-body">
       <div class="sum-subsection"><h4>Two QC Methods</h4>
         <ul><li><strong>Process-based</strong> — performing tasks correctly the first time: checklists, BIM clash detection (semi-automated)</li><li><strong>Inspection/Checking-based</strong> — reviewing finished work before delivery: third-party drawing review by an architect not on the project</li></ul>
@@ -699,12 +745,32 @@
 
   <!-- Ethics -->
   <div class="sum-section" id="s-ethics">
-    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Ethics — NCARB Model Rules of Conduct</h3></div>
+    <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Ethics — NCARB Model Rules of Conduct</h3></div>
     <div class="sum-body">
       <div class="sum-subsection"><h4>Rule 1 — Competence</h4><p>Standard of care (1.1). Cannot perform outside competence without engaging a qualified consultant (1.3). Ordinary vs. gross negligence: ordinary = failed to meet standard; gross = reckless disregard.</p></div>
       <div class="sum-subsection"><h4>Rule 2 — Conflict of Interest</h4><p>No dual compensation without full disclosure and written waiver (2.1). <strong>Never accept compensation from material suppliers — no waiver permitted (2.2).</strong> Must act impartially as contract interpreter (2.4).</p></div>
       <div class="sum-subsection"><h4>Rule 3 — Full Disclosure</h4><p>No misleading statements (3.1). Must report known violations of licensing laws (3.6–3.9).</p></div>
       <div class="sum-subsection"><h4>Rule 5 — Signing and Sealing</h4><p><strong>Seal only work under your responsible control (5.1). Plan-stamping is one of the most common disciplinary violations.</strong> Prototype designs are permitted to be sealed by the architect of record for each jurisdiction (Rule 5.3).</p></div>
+    </div>
+  </div>
+
+  <!-- CE Exam Strategy -->
+  <div class="sum-section" id="s-ce-strategy">
+    <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE</span><h3>CE Exam Strategy &amp; Content Split <span class="new-badge">NEW</span></h3></div>
+    <div class="sum-body">
+      <div class="callout gold">CE is approximately <strong>70% professional practice</strong> and <strong>30% technical</strong>. The professional practice content overlaps heavily with PcM and PjM — contracts, delivery methods, CA procedures, ethics, and risk management. This is why CE pairs naturally with PcM + PjM: study the material once, sit for three exams.</div>
+      <table class="inline-table" style="margin-top:14px">
+        <thead><tr><th>CE Section</th><th>Approx. %</th><th>Overlaps with</th></tr></thead>
+        <tbody>
+          <tr class="priority-row"><td><strong>Construction Administration (CA)</strong> — meetings, observations, changes, pay apps, closeout</td><td>~45%</td><td>PjM (change management, contracts), PcM (risk, insurance)</td></tr>
+          <tr class="priority-row"><td><strong>Project and Practice Management</strong> — delivery methods, roles, legal</td><td>~25%</td><td>PcM + PjM directly</td></tr>
+          <tr><td><strong>Building Systems &amp; Commissioning</strong> — OPR/BOD, functional testing, POE</td><td>~20%</td><td>PPD/PDD building systems</td></tr>
+          <tr><td><strong>Specifications &amp; Technical Review</strong></td><td>~10%</td><td>PDD</td></tr>
+        </tbody>
+      </table>
+      <div class="sum-subsection" style="margin-top:16px"><h4>Recommended Study Sequence</h4>
+        <p>Study <strong>all three divisions together</strong> rather than separately. The Amber Book notes that content overlap is a defining characteristic of ARE 5.0 — "how do you study for just the design development portion of thermal envelope design? Where do you stop?" The same logic applies here: professional practice content cannot be cleanly separated into PcM/PjM/CE boxes. Study it as a unified body, then sit for all three in close succession.</p>
+      </div>
     </div>
   </div>
 
@@ -755,6 +821,34 @@
           <li><strong>Payment bond</strong> — protects subs from GC nonpayment</li>
         </ul>
         <p><strong>Mechanics lien:</strong> Subcontractors (and architects) can file a lien against the owner's property if unpaid. Forces a sale of property through court.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commissioning and POE -->
+  <div class="sum-section" id="s-commissioning">
+    <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE</span><h3>Building Commissioning &amp; POE <span class="new-badge">NEW</span></h3></div>
+    <div class="sum-body">
+      <div class="callout">Commissioning is the systematic process of verifying that building systems are installed and operate as intended. The commissioning agent (CxA) is a <strong>third party</strong> — independent of both the design team and contractor. LEED Fundamental Commissioning is a prerequisite for all LEED rating systems.</div>
+      <div class="sum-subsection"><h4>Two Key Documents</h4>
+        <p><strong>OPR — Owner's Project Requirements:</strong> Written first. States what the building must do — functional uses, environmental goals, energy targets, occupancy requirements. Updated throughout the project.</p>
+        <p><strong>BOD — Basis of Design:</strong> Translates the OPR into design decisions. More technical: explains which systems were selected, how they are integrated, and the sequence of operations. Where the OPR says <em>what</em>, the BOD says <em>how</em>.</p>
+      </div>
+      <div class="sum-subsection"><h4>Three Stages of Commissioning</h4>
+        <table class="inline-table">
+          <thead><tr><th>Stage</th><th>When</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1 — Determine Requirements</strong></td><td>Pre-design / Design</td><td>Owner + CxA identify systems to be commissioned; establish acceptance criteria; produce OPR and BOD</td></tr>
+            <tr><td><strong>2 — Plan the Process</strong></td><td>Design / Bidding</td><td>Commissioning plan written: scope, system list, responsibilities, schedule, test procedures, documentation requirements, budget</td></tr>
+            <tr class="priority-row"><td><strong>3 — Functional Testing</strong></td><td>Near end of construction</td><td>Systems started up and tested against design criteria; contractor corrects deficiencies; owner's staff trained; commissioning report issued</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:8px">Post-construction commissioning should continue one year after occupancy — coordinated with the contractor's warranty period so corrections can be made under warranty.</p>
+      </div>
+      <div class="sum-subsection"><h4>Post-Occupancy Evaluation (POE)</h4>
+        <p>A POE reviews a completed building after the client has occupied it — typically 3–6 months after move-in. It is an <strong>additional service</strong>, not included in basic B101. Added via AIA G802 (Amendment to Professional Services Agreement).</p>
+        <div class="callout warn">Use G802 to add POE — not a verbal agreement. The statute of limitations begins at substantial completion. Documenting the POE as a separate contracted service prevents the architect from inadvertently resetting that clock.</div>
+        <p>A POE confirms whether the building delivers on its original program: correct adjacencies, adequate room sizes, functioning envelope, systems performing as designed, occupant satisfaction. It is also a business development tool — it maintains client contact and often leads to repeat work.</p>
       </div>
     </div>
   </div>
@@ -952,40 +1046,178 @@
       <p><strong>Design integrity:</strong> Document intent of key SD decisions so they aren't value-engineered away in DD/CDs. Avoid <strong>project perfection syndrome</strong> — over-detailing beyond what the phase or budget requires. <strong>Corporate memory</strong> = institutional accumulated knowledge (reliable subcontractors, building department contacts, past project details) — organizing it is a QC function.</p>
     </div>
   </div>
+
+  <!-- Abbreviations Legend -->
+  <div class="sum-section" id="s-legend" style="border-top:2px solid var(--border);padding-top:24px">
+    <div class="sum-section-header"><span class="sum-section-tag" style="background:#f1f3f8;color:#64748b;">REF</span><h3>Abbreviations Legend</h3></div>
+    <div class="sum-body">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">All abbreviations used in this study aid, grouped by category.</p>
+
+      <div class="sum-subsection"><h4>ARE Divisions</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ARE</strong></td><td>Architect Registration Examination</td><td>NCARB's 6-division licensure exam</td></tr>
+          <tr><td><strong>PcM</strong></td><td>Practice Management</td><td>Firm operations, finance, ethics, HR</td></tr>
+          <tr><td><strong>PjM</strong></td><td>Project Management</td><td>Contracts, scheduling, coordination</td></tr>
+          <tr><td><strong>PA</strong></td><td>Programming &amp; Analysis</td><td>Pre-design, site analysis, feasibility</td></tr>
+          <tr><td><strong>PPD</strong></td><td>Project Planning &amp; Design</td><td>Schematic design, building systems</td></tr>
+          <tr><td><strong>PDD</strong></td><td>Project Development &amp; Documentation</td><td>Construction documents, specs, structures</td></tr>
+          <tr><td><strong>CE</strong></td><td>Construction &amp; Evaluation</td><td>CA, commissioning, closeout</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Organizations &amp; Programs</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NCARB</strong></td><td>National Council of Architectural Registration Boards</td></tr>
+          <tr><td><strong>AIA</strong></td><td>American Institute of Architects</td></tr>
+          <tr><td><strong>AXP</strong></td><td>Architectural Experience Program (NCARB)</td></tr>
+          <tr><td><strong>AHPP</strong></td><td>Architect's Handbook of Professional Practice (AIA)</td></tr>
+          <tr><td><strong>AHJ</strong></td><td>Authority Having Jurisdiction</td></tr>
+          <tr><td><strong>OSHA</strong></td><td>Occupational Safety and Health Administration</td></tr>
+          <tr><td><strong>EEOC</strong></td><td>Equal Employment Opportunity Commission</td></tr>
+          <tr><td><strong>FLSA</strong></td><td>Fair Labor Standards Act</td></tr>
+          <tr><td><strong>LEED</strong></td><td>Leadership in Energy and Environmental Design (USGBC)</td></tr>
+          <tr><td><strong>CSI</strong></td><td>Construction Specifications Institute</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Project Delivery &amp; Contracting</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DBB</strong></td><td>Design-Bid-Build</td><td>Default delivery method; architect designs, competitive bid, owner contracts GC</td></tr>
+          <tr><td><strong>D-B</strong></td><td>Design-Build</td><td>Single entity handles design + construction</td></tr>
+          <tr><td><strong>IPD</strong></td><td>Integrated Project Delivery</td><td>Shared-risk; owner, architect, contractor in one agreement</td></tr>
+          <tr><td><strong>CM</strong></td><td>Construction Manager</td><td>Experienced professional managing schedule, cost, constructability</td></tr>
+          <tr><td><strong>CMa</strong></td><td>Construction Manager as Advisor/Agent</td><td>CM advises; does not build; architect retains CA role</td></tr>
+          <tr><td><strong>CMc</strong></td><td>Construction Manager as Constructor (at-Risk)</td><td>CM replaces GC; assumes construction risk; sets GMP</td></tr>
+          <tr><td><strong>GC</strong></td><td>General Contractor</td><td>Prime contractor in DBB; manages subcontractors</td></tr>
+          <tr><td><strong>GMP</strong></td><td>Guaranteed Maximum Price</td><td>Contractor absorbs costs above this ceiling; set by end of SD in CMc</td></tr>
+          <tr><td><strong>QBS</strong></td><td>Qualifications-Based Selection</td><td>Federal A&amp;E selection method (Brooks Act); fee negotiated after selection</td></tr>
+          <tr><td><strong>RFQ</strong></td><td>Request for Qualifications</td><td>Owner requests firm credentials only; precedes RFP</td></tr>
+          <tr><td><strong>RFP</strong></td><td>Request for Proposals</td><td>Owner requests qualifications + fee from firms</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>AIA Contract Documents</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Document</th><th>Full name</th><th>Who signs</th></tr></thead>
+        <tbody>
+          <tr><td><strong>B101</strong></td><td>Standard Form of Agreement Between Owner and Architect</td><td>Owner + Architect</td></tr>
+          <tr><td><strong>A101</strong></td><td>Standard Form of Agreement Between Owner and Contractor (Stipulated Sum)</td><td>Owner + GC</td></tr>
+          <tr><td><strong>A201</strong></td><td>General Conditions of the Contract for Construction</td><td>Incorporated by reference into B101 and A101</td></tr>
+          <tr><td><strong>C401</strong></td><td>Standard Form of Agreement Between Architect and Consultant</td><td>Architect + Consultant</td></tr>
+          <tr><td><strong>G701</strong></td><td>Change Order</td><td>Owner + Architect + Contractor</td></tr>
+          <tr><td><strong>G702</strong></td><td>Application and Certificate for Payment</td><td>Contractor submits; Architect certifies; Owner pays</td></tr>
+          <tr><td><strong>G703</strong></td><td>Continuation Sheet (Schedule of Values)</td><td>Attached to G702</td></tr>
+          <tr><td><strong>G704</strong></td><td>Certificate of Substantial Completion</td><td>Architect certifies</td></tr>
+          <tr><td><strong>G710</strong></td><td>Architect's Supplemental Instructions (ASI)</td><td>Architect only — minor changes, no cost/schedule impact</td></tr>
+          <tr><td><strong>G711</strong></td><td>Architect's Field Report</td><td>Architect records site observations</td></tr>
+          <tr><td><strong>G714</strong></td><td>Construction Change Directive (CCD)</td><td>Owner + Architect (NOT contractor)</td></tr>
+          <tr><td><strong>G802</strong></td><td>Amendment to the Professional Services Agreement</td><td>Used to add POE and other additional services</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Construction Administration</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CA</strong></td><td>Construction Administration</td><td>Post-contract phase; architect administers the contract (not the construction)</td></tr>
+          <tr><td><strong>ASI</strong></td><td>Architect's Supplemental Instructions</td><td>Minor change; no cost or schedule impact; architect signs only (G710)</td></tr>
+          <tr><td><strong>CO</strong></td><td>Change Order</td><td>Post-contract change altering scope, cost, or schedule; all three parties sign (G701)</td></tr>
+          <tr><td><strong>CCD</strong></td><td>Construction Change Directive</td><td>Change where owner/contractor disagree on cost; owner + architect sign; keeps project moving (G714)</td></tr>
+          <tr><td><strong>RFI</strong></td><td>Request for Information</td><td>Contractor asks architect to clarify drawings (G716); not a contract document</td></tr>
+          <tr><td><strong>OPR</strong></td><td>Owner's Project Requirements</td><td>Commissioning document stating what the building must do</td></tr>
+          <tr><td><strong>BOD</strong></td><td>Basis of Design</td><td>Commissioning document explaining how the design achieves the OPR</td></tr>
+          <tr><td><strong>CxA</strong></td><td>Commissioning Agent</td><td>Independent third party verifying systems perform as designed</td></tr>
+          <tr><td><strong>POE</strong></td><td>Post-Occupancy Evaluation</td><td>Additional service reviewing building performance 3–6 months after occupancy</td></tr>
+          <tr><td><strong>CDs</strong></td><td>Construction Documents</td><td>Drawings + specifications used for building</td></tr>
+          <tr><td><strong>SD / DD</strong></td><td>Schematic Design / Design Development</td><td>First two design phases before CDs</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Financial &amp; Firm Metrics</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th><th>Formula / target</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NOR</strong></td><td>Net Operating Revenue</td><td>Gross revenue − consultant fees − reimbursables</td></tr>
+          <tr><td><strong>DSE</strong></td><td>Direct Salary Expense</td><td>Salaries for time charged directly to projects</td></tr>
+          <tr><td><strong>SPI</strong></td><td>Schedule Performance Index</td><td>EV ÷ PV; ≥ 1.0 = on/ahead of schedule</td></tr>
+          <tr><td><strong>CPI</strong></td><td>Cost Performance Index</td><td>EV ÷ AC; ≥ 1.0 = on/under budget</td></tr>
+          <tr><td><strong>EV</strong></td><td>Earned Value</td><td>Budgeted cost of work actually performed</td></tr>
+          <tr><td><strong>AR</strong></td><td>Accounts Receivable</td><td>Money owed to the firm; aged AR &gt;90 days = problem</td></tr>
+          <tr><td><strong>E&amp;O</strong></td><td>Errors &amp; Omissions (Insurance)</td><td>Professional Liability Insurance; covers design mistakes</td></tr>
+          <tr><td><strong>P&amp;L</strong></td><td>Profit &amp; Loss Statement</td><td>Tracks revenue and expenses over a period</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Business Entities</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th></tr></thead>
+        <tbody>
+          <tr><td><strong>LLC</strong></td><td>Limited Liability Company</td></tr>
+          <tr><td><strong>LLP</strong></td><td>Limited Liability Partnership</td></tr>
+          <tr><td><strong>LP</strong></td><td>Limited Partnership</td></tr>
+          <tr><td><strong>GP</strong></td><td>General Partnership</td></tr>
+          <tr><td><strong>S-Corp</strong></td><td>S Corporation (≤100 shareholders; pass-through taxation with salary/distribution split)</td></tr>
+          <tr><td><strong>C-Corp</strong></td><td>C Corporation (publicly traded; double taxation; typical for large firms)</td></tr>
+          <tr><td><strong>B-Corp</strong></td><td>Benefit Corporation (social mission embedded in charter; triple bottom line)</td></tr>
+          <tr><td><strong>JV</strong></td><td>Joint Venture (temporary third entity formed by two firms for a specific project)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="sum-subsection" style="margin-top:16px"><h4>Quality &amp; Scheduling</h4></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>QC / QA</strong></td><td>Quality Control / Quality Assurance</td><td>QC = inspecting finished work; QA = process-based prevention</td></tr>
+          <tr><td><strong>PDCA</strong></td><td>Plan–Do–Check–Adjust</td><td>Iterative project management cycle</td></tr>
+          <tr><td><strong>CPM</strong></td><td>Critical Path Method</td><td>Scheduling tool identifying the longest sequence of dependent tasks</td></tr>
+          <tr><td><strong>PERT</strong></td><td>Program Evaluation and Review Technique</td><td>Scheduling tool focusing on task sequence; less specific on duration than CPM</td></tr>
+          <tr><td><strong>BIM</strong></td><td>Building Information Modeling</td><td>3D model-based process integrating design and documentation</td></tr>
+          <tr><td><strong>MEP</strong></td><td>Mechanical, Electrical, Plumbing</td><td>Core building systems; typically contracted directly with architect</td></tr>
+          <tr><td><strong>FF&amp;E</strong></td><td>Furniture, Fixtures &amp; Equipment</td><td>Additional service under B101</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
 </div>
 
 <script>
 const cards = [
-  // BOTH DIVISIONS
-  {q:"What are the five phases of B101 basic services?",a:"Schematic Design, Design Development, Construction Documents, Bidding/Negotiation, Construction Administration.",div:"both",section:"B101 Basics"},
+  // ALL 3 EXAMS
+  {q:"What are the five phases of B101 basic services?",a:"Schematic Design, Design Development, Construction Documents, Bidding/Negotiation, Construction Administration.",div:"all3",section:"B101 Basics"},
   {q:'What does "Cost of the Work" include under B101?',a:"Contractor's materials, labor, overhead, and profit. Does NOT include the architect's fee, land cost, or contingencies.",div:"both",section:"B101 Cost"},
-  {q:"If the lowest bid exceeds the owner's budget, what must the architect do?",a:"Redesign at no additional cost to the owner (and revise consultant drawings too if in scope).",div:"both",section:"B101 Cost"},
-  {q:"How long does the owner have to terminate the architect for convenience?",a:"Any time — no waiting period required. Owner pays work-to-date plus overhead and profit.",div:"both",section:"B101 Termination"},
-  {q:"What happens to drawing access if the owner terminates the architect for cause?",a:"Owner retains access (limited license continues). If the architect terminates for cause, the owner loses access.",div:"both",section:"B101 Copyright"},
-  {q:"What are the owner's primary responsibilities under B101?",a:"Provide geotechnical reports, surveys, legal descriptions, building permits (owner pays; contractor pays construction permits), and information about pre-existing hazardous conditions.",div:"both",section:"B101 Owner's Duties"},
-  {q:"What is the mandatory first step in AIA dispute resolution?",a:"Mediation (non-binding, private). Arbitration or litigation only if mediation fails.",div:"both",section:"Dispute Resolution"},
-  {q:"How long is the claims period under B101?",a:"10 years from substantial completion (may vary by state).",div:"both",section:"B101 Claims"},
-  {q:"Define standard of care.",a:"Skill, care, and diligence consistent with other architects in the same locality practicing on similar projects at the same time. Not a guarantee of outcomes.",div:"both",section:"Standard of Care"},
+  {q:"If the lowest bid exceeds the owner's budget, what must the architect do?",a:"Redesign at no additional cost to the owner (and revise consultant drawings too if in scope).",div:"all3",section:"B101 Cost"},
+  {q:"How long does the owner have to terminate the architect for convenience?",a:"Any time — no waiting period required. Owner pays work-to-date plus overhead and profit.",div:"all3",section:"B101 Termination"},
+  {q:"What happens to drawing access if the owner terminates the architect for cause?",a:"Owner retains access (limited license continues). If the architect terminates for cause, the owner loses access.",div:"all3",section:"B101 Copyright"},
+  {q:"What are the owner's primary responsibilities under B101?",a:"Provide geotechnical reports, surveys, legal descriptions, building permits (owner pays; contractor pays construction permits), and information about pre-existing hazardous conditions.",div:"all3",section:"B101 Owner's Duties"},
+  {q:"What is the mandatory first step in AIA dispute resolution?",a:"Mediation (non-binding, private). Arbitration or litigation only if mediation fails.",div:"all3",section:"Dispute Resolution"},
+  {q:"How long is the claims period under B101?",a:"10 years from substantial completion (may vary by state).",div:"all3",section:"B101 Claims"},
+  {q:"Define standard of care.",a:"Skill, care, and diligence consistent with other architects in the same locality practicing on similar projects at the same time. Not a guarantee of outcomes.",div:"all3",section:"Standard of Care"},
   {q:'Why can\'t the architect accept "highest standard of care" language?',a:"Professional liability insurance will not cover performance beyond the standard of care. Accepting elevated language makes the architect nearly uninsurable.",div:"both",section:"Standard of Care"},
-  {q:"Name the five insurance types required by B101.",a:"(1) General Liability, (2) Professional Liability (E&O), (3) Automobile Liability, (4) Workers' Compensation, (5) Employer's Liability.",div:"both",section:"Risk & Insurance"},
-  {q:"What is the Spearin Doctrine?",a:"The contractor has the right to expect accurate and proper plans. The owner — not the contractor — is liable for errors in the drawings.",div:"both",section:"Risk & Insurance"},
-  {q:"What is privity and why does it matter in disputes?",a:"A legal relationship arising from a contract. In DBB, the contractor has no privity with the architect, so the contractor generally cannot sue the architect directly for economic damages.",div:"both",section:"Risk & Insurance"},
-  {q:"What does waiver of subrogation mean?",a:"After paying a claim, insurers waive the right to sue other project parties to recover the payment. Required by A201 for all parties.",div:"both",section:"Risk & Insurance"},
-  {q:"What four elements must a plaintiff prove to establish architectural negligence?",a:"(1) The architect owed a duty, (2) the duty was breached, (3) the breach caused an event, (4) damage occurred.",div:"both",section:"Risk"},
+  {q:"Name the five insurance types required by B101.",a:"(1) General Liability, (2) Professional Liability (E&O), (3) Automobile Liability, (4) Workers' Compensation, (5) Employer's Liability.",div:"all3",section:"Risk & Insurance"},
+  {q:"What is the Spearin Doctrine?",a:"The contractor has the right to expect accurate and proper plans. The owner — not the contractor — is liable for errors in the drawings.",div:"all3",section:"Risk & Insurance"},
+  {q:"What is privity and why does it matter in disputes?",a:"A legal relationship arising from a contract. In DBB, the contractor has no privity with the architect, so the contractor generally cannot sue the architect directly for economic damages.",div:"all3",section:"Risk & Insurance"},
+  {q:"What does waiver of subrogation mean?",a:"After paying a claim, insurers waive the right to sue other project parties to recover the payment. Required by A201 for all parties.",div:"all3",section:"Risk & Insurance"},
+  {q:"What four elements must a plaintiff prove to establish architectural negligence?",a:"(1) The architect owed a duty, (2) the duty was breached, (3) the breach caused an event, (4) damage occurred.",div:"all3",section:"Risk"},
   {q:"What is SPI and what does SPI < 1.0 mean?",a:"Schedule Performance Index = Earned Value ÷ Planned Value. SPI < 1.0 means the project is behind schedule.",div:"both",section:"Earned Value"},
   {q:"What does CPI < 1.0 mean?",a:"Cost Performance Index (EV ÷ Actual Cost) < 1.0 means the project is over budget.",div:"both",section:"Earned Value"},
-  {q:"Which project type carries the highest litigation risk for architects?",a:"Condominiums and residential projects.",div:"both",section:"Risk"},
-  {q:"Name the four methods of managing risk.",a:"Avoid, Assume, Transfer, Control.",div:"both",section:"Risk"},
-  {q:"What does A201 say about the architect's role during construction?",a:"The architect is the contract administrator — not the supervisor of construction. The architect does not control the contractor's means and methods.",div:"both",section:"A201 / CA"},
-  {q:"What is the difference between DBB and CM as Constructor?",a:"In DBB, a GC bids after design is complete. In CMc, the CM is brought on early and assumes construction risk at a GMP established by end of schematic design.",div:"both",section:"Delivery Methods"},
-  {q:"Which delivery method uses AIA A195?",a:"Integrated Project Delivery (IPD).",div:"both",section:"Delivery Methods"},
+  {q:"Which project type carries the highest litigation risk for architects?",a:"Condominiums and residential projects.",div:"all3",section:"Risk"},
+  {q:"Name the four methods of managing risk.",a:"Avoid, Assume, Transfer, Control.",div:"all3",section:"Risk"},
+  {q:"What does A201 say about the architect's role during construction?",a:"The architect is the contract administrator — not the supervisor of construction. The architect does not control the contractor's means and methods.",div:"all3",section:"A201 / CA"},
+  {q:"What is the difference between DBB and CM as Constructor?",a:"In DBB, a GC bids after design is complete. In CMc, the CM is brought on early and assumes construction risk at a GMP established by end of schematic design.",div:"all3",section:"Delivery Methods"},
+  {q:"Which delivery method uses AIA A195?",a:"Integrated Project Delivery (IPD).",div:"all3",section:"Delivery Methods"},
   {q:'What is "bridged design-build"?',a:"A design architect completes design to approximately 35% and then hands off to a design-build firm. The bridging architect may continue as the owner's advocate.",div:"both",section:"Delivery Methods"},
-  {q:"What is Rule 2.2 of the NCARB Model Rules of Conduct?",a:"An architect may never accept compensation from material or equipment suppliers for specifying or endorsing their products. No waiver is possible — this rule is absolute.",div:"both",section:"NCARB Rules"},
-  {q:"What is Rule 5.1?",a:"An architect shall sign and seal only technical submissions prepared under the architect's responsible control. Sealing drawings you didn't control is plan-stamping — one of the most frequently disciplined violations.",div:"both",section:"NCARB Rules"},
-  {q:"What is Rule 2.4?",a:"When the architect serves as an independent interpreter of contract documents, they must render decisions impartially — even though they are paid by the owner.",div:"both",section:"NCARB Rules"},
-  {q:"What does scope creep mean and how should it be managed?",a:"Incremental additions to program or scope during design. Manage by documenting every change, getting written owner consent, and tying each change to fee and schedule implications.",div:"both",section:"Scope Creep"},
-  {q:"What are consequential damages and how does AIA treat them?",a:"Consequential damages are indirect losses like lost rent, lost business, or loan penalties from delays. AIA contracts mutually waive them (since 1997). Direct damages (cost of fixing work) are limited to the architect's fee.",div:"both",section:"AIA Contracts"},
-  {q:"What is the difference between contract documents and instruments of service?",a:"Contract documents legally bind parties to build (drawings, specs, addenda, change orders). Instruments of service is a larger category — everything the architect creates, including sketches, field notes, abandoned designs. RFIs are NOT contract documents.",div:"both",section:"AIA Contracts"},
+  {q:"What is Rule 2.2 of the NCARB Model Rules of Conduct?",a:"An architect may never accept compensation from material or equipment suppliers for specifying or endorsing their products. No waiver is possible — this rule is absolute.",div:"all3",section:"NCARB Rules"},
+  {q:"What is Rule 5.1?",a:"An architect shall sign and seal only technical submissions prepared under the architect's responsible control. Sealing drawings you didn't control is plan-stamping — one of the most frequently disciplined violations.",div:"all3",section:"NCARB Rules"},
+  {q:"What is Rule 2.4?",a:"When the architect serves as an independent interpreter of contract documents, they must render decisions impartially — even though they are paid by the owner.",div:"all3",section:"NCARB Rules"},
+  {q:"What does scope creep mean and how should it be managed?",a:"Incremental additions to program or scope during design. Manage by documenting every change, getting written owner consent, and tying each change to fee and schedule implications.",div:"all3",section:"Scope Creep"},
+  {q:"What are consequential damages and how does AIA treat them?",a:"Consequential damages are indirect losses like lost rent, lost business, or loan penalties from delays. AIA contracts mutually waive them (since 1997). Direct damages (cost of fixing work) are limited to the architect's fee.",div:"all3",section:"AIA Contracts"},
+  {q:"What is the difference between contract documents and instruments of service?",a:"Contract documents legally bind parties to build (drawings, specs, addenda, change orders). Instruments of service is a larger category — everything the architect creates, including sketches, field notes, abandoned designs. RFIs are NOT contract documents.",div:"all3",section:"AIA Contracts"},
 
   // PcM
   {q:"What is the utilization rate, and what range do profitable firms typically operate in?",a:"Utilization = DSE ÷ Total salary expense. Profitable firms typically operate at 0.60–0.65 (AHPP).",div:"pcm",section:"PcM S2: Finances"},
@@ -1044,6 +1276,16 @@ const cards = [
   {q:"What is a mechanics lien?",a:"A legal claim filed by a subcontractor (or architect) against the owner's property for unpaid fees. Can force a sale of the property through court.",div:"ce",section:"CA: Liens"},
   {q:"What is the preferred term for 'as-built drawings' and who prepares them?",a:"'As-constructed record drawings,' prepared by the contractor and called out in Division 01 of the specifications. The architect may provide 'as-designed record drawings' as a supplemental service.",div:"ce",section:"CA: Closeout"},
   {q:"What is liquidated damages?",a:"A per-day delay penalty agreed upon in advance by all parties in the contract.",div:"ce",section:"CA: Contracts"},
+  // CE — Commissioning & POE
+  {q:"What does a commissioning agent (CxA) do, and who do they work for?",a:"The CxA verifies that building systems are installed and operate as intended. They are a third party — independent of both the design team and contractor — hired by the owner. They are involved from pre-design through one year post-occupancy.",div:"ce",section:"CE: Commissioning"},
+  {q:"What is the OPR and what does it contain?",a:"Owner's Project Requirements — states what the building must do. Covers functional uses, environmental goals, energy targets, and occupancy requirements. Written first, before design begins. Updated throughout the project.",div:"ce",section:"CE: Commissioning"},
+  {q:"What is the BOD and how does it relate to the OPR?",a:"Basis of Design — explains how the design achieves the OPR. More technical: documents system selection, integration, and sequence of operations. OPR says 'what'; BOD says 'how'.",div:"ce",section:"CE: Commissioning"},
+  {q:"What are the three stages of commissioning?",a:"(1) Determine requirements — OPR + BOD established; (2) Plan the process — commissioning plan written (scope, systems, schedule, test procedures); (3) Functional testing — systems started up and tested against design criteria, owner's staff trained, commissioning report issued.",div:"ce",section:"CE: Commissioning"},
+  {q:"LEED requires commissioning as a prerequisite — true or false?",a:"True. Fundamental Commissioning is a prerequisite for LEED certification across all rating systems. Enhanced Commissioning is available as an additional credit.",div:"ce",section:"CE: Commissioning"},
+  {q:"What is a post-occupancy evaluation (POE) and is it a basic service?",a:"A review of a completed building — typically 3–6 months after occupancy — to confirm it delivers on the original program. It is an additional service, not basic. It is added via AIA G802 (Amendment to the Professional Services Agreement).",div:"ce",section:"CE: POE"},
+  {q:"Why use G802 to add a POE rather than a verbal agreement?",a:"The statute of limitations begins at substantial completion. Adding the POE via G802 documents it as a separate contracted service, preventing the architect from inadvertently resetting the liability clock.",div:"ce",section:"CE: POE"},
+  {q:"What is the approximate content split for CE?",a:"~70% professional practice (CA procedures, contracts, delivery methods, risk) + ~30% technical (commissioning, building systems, specifications). The professional practice portion overlaps directly with PcM and PjM — study it once, test on it three times.",div:"ce",section:"CE: Exam Strategy"},
+  {q:"What is weather day responsibility during construction?",a:"Past data establishes expected weather days. The architect decides if additional days are warranted. If the owner or architect causes a delay, the schedule is extended by change order. If the GC causes a delay, they earn no extra time — the owner can require extra labor at GC's cost.",div:"ce",section:"CA: Schedule"},
   {q:"What are RFIs and what form are they issued on?",a:"Requests for Information (G716) — the contractor's mechanism for asking the architect to clarify anything that cannot be built as drawn. If the response changes cost or schedule, a change order follows.",div:"ce",section:"CA: RFIs"},
 
   // PcM — Fee structures & delivery
@@ -1099,7 +1341,8 @@ function renderCard(){
   document.getElementById('cardA').textContent=card.a;
   document.getElementById('cardSection').textContent=card.section;
   const badge=document.getElementById('cardBadge');
-  if(card.div==='both'){badge.className='card-division-badge badge-both';badge.textContent='⭐ BOTH';}
+  if(card.div==='all3'){badge.className='card-division-badge badge-all3';badge.textContent='🔺 ALL 3';}
+  else if(card.div==='both'){badge.className='card-division-badge badge-both';badge.textContent='⭐ PcM+PjM';}
   else if(card.div==='pcm'){badge.className='card-division-badge badge-pcm';badge.textContent='PcM';}
   else if(card.div==='ce'){badge.className='card-division-badge badge-ce';badge.textContent='CE / CA';}
   else{badge.className='card-division-badge badge-pjm';badge.textContent='PjM';}
