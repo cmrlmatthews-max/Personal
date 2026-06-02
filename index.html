@@ -1,398 +1,1202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Moving Timeline · Cade & Casey</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARE PcM + PjM Study Aid</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f8f9fc;
+    --surface: #ffffff;
+    --surface2: #f1f3f8;
+    --border: #dde1ed;
+    --accent: #4f46e5;
+    --accent2: #6366f1;
+    --gold: #d97706;
+    --green: #059669;
+    --red: #dc2626;
+    --text: #1e2132;
+    --muted: #64748b;
+    --pcm: #7c3aed;
+    --pjm: #0284c7;
+    --both: #d97706;
+    --ce: #0f766e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
 
-    body {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      background: #0f0f0f;
-      color: #e8e0d4;
-      min-height: 100vh;
-    }
+  .nav { background: var(--surface); border-bottom: 2px solid var(--border); padding: 0 16px; display: flex; align-items: center; gap: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .nav-brand { font-weight: 800; font-size: 14px; color: var(--accent); padding: 14px 16px 14px 0; border-right: 1px solid var(--border); margin-right: 8px; white-space: nowrap; }
+  .nav-tabs { display: flex; }
+  .nav-tab { padding: 16px 16px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; white-space: nowrap; }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-    /* HEADER */
-    #header {
-      border-bottom: 1px solid #2a2a2a;
-      padding: 32px 32px 24px;
-      background: #111;
-    }
-    #header .eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: #888;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-family: monospace;
-    }
-    #header h1 {
-      font-size: clamp(22px, 5vw, 40px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: #f0e8dc;
-      display: inline;
-    }
-    #header .target {
-      display: inline-block;
-      margin-left: 16px;
-      font-size: 13px;
-      color: #c8441a;
-      font-family: monospace;
-      letter-spacing: 0.05em;
-      vertical-align: middle;
-    }
-    #progress-wrap {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    #progress-bar-bg {
-      flex: 1;
-      height: 3px;
-      background: #222;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    #progress-bar-fill {
-      height: 100%;
-      background: #c8441a;
-      width: 0%;
-      transition: width 0.5s ease;
-    }
-    #progress-label {
-      font-size: 12px;
-      font-family: monospace;
-      color: #888;
-      white-space: nowrap;
-    }
+  .panel { display: none; }
+  .panel.active { display: block; }
 
-    /* LAYOUT */
-    #layout {
-      display: flex;
-      min-height: calc(100vh - 130px);
-    }
+  /* ===== FLASHCARDS ===== */
+  #flashcards { padding: 20px 16px; max-width: 860px; margin: 0 auto; }
+  .fc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .fc-header h2 { font-size: 18px; font-weight: 700; flex: 1; }
+  .fc-stats { display: flex; gap: 8px; }
+  .fc-stat { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 12px; color: var(--muted); }
+  .fc-stat span { font-weight: 700; }
+  .stat-known span { color: var(--green); }
+  .stat-review span { color: var(--red); }
 
-    /* SIDEBAR */
-    #sidebar {
-      width: clamp(120px, 22vw, 200px);
-      border-right: 1px solid #1e1e1e;
-      background: #0d0d0d;
-      flex-shrink: 0;
-    }
-    .phase-btn {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 16px 20px;
-      background: transparent;
-      border: none;
-      border-left: 3px solid transparent;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .phase-btn:hover { background: #161616; }
-    .phase-btn.active { background: #1a1a1a; }
-    .phase-btn .phase-label {
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      font-family: monospace;
-      margin-bottom: 4px;
-      color: #555;
-    }
-    .phase-btn.active .phase-label { /* color set inline */ }
-    .phase-btn .phase-title {
-      font-size: 13px;
-      color: #666;
-      font-weight: 400;
-      line-height: 1.3;
-      margin-bottom: 8px;
-    }
-    .phase-btn.active .phase-title { color: #f0e8dc; font-weight: 600; }
-    .phase-mini-bar-bg {
-      height: 2px;
-      background: #1e1e1e;
-      border-radius: 1px;
-      overflow: hidden;
-    }
-    .phase-mini-bar-fill {
-      height: 100%;
-      opacity: 0.8;
-      transition: width 0.3s ease;
-    }
-    .phase-count {
-      font-size: 9px;
-      color: #444;
-      font-family: monospace;
-      margin-top: 4px;
-    }
+  .fc-filters { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .fc-filter { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--muted); transition: all 0.15s; }
+  .fc-filter:hover { border-color: var(--accent); color: var(--accent); }
+  .fc-filter.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .fc-filter.f-both.active { background: var(--both); border-color: var(--both); color: #fff; }
+  .fc-filter.f-pcm.active { background: var(--pcm); border-color: var(--pcm); color: #fff; }
+  .fc-filter.f-pjm.active { background: var(--pjm); border-color: var(--pjm); color: #fff; }
+  .fc-filter.f-ce.active { background: var(--ce); border-color: var(--ce); color: #fff; }
+  .fc-filter.f-review.active { background: var(--red); border-color: var(--red); color: #fff; }
 
-    /* MAIN */
-    #main {
-      flex: 1;
-      padding: 32px;
-      overflow: auto;
-    }
-    .phase-date {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      font-family: monospace;
-      margin-bottom: 6px;
-    }
-    .phase-heading {
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 0;
-    }
-    .divider {
-      height: 1px;
-      background: #1e1e1e;
-      margin: 16px 0 24px;
-    }
-    .section-label {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      font-family: monospace;
-      margin-bottom: 12px;
-    }
-    .section-label.priority { color: #c8441a; }
-    .section-label.standard { color: #555; }
+  .fc-progress { height: 5px; background: var(--surface2); border-radius: 3px; margin-bottom: 16px; overflow: hidden; border: 1px solid var(--border); }
+  .fc-progress-bar { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.3s; }
 
-    /* TASK ROW */
-    .task-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 14px;
-      margin-bottom: 6px;
-      border-radius: 4px;
-      background: #141414;
-      border: 1px solid #1a1a1a;
-      cursor: pointer;
-      transition: background 0.15s;
-      user-select: none;
-    }
-    .task-row:hover { background: #181818; }
-    .task-row.done { background: #151515; border-color: #1e1e1e; }
-    .task-row.priority-task { border-color: #2a1a10; }
-    .task-row.done.priority-task { border-color: #1e1e1e; }
+  .card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; min-height: 260px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; user-select: none; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.12); }
+  .card-division-badge { position: absolute; top: 14px; right: 14px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .badge-both { background: #fef3c7; color: var(--both); border: 1px solid #fde68a; }
+  .badge-pcm { background: #ede9fe; color: var(--pcm); border: 1px solid #ddd6fe; }
+  .badge-pjm { background: #e0f2fe; color: var(--pjm); border: 1px solid #bae6fd; }
+  .badge-ce  { background: #ccfbf1; color: var(--ce);  border: 1px solid #99f6e4; }
+  .card-section-tag { position: absolute; top: 15px; left: 16px; font-size: 11px; color: var(--muted); font-weight: 600; }
+  .card-inner { padding: 48px 32px 28px; }
+  .card-q { font-size: 18px; font-weight: 600; line-height: 1.5; text-align: center; min-height: 72px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+  .card-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 10px; padding-bottom: 12px; }
+  .card.flipped .card-hint { display: none; }
+  .card-a { display: none; margin-top: 20px; padding-top: 20px; border-top: 1.5px solid var(--border); font-size: 14px; line-height: 1.7; color: var(--text); }
+  .card.flipped .card-a { display: block; }
 
-    .task-circle {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1.5px solid #333;
-      background: transparent;
-      flex-shrink: 0;
-      margin-top: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      font-size: 10px;
-      color: #fff;
-      line-height: 1;
-    }
-    .task-row.done .task-circle { background: var(--phase-color); border-color: var(--phase-color); }
+  .fc-controls { display: flex; gap: 10px; margin-top: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .btn { padding: 9px 20px; border-radius: 10px; border: none; cursor: pointer; font-size: 13px; font-weight: 700; transition: all 0.15s; }
+  .btn-know { background: #d1fae5; border: 1.5px solid var(--green); color: var(--green); }
+  .btn-know:hover { background: var(--green); color: #fff; }
+  .btn-review { background: #fee2e2; border: 1.5px solid var(--red); color: var(--red); }
+  .btn-review:hover { background: var(--red); color: #fff; }
+  .btn-outline { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-ghost:hover { color: var(--text); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; }
+  .btn-primary:hover { background: var(--accent2); }
+  .fc-counter { font-size: 13px; color: var(--muted); min-width: 70px; text-align: center; font-weight: 600; }
+  .fc-complete { text-align: center; padding: 60px 20px; }
+  .fc-complete h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .fc-complete p { color: var(--muted); margin-bottom: 20px; font-size: 14px; }
 
-    .task-text {
-      font-size: 14px;
-      color: #c8c0b4;
-      line-height: 1.5;
-      transition: color 0.2s;
-    }
-    .task-row.done .task-text {
-      color: #444;
-      text-decoration: line-through;
-    }
-  </style>
+  /* ===== TABLES ===== */
+  #tables { padding: 20px 16px; max-width: 1060px; margin: 0 auto; }
+  #tables h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+  .table-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .table-btn { padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--muted); transition: all 0.15s; }
+  .table-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .table-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .table-section { display: none; }
+  .table-section.active { display: block; }
+  .table-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+  .tbl-wrap { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--surface2); color: var(--muted); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; text-align: left; border-bottom: 1.5px solid var(--border); white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+  .priority-row td { background: #fffbeb; }
+  .priority-row:hover td { background: #fef3c7 !important; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .pill-yes { background: #d1fae5; color: var(--green); }
+  .pill-no { background: var(--surface2); color: var(--muted); }
+  .pill-pri { background: #fef3c7; color: var(--both); }
+  .star { color: var(--both); }
+
+  /* ===== SUMMARY ===== */
+  #summary { padding: 20px 16px; max-width: 820px; margin: 0 auto; }
+  .sum-header { margin-bottom: 20px; }
+  .sum-header h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .sum-header p { color: var(--muted); font-size: 13px; }
+  .sum-toc { background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 28px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .sum-toc h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; font-weight: 700; }
+  .sum-toc ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .sum-toc li a { color: var(--text); font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+  .sum-toc li a:hover { color: var(--accent); }
+  .toc-tag { font-size: 10px; padding: 2px 7px; border-radius: 8px; font-weight: 700; flex-shrink: 0; }
+  .toc-both { background: #fef3c7; color: var(--both); }
+  .toc-pcm { background: #ede9fe; color: var(--pcm); }
+  .toc-pjm { background: #e0f2fe; color: var(--pjm); }
+  .toc-ce  { background: #ccfbf1; color: var(--ce); }
+  .sum-section { margin-bottom: 40px; }
+  .sum-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1.5px solid var(--border); }
+  .sum-section-header h3 { font-size: 17px; font-weight: 700; }
+  .sum-section-tag { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 700; flex-shrink: 0; }
+  .sum-subsection { margin-bottom: 22px; }
+  .sum-subsection h4 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .sum-subsection h4::before { content: ''; display: block; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+  .sum-body { font-size: 13px; line-height: 1.8; color: var(--text); }
+  .sum-body p { margin-bottom: 10px; }
+  .sum-body strong { color: var(--accent); }
+  .sum-body ul { padding-left: 18px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .callout { background: #eef2ff; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; line-height: 1.6; }
+  .callout.warn { background: #fff1f2; border-left-color: var(--red); }
+  .callout.gold { background: #fffbeb; border-left-color: var(--both); }
+  .inline-table { width: 100%; font-size: 12px; margin: 10px 0 16px; border-collapse: collapse; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .inline-table th { background: var(--surface2); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 10px; text-align: left; }
+  .inline-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .inline-table tr:last-child td { border-bottom: none; }
+  .new-badge { display: inline-block; background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+</style>
 </head>
 <body>
 
-<div id="header">
-  <div class="eyebrow">Moving Plan · Cade & Casey</div>
-  <div>
-    <h1>North Sandy Springs → New Home</h1>
-    <span class="target">TARGET: JULY 1, 2026</span>
+<nav class="nav">
+  <div class="nav-brand">ARE Study Aid</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchPanel('flashcards',this)">⚡ Flashcards</div>
+    <div class="nav-tab" onclick="switchPanel('tables',this)">📊 Tables</div>
+    <div class="nav-tab" onclick="switchPanel('summary',this)">📖 Summary</div>
   </div>
-  <div id="progress-wrap">
-    <div id="progress-bar-bg"><div id="progress-bar-fill"></div></div>
-    <div id="progress-label">0/0 tasks · 0%</div>
+</nav>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="panel active">
+  <div class="fc-header">
+    <h2>Flashcards</h2>
+    <div class="fc-stats">
+      <div class="fc-stat stat-known">Known: <span id="knownCount">0</span></div>
+      <div class="fc-stat stat-review">Review: <span id="reviewCount">0</span></div>
+      <div class="fc-stat">Left: <span id="remCount">0</span></div>
+    </div>
+    <button class="btn-ghost" onclick="resetDeck()">↺ Reset</button>
+  </div>
+  <div class="fc-filters">
+    <div class="fc-filter active" onclick="setFilter('all',this)">All Cards</div>
+    <div class="fc-filter f-both" onclick="setFilter('both',this)">⭐ Both Divisions</div>
+    <div class="fc-filter f-pcm" onclick="setFilter('pcm',this)">PcM Only</div>
+    <div class="fc-filter f-pjm" onclick="setFilter('pjm',this)">PjM Only</div>
+    <div class="fc-filter f-ce" onclick="setFilter('ce',this)">CE / CA</div>
+    <div class="fc-filter f-review" onclick="setFilter('review',this)">🔁 Needs Review</div>
+  </div>
+  <div class="fc-progress"><div class="fc-progress-bar" id="progressBar" style="width:0%"></div></div>
+  <div id="cardArea">
+    <div class="card" id="flashcard" onclick="flipCard()">
+      <div class="card-section-tag" id="cardSection"></div>
+      <div class="card-division-badge badge-both" id="cardBadge">⭐ BOTH</div>
+      <div class="card-inner">
+        <div class="card-q" id="cardQ">Loading...</div>
+        <div class="card-a" id="cardA"></div>
+      </div>
+      <div class="card-hint">Tap to reveal answer</div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="btn btn-review" id="btnReview" onclick="markCard('review')" disabled>✗ Review</button>
+    <button class="btn btn-outline" onclick="prevCard()">← Back</button>
+    <div class="fc-counter" id="cardCounter">1 / 0</div>
+    <button class="btn btn-outline" onclick="nextCard()">Skip →</button>
+    <button class="btn btn-know" id="btnKnow" onclick="markCard('know')" disabled>✓ Got It</button>
   </div>
 </div>
 
-<div id="layout">
-  <div id="sidebar"></div>
-  <div id="main"></div>
+<!-- TABLES -->
+<div id="tables" class="panel">
+  <h2>Reference Tables</h2>
+  <div class="table-nav">
+    <div class="table-btn active" onclick="showTable('t-snapshot',this)">Division Snapshot</div>
+    <div class="table-btn" onclick="showTable('t-overlap',this)">⭐ Overlapping Topics</div>
+    <div class="table-btn" onclick="showTable('t-aia',this)">AIA Documents</div>
+    <div class="table-btn" onclick="showTable('t-gforms',this)">G-Series Forms ✦</div>
+    <div class="table-btn" onclick="showTable('t-ca',this)">CA Change Instruments ✦</div>
+    <div class="table-btn" onclick="showTable('t-delivery',this)">Delivery Methods</div>
+    <div class="table-btn" onclick="showTable('t-financial',this)">Financial Metrics</div>
+    <div class="table-btn" onclick="showTable('t-revenue',this)">Revenue Flow ✦</div>
+    <div class="table-btn" onclick="showTable('t-dispute',this)">Dispute Resolution</div>
+    <div class="table-btn" onclick="showTable('t-rules',this)">NCARB Rules</div>
+    <div class="table-btn" onclick="showTable('t-pcm',this)">PcM Exclusive</div>
+    <div class="table-btn" onclick="showTable('t-pjm',this)">PjM Exclusive</div>
+  </div>
+
+  <!-- Division Snapshot -->
+  <div class="table-section active" id="t-snapshot">
+    <h3>Division Snapshot</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th></th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th></tr></thead>
+      <tbody>
+        <tr><td>Total items</td><td>65 (59 scored + 6 pretest)</td><td>75 (68 scored + 7 pretest)</td></tr>
+        <tr><td>Test duration</td><td>2 hr 40 min</td><td>3 hr</td></tr>
+        <tr><td>Optional break</td><td>30 min</td><td>30 min</td></tr>
+        <tr><td>Total appointment</td><td>3 hr 20 min</td><td>3 hr 40 min</td></tr>
+        <tr><td>Case studies</td><td>Up to 6 / up to 14 items</td><td>Up to 7 / up to 16 items</td></tr>
+        <tr><td><strong>Biggest section</strong></td><td><strong>Section 2: Finances (29–35%)</strong></td><td><strong>Section 3: Contracts (25–31%)</strong></td></tr>
+        <tr><td>Primary references</td><td>AHPP, Law for Architects</td><td>AHPP, CSI Practice Guide</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Section-by-Section Overview</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Section</th><th style="color:var(--pcm)">PcM (%)</th><th style="color:var(--pjm)">PjM (%)</th><th>Overlap?</th></tr></thead>
+      <tbody>
+        <tr><td>Business/Firm Operations</td><td>Section 1 (20–26%)</td><td>—</td><td>—</td></tr>
+        <tr><td>Finances, Risk, Legal</td><td>Section 2 (29–35%)</td><td>—</td><td>Partial</td></tr>
+        <tr><td>Delivery of Services</td><td>Section 3 (22–28%)</td><td>—</td><td>—</td></tr>
+        <tr><td>Practice Methodologies</td><td>Section 4 (17–23%)</td><td>—</td><td>—</td></tr>
+        <tr><td>Resource Management</td><td>—</td><td>Section 1 (7–13%)</td><td>—</td></tr>
+        <tr><td>Project Work Planning</td><td>—</td><td>Section 2 (17–23%)</td><td>—</td></tr>
+        <tr class="priority-row"><td><strong>⭐ Contracts</strong></td><td>PcM 3.2 (part of 22–28%)</td><td>Section 3 (25–31%)</td><td><span class="pill pill-pri">PRIORITY</span></td></tr>
+        <tr><td>Project Execution</td><td>—</td><td>Section 4 (17–23%)</td><td>—</td></tr>
+        <tr class="priority-row"><td><strong>⭐ Quality Control</strong></td><td>PcM 4.2 (part of 17–23%)</td><td>Section 5 (19–25%)</td><td><span class="pill pill-pri">PRIORITY</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Overlapping Topics -->
+  <div class="table-section" id="t-overlap">
+    <h3>⭐ Overlapping Topics — Study These First</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Topic</th><th style="color:var(--pcm)">PcM tests</th><th style="color:var(--pjm)">PjM tests</th><th>Key fact</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>B101</strong></td><td>Analyze contract types; assess risk of changes (PcM 3.2)</td><td>Evaluate adherence; differentiate services; phase billing (PjM 3.1)</td><td>13 articles; 5 basic phases; copyright stays with architect</td></tr>
+        <tr class="priority-row"><td><strong>Standard of care</strong></td><td>Apply appropriate standard (PcM 1.4)</td><td>QC processes for risk reduction (PjM 5.2)</td><td>Never elevate language — uninsurable</td></tr>
+        <tr class="priority-row"><td><strong>Delivery methods</strong></td><td>Analyze applicability; estimate risk (PcM 3.2, 3.3)</td><td>Implement documentation for a specified method (PjM 4.3)</td><td>DBB = B101+A101; CMc = A133; IPD = A195</td></tr>
+        <tr class="priority-row"><td><strong>Risk &amp; insurance</strong></td><td>Identify legal exposures; practice-level risk (PcM 2.2)</td><td>Insurance strategies; project-level liability (PjM 5.2)</td><td>5 required B101 insurance types; waiver of subrogation per A201</td></tr>
+        <tr class="priority-row"><td><strong>Scope creep</strong></td><td>Strategies for scope adjustments (PcM 2.3)</td><td>Evaluate changes; impact on fee/schedule (PjM 4.2)</td><td>Document every change in writing; get owner consent first</td></tr>
+        <tr class="priority-row"><td><strong>Quality control</strong></td><td>Processes for documentation (PcM 4.2)</td><td>QC for coordination, constructability, design integrity (PjM 5.3–5.4)</td><td>Process-based (BIM) + inspection-based (human) = best programs</td></tr>
+        <tr class="priority-row"><td><strong>Ethics — Model Rules</strong></td><td>Apply ethical standards (PcM 1.3)</td><td>Laws and regulations; protect the public (PjM 5.1)</td><td>Rules 1–5: Competence, Conflict, Disclosure, Laws, Sealing</td></tr>
+        <tr class="priority-row"><td><strong>Budget and cost</strong></td><td>Firm financial well-being (PcM 2.1)</td><td>Monitor project for compliance with construction budget (PjM 4.1)</td><td>PcM = firm overhead/profit; PjM = estimate vs. owner budget</td></tr>
+        <tr class="priority-row"><td><strong>SPI / earned value</strong></td><td>Evaluate firm financial metrics (PcM 2.1)</td><td>Project controls (PjM 5.2)</td><td>SPI = schedule; CPI = cost. SPI &lt; 1.0 = behind schedule</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- AIA Documents -->
+  <div class="table-section" id="t-aia">
+    <h3>AIA Contract Documents — Which Division Tests Them</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Document</th><th>Description</th><th style="color:var(--pcm)">PcM</th><th style="color:var(--pjm)">PjM</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>B101-2017</strong></td><td>Owner-Architect Agreement (DBB)</td><td><span class="pill pill-pri">Primary</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>A101-2017</strong></td><td>Owner-Contractor (stipulated sum)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>A201-2017</strong></td><td>General Conditions (incorporated into B101 by reference)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>A132</strong></td><td>Owner-Contractor when CM is advisor/agent</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A133-2019</strong></td><td>Owner-CM as Constructor (cost plus + GMP)</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A141-2014</strong></td><td>Owner-Design-Builder</td><td>Delivery</td><td>Delivery</td></tr>
+        <tr><td><strong>A195-2008</strong></td><td>Owner-Contractor for IPD</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>A701</strong></td><td>Instructions to Bidders (complements A201)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>C401-2017</strong></td><td>Architect-Consultant Agreement (mirrors B101)</td><td><span class="pill pill-yes">✓</span></td><td><span class="pill pill-pri">Primary</span></td></tr>
+        <tr><td><strong>G701-2017</strong></td><td>Change Order</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>G702-1992</strong></td><td>Application and Certificate for Payment</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>G704-2017</strong></td><td>Certificate of Substantial Completion</td><td><span class="pill pill-no">—</span></td><td><span class="pill pill-yes">✓</span></td></tr>
+        <tr><td><strong>G802</strong></td><td>Amendment to Professional Services Agreement (scope changes to B101)</td><td>Scope changes</td><td><span class="pill pill-yes">✓</span></td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">Key Terms</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Contract documents</strong></td><td>Drawings, specs, addenda, change orders, ASIs, CCDs, bidding docs — legally binds parties to build. RFIs are NOT contract documents.</td></tr>
+        <tr><td><strong>Instruments of service</strong></td><td>Everything the architect creates — larger category than contract documents. Includes sketches, abandoned designs, field notes.</td></tr>
+        <tr><td><strong>Consequential damages</strong></td><td>Lost rent, lost business, loan penalties from delays. Mutually waived by AIA contracts (since 1997). Direct damages (cost of fixing work) limited to architect's fee.</td></tr>
+        <tr><td><strong>Liquidated damages</strong></td><td>Per-day delay penalty agreed upon in advance by all parties.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- G-Series Forms (NEW) -->
+  <div class="table-section" id="t-gforms">
+    <h3>G-Series Administration Forms <span class="new-badge">NEW</span></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Form</th><th>Name</th><th>Used for</th><th>Who signs</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>G701</strong></td><td>Change Order</td><td>Change that alters scope, cost, or schedule after contract signing</td><td>Owner + Architect + Contractor</td></tr>
+        <tr class="priority-row"><td><strong>G702</strong></td><td>Application and Certificate for Payment</td><td>Contractor's pay application — lists change orders, amount due, progress</td><td>Contractor submits; Architect certifies; Owner pays</td></tr>
+        <tr><td><strong>G703</strong></td><td>Continuation Sheet</td><td>Schedule of values breakdown (sidecar to G702)</td><td>Part of pay application</td></tr>
+        <tr class="priority-row"><td><strong>G704</strong></td><td>Certificate of Substantial Completion</td><td>Certifies building is sufficiently complete for occupancy; starts warranty period</td><td>Architect certifies</td></tr>
+        <tr><td><strong>G706</strong></td><td>Contractor's Affidavit of Payment of Debts</td><td>Contractor confirms subs/suppliers have been paid</td><td>Contractor</td></tr>
+        <tr class="priority-row"><td><strong>G710</strong></td><td>Architect's Supplemental Instructions (ASI)</td><td>Minor change — no cost or schedule impact</td><td>Architect only</td></tr>
+        <tr><td><strong>G711</strong></td><td>Architect's Field Report</td><td>Records site observations during construction</td><td>Architect</td></tr>
+        <tr class="priority-row"><td><strong>G714</strong></td><td>Construction Change Directive (CCD)</td><td>Change with cost/schedule impact where owner and contractor can't agree on cost; keeps project moving</td><td>Owner + Architect (NOT contractor)</td></tr>
+        <tr class="priority-row"><td><strong>G716</strong></td><td>Request for Information (RFI)</td><td>Contractor asks architect to clarify something that can't be built as drawn</td><td>Contractor submits; Architect responds</td></tr>
+        <tr><td><strong>G802</strong></td><td>Amendment to Professional Services Agreement</td><td>Amends B101 when scope changes after execution</td><td>Owner + Architect</td></tr>
+        <tr><td><strong>G807</strong></td><td>Project Team Directory</td><td>Lists all project participants and contact information</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- CA Change Instruments (NEW) -->
+  <div class="table-section" id="t-ca">
+    <h3>Construction Administration — Change Instruments <span class="new-badge">NEW</span></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Instrument</th><th>When used</th><th>Cost/Schedule impact?</th><th>Signatures required</th><th>Form</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Addendum</strong></td><td>After bidding begins but BEFORE contract signed</td><td>Baked into bids — no CO needed</td><td>Architect issues</td><td>Labeled A, B, C…</td></tr>
+        <tr class="priority-row"><td><strong>ASI</strong></td><td>After contract signed; minor change only</td><td>NO — cannot alter cost or schedule</td><td>Architect only</td><td>G710</td></tr>
+        <tr class="priority-row"><td><strong>Change Order (CO)</strong></td><td>After contract signed; alters scope, cost, or schedule</td><td>YES</td><td>Owner + Architect + Contractor</td><td>G701</td></tr>
+        <tr class="priority-row"><td><strong>CCD</strong></td><td>After contract signed; cost/schedule disputed — need to keep moving</td><td>YES (amount TBD)</td><td>Owner + Architect (NOT contractor)</td><td>G714</td></tr>
+        <tr><td><strong>Bulletin</strong></td><td>Post-contract design change (also called a modification)</td><td>May trigger a CO</td><td>Varies</td><td>Numbered 1, 2, 3…</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">CA Roles &amp; Responsibilities</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Topic</th><th>Who is responsible</th><th>Key rule</th></tr></thead>
+      <tbody>
+        <tr><td>Site safety</td><td>Contractor</td><td>Architect does NOT control means and methods or site safety</td></tr>
+        <tr><td>Shop drawing accuracy</td><td>Contractor</td><td>Architect reviews for design intent only — not for accuracy</td></tr>
+        <tr><td>Nonconforming work</td><td>Contractor must correct</td><td>Architect notifies in writing, withholds payment certification until corrected</td></tr>
+        <tr><td>Substantial completion</td><td>Architect certifies (G704)</td><td>Starts contractor's 1-year warranty; triggers retainage release</td></tr>
+        <tr><td>Punch list</td><td>Contractor prepares</td><td>List of incomplete/non-conforming items to resolve before final completion</td></tr>
+        <tr><td>Retainage</td><td>Owner holds back</td><td>10% work-in-place; 5% stored materials; releases after substantial completion</td></tr>
+        <tr><td>RFI response time</td><td>Architect responds</td><td>Within 7 days of receiving needed information from the owner</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">Surety Bonds</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Bond type</th><th>Purchased by</th><th>Protects</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bid bond</strong></td><td>Contractor/bidder</td><td>Owner</td><td>Guarantees bidder will enter contract if selected; compensates owner for difference if winner walks</td></tr>
+        <tr><td><strong>Performance bond</strong></td><td>Contractor</td><td>Owner</td><td>Surety completes project if contractor defaults — owner pays no more than original contract sum</td></tr>
+        <tr><td><strong>Payment bond</strong></td><td>Contractor</td><td>Subcontractors</td><td>Protects subs from GC nonpayment</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Delivery Methods -->
+  <div class="table-section" id="t-delivery">
+    <h3>Project Delivery Methods</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Method</th><th>Owner risk</th><th>Architect risk</th><th>Speed</th><th>Cost control</th><th>Key AIA docs</th></tr></thead>
+      <tbody>
+        <tr><td><strong>DBB</strong></td><td>Low</td><td>Low</td><td>Slowest</td><td>Highest (fixed bid)</td><td>B101 + A101 + A201</td></tr>
+        <tr><td><strong>DBB Negotiated</strong></td><td>Low</td><td>Low</td><td>Moderate</td><td>High</td><td>B101 + A101</td></tr>
+        <tr><td><strong>Design-Build</strong></td><td>High (no advocate)</td><td>Medium</td><td>Fast</td><td>Variable</td><td>B143 + A141</td></tr>
+        <tr><td><strong>Bridged D-B</strong></td><td>Moderate</td><td>Medium</td><td>Fast</td><td>Variable</td><td>B101 (bridging)</td></tr>
+        <tr><td><strong>CMa</strong></td><td>Low</td><td>Low</td><td>Moderate</td><td>High</td><td>B101 + A132</td></tr>
+        <tr><td><strong>CM as Constructor</strong></td><td>Low</td><td>Medium (complexity)</td><td>Fastest</td><td>GMP-protected</td><td>B101 + A133</td></tr>
+        <tr><td><strong>Multiple Prime</strong></td><td>High (coordination)</td><td>Medium</td><td>Variable</td><td>Moderate</td><td>B101 (no GC)</td></tr>
+        <tr><td><strong>IPD</strong></td><td>Shared</td><td>Shared</td><td>Fast</td><td>Shared</td><td>A195 + B195</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">DBB Bid Types <span class="new-badge">NEW</span></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Bid type</th><th>Who can bid</th><th>Selection basis</th><th>Typical result</th></tr></thead>
+      <tbody>
+        <tr class="priority-row"><td><strong>Competitive bid</strong></td><td>All qualified bidders</td><td>Lowest responsible bidder</td><td>Lower cost; less control over quality</td></tr>
+        <tr><td><strong>Invited bid</strong></td><td>Pre-qualified contractors only</td><td>Best value (not pure cost)</td><td>Higher quality; specialty projects (hospitals, secure facilities)</td></tr>
+        <tr><td><strong>Negotiated bid</strong></td><td>Single GC works with architect from start</td><td>Negotiated price with owner</td><td>Highest quality; trusted relationship; higher cost</td></tr>
+      </tbody>
+    </table></div>
+    <p style="font-size:12px;color:var(--muted);margin:6px 0 12px"><strong>Bid process:</strong> Owner issues RFP → pre-bid conference → questions answered via addenda → bids opened publicly → award. A <em>responsive</em> bid addresses all requirements; a <em>responsible</em> bidder is qualified to perform the work.</p>
+    <h3 style="margin-top:4px">Owner-Contractor Payment Structures <span class="new-badge">NEW</span></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Structure</th><th>How it works</th><th>Owner cost risk</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stipulated (Lump) Sum</strong></td><td>Fixed price to build everything in the contract documents</td><td>Low — contractor absorbs overruns</td></tr>
+        <tr><td><strong>Cost Plus Fixed Fee</strong></td><td>Owner pays all actual costs + a fixed profit for the contractor; no limit on scope changes</td><td>High — owner pays if cost is exceeded</td></tr>
+        <tr class="priority-row"><td><strong>GMP (Guaranteed Maximum Price)</strong></td><td>Like cost-plus but contractor absorbs costs above the agreed maximum</td><td>Capped — contractor absorbs overruns above GMP</td></tr>
+        <tr><td><strong>Unit Cost</strong></td><td>Owner pays a set amount per unit completed</td><td>Moderate — varies with final quantity</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Financial Metrics -->
+  <div class="table-section" id="t-financial">
+    <h3>Financial Metrics Quick Reference (PcM Section 2)</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Metric</th><th>Formula</th><th>Target / Typical</th><th>What it tells you</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Utilization rate</strong></td><td>DSE ÷ Total salary expense</td><td>0.60–0.65 (AHPP)</td><td>% of payroll time on billable work</td></tr>
+        <tr><td><strong>Overhead rate</strong></td><td>Indirect expense ÷ DSE</td><td>100–200% of DSE</td><td>Overhead burden per dollar of direct labor</td></tr>
+        <tr><td><strong>Break-even multiplier</strong></td><td>(DSE + Overhead) ÷ DSE</td><td>~2.5 (varies)</td><td>Minimum billing to not lose money</td></tr>
+        <tr><td><strong>Net DSE multiplier</strong></td><td>Net revenue ÷ DSE</td><td>3.0–4.0</td><td>Actual billing rate vs. direct labor</td></tr>
+        <tr><td><strong>Profit margin</strong></td><td>Net profit ÷ Net revenue</td><td>10–15% typical</td><td>Overall profitability</td></tr>
+        <tr><td><strong>Net revenue per employee</strong></td><td>NOR ÷ # employees</td><td>Higher = healthier</td><td>Output per person</td></tr>
+        <tr><td><strong>Current ratio</strong></td><td>Current assets ÷ Current liabilities</td><td>≥ 1.5</td><td>Short-term solvency</td></tr>
+        <tr><td><strong>Quick ratio</strong></td><td>(Cash + AR) ÷ Current liabilities</td><td>≥ 1.0</td><td>Immediate liquidity</td></tr>
+        <tr><td><strong>Debt-to-equity</strong></td><td>Liabilities ÷ Equity</td><td>&lt; 35%</td><td>Financial leverage</td></tr>
+        <tr><td><strong>Return on equity</strong></td><td>Profit ÷ Equity</td><td>~20%</td><td>Return on invested capital</td></tr>
+        <tr class="priority-row"><td><strong>SPI</strong></td><td>EV ÷ Planned Value</td><td>≥ 1.0 = on/ahead</td><td>Schedule health — SPI &lt; 1.0 = behind</td></tr>
+        <tr class="priority-row"><td><strong>CPI</strong></td><td>EV ÷ Actual Cost</td><td>≥ 1.0 = on/under</td><td>Budget health — CPI &lt; 1.0 = over budget</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Revenue Flow (NEW) -->
+  <div class="table-section" id="t-revenue">
+    <h3>Revenue Flow Hierarchy <span class="new-badge">NEW</span></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Level</th><th>Definition</th><th>What it pays for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gross Revenue</strong></td><td>All fees billed to clients including reimbursables and consultant pass-throughs</td><td>—</td></tr>
+        <tr class="priority-row"><td><strong>Net Operating Revenue (NOR)</strong></td><td>Gross Revenue minus consultant fees and reimbursables. Does NOT count fees paid to cover non-reimbursable expenses.</td><td>Direct expenses + Indirect expenses + Profit</td></tr>
+        <tr><td><strong>Net Billing</strong></td><td>Fees for the architect's own time only — excludes consultant fees and reimbursables</td><td>—</td></tr>
+        <tr><td><strong>Profits Before Taxes</strong></td><td>NOR minus all employee costs, rent, and indirect costs</td><td>—</td></tr>
+        <tr><td><strong>Current Earnings</strong></td><td>What remains after taxes are deducted from profits</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">Accounting Methods</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Method</th><th>What it counts</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Accrual basis</strong></td><td>Credits and debts even when unpaid (unbilled invoice or charge counts)</td><td>Better for business decisions; large firms often use for internal reporting</td></tr>
+        <tr><td><strong>Cash basis</strong></td><td>Only actual receipts and payments</td><td>Used for taxes; simpler</td></tr>
+      </tbody>
+    </table></div>
+    <h3 style="margin-top:4px">Revenue Planning Terms</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Prospect</strong></td><td>≥50% likelihood of becoming a revenue-generating project. Multiply projected fee × likelihood % to estimate expected revenue.</td></tr>
+        <tr><td><strong>Suspect</strong></td><td>&lt;50% likelihood of becoming a project.</td></tr>
+        <tr><td><strong>Pro Forma</strong></td><td>Financial feasibility document tracking projects, proposals, fees, revenue, expenditures, and profit projections.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Dispute Resolution -->
+  <div class="table-section" id="t-dispute">
+    <h3>Dispute Resolution Sequence (AIA B101)</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Step</th><th>Binding?</th><th>Required by AIA?</th><th>Who can initiate?</th></tr></thead>
+      <tbody>
+        <tr><td>Informal resolution</td><td><span class="pill pill-no">No</span></td><td>No (encouraged)</td><td>Either party</td></tr>
+        <tr class="priority-row"><td><strong>Mediation</strong></td><td><span class="pill pill-no">No</span></td><td><span class="pill pill-pri">YES — mandatory first step</span></td><td>Either party</td></tr>
+        <tr><td>Arbitration</td><td><span class="pill pill-yes">Yes</span></td><td>Only if chosen at signing</td><td>Either party</td></tr>
+        <tr><td>Litigation</td><td><span class="pill pill-yes">Yes</span></td><td>If arbitration not chosen</td><td>Either party</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- NCARB Rules -->
+  <div class="table-section" id="t-rules">
+    <h3>NCARB Model Rules of Conduct (PcM 1.3)</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Rule</th><th>Name</th><th>Key prohibition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rule 1</strong></td><td>Competence</td><td>Cannot perform services outside competence without engaging qualified consultant</td></tr>
+        <tr><td><strong>Rule 2.1</strong></td><td>Conflict of Interest</td><td>No dual compensation without written waiver by all parties</td></tr>
+        <tr class="priority-row"><td><strong>Rule 2.2</strong></td><td>Conflict of Interest</td><td><strong>No compensation from suppliers — ever. No waiver permitted.</strong></td></tr>
+        <tr><td><strong>Rule 2.4</strong></td><td>Conflict of Interest</td><td>Must act impartially as contract interpreter even though paid by owner</td></tr>
+        <tr><td><strong>Rule 3.1</strong></td><td>Full Disclosure</td><td>No false or misleading statements</td></tr>
+        <tr><td><strong>Rule 3.6–3.9</strong></td><td>Full Disclosure</td><td>Must report known licensing violations</td></tr>
+        <tr><td><strong>Rule 4.4</strong></td><td>Compliance with Laws</td><td>No bribery of public officials</td></tr>
+        <tr class="priority-row"><td><strong>Rule 5.1</strong></td><td>Signing &amp; Sealing</td><td><strong>Seal only work under your responsible control — plan-stamping prohibited</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- PcM Exclusive -->
+  <div class="table-section" id="t-pcm">
+    <h3 style="color:var(--pcm)">PcM-Exclusive Topics</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Topic</th><th>Section</th><th>% Weight</th><th>Key facts</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Firm financial metrics</strong></td><td>2</td><td>29–35%</td><td>Utilization 0.60–0.65; overhead = indirect ÷ DSE; net multiplier 3.0–4.0; profit 10–15%</td></tr>
+        <tr><td><strong>P&amp;L / balance sheet / NOR</strong></td><td>2</td><td>29–35%</td><td>Current ratio ≥ 1.5; quick ratio ≥ 1.0; debt-to-equity &lt; 35%; ROE ~20%; NOR = gross minus consultant fees</td></tr>
+        <tr><td><strong>Fee types</strong></td><td>3</td><td>22–28%</td><td>Percentage (~15% residential); fixed; hourly (Not to Exceed option); unit cost; retainer; combination</td></tr>
+        <tr><td><strong>Fee determination</strong></td><td>3</td><td>22–28%</td><td>Bottom-up (most accurate, task-by-task estimate) vs. top-down (start from gross fee, work backward). Using both gives upper/lower bounds.</td></tr>
+        <tr><td><strong>Bid pricing tools</strong></td><td>3</td><td>22–28%</td><td>Allowances (placeholder for unknown price items); Unit prices (known item, unknown quantity); Add alternates (optional items priced separately)</td></tr>
+        <tr><td><strong>Construction contingency</strong></td><td>3</td><td>22–28%</td><td>Set aside by owner for unforeseen costs; NOT part of Cost of the Work for fee calculation</td></tr>
+        <tr><td><strong>Business entity structures</strong></td><td>4</td><td>17–23%</td><td>Sole prop → GP → LP → LLP → LLC → S-Corp → C-Corp → B-Corp; LLC and S-Corp best for most firms</td></tr>
+        <tr><td><strong>Firm combinations</strong></td><td>4</td><td>17–23%</td><td>Strategic alliance (no new entity) → Joint venture (temporary third entity) → Merger (full combination)</td></tr>
+        <tr><td><strong>Agency and duties</strong></td><td>1/3</td><td>20–26%</td><td>Architect is agent of owner; three sources of duties: contract, legislative, conduct</td></tr>
+        <tr><td><strong>Marketing &amp; business development</strong></td><td>1/3</td><td>20–26%</td><td>RFQ/RFP/QBS; Brooks Act for federal; networking, proposals, corporate identity</td></tr>
+        <tr><td><strong>Human resources</strong></td><td>1</td><td>20–26%</td><td>EEOC, FLSA, OSHA, workers' comp, ADA in the workplace</td></tr>
+        <tr><td><strong>Firm organization / practice types</strong></td><td>4</td><td>17–23%</td><td>Design-led vs. management-led; single vs. multi-disciplinary</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- PjM Exclusive -->
+  <div class="table-section" id="t-pjm">
+    <h3 style="color:var(--pjm)">PjM-Exclusive Topics</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Topic</th><th>Section</th><th>% Weight</th><th>Key facts</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Team assembly</strong></td><td>1</td><td>7–13%</td><td>Staff + consultants; fees; responsibilities</td></tr>
+        <tr><td><strong>Gantt charts</strong></td><td>2</td><td>17–23%</td><td>Tasks + durations + dependencies on a timeline</td></tr>
+        <tr><td><strong>PERT / CPM</strong></td><td>2</td><td>17–23%</td><td>Sequence and critical path; PERT less specific on duration</td></tr>
+        <tr><td><strong>Float / slack</strong></td><td>2</td><td>17–23%</td><td>Total float (project level); free float (task level)</td></tr>
+        <tr><td><strong>Work plan + PDCA</strong></td><td>2</td><td>17–23%</td><td>2-page doc; Plan → Do → Check → Adjust</td></tr>
+        <tr><td><strong>C401 Architect-Consultant Agreement</strong></td><td>3</td><td>25–31%</td><td>Mirrors B101; architect acts as "owner"; consultant owns their instruments of service; can't sub without written permission</td></tr>
+        <tr><td><strong>A101 / A201</strong></td><td>3</td><td>25–31%</td><td>Owner-Contractor Agreement; General Conditions; architect administers but doesn't supervise</td></tr>
+        <tr><td><strong>Change instruments</strong></td><td>3/4</td><td>25–31%</td><td>ASI (no cost/schedule) → CO (all agree) → CCD (keep moving, cost TBD)</td></tr>
+        <tr><td><strong>AHJ approvals</strong></td><td>4</td><td>17–23%</td><td>Identify all authorities; determine required submittals; manage timing</td></tr>
+        <tr><td><strong>Constructability review</strong></td><td>5</td><td>19–25%</td><td>Can it actually be built? sequencing, access, tolerances</td></tr>
+        <tr><td><strong>Design integrity through phases</strong></td><td>5</td><td>19–25%</td><td>Document intent of key design decisions to prevent value-engineering drift</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div id="summary" class="panel">
+  <div class="sum-header">
+    <h2>PcM + PjM Study Summary</h2>
+    <p>Compiled from NCARB ARE 5.0 Guidelines (April 2026), AHPP 15th ed., NCARB Professional Conduct CE Series, PPI Review Manuals. ✦ = updated with new wiki content.</p>
+    <div style="position:relative;margin-top:12px;">
+      <input id="sumSearch" type="text" placeholder="🔍  Search summary…" oninput="filterSummary(this.value)" style="width:100%;padding:10px 36px 10px 14px;background:#fff;border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      <button onclick="clearSearch()" title="Clear" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;line-height:1;">✕</button>
+    </div>
+    <div id="sumSearchMsg" style="display:none;margin-top:8px;font-size:13px;color:var(--muted);"></div>
+  </div>
+
+  <div class="sum-toc">
+    <h4>Contents</h4>
+    <ul>
+      <li><a href="#s-b101"><span class="toc-tag toc-both">⭐ BOTH</span> B101 Owner-Architect Agreement</a></li>
+      <li><a href="#s-soc"><span class="toc-tag toc-both">⭐ BOTH</span> Standard of Care</a></li>
+      <li><a href="#s-delivery"><span class="toc-tag toc-both">⭐ BOTH</span> Project Delivery Methods</a></li>
+      <li><a href="#s-risk"><span class="toc-tag toc-both">⭐ BOTH</span> Risk Management &amp; Insurance</a></li>
+      <li><a href="#s-scope"><span class="toc-tag toc-both">⭐ BOTH</span> Scope Creep &amp; Scope Changes</a></li>
+      <li><a href="#s-qc"><span class="toc-tag toc-both">⭐ BOTH</span> Quality Control</a></li>
+      <li><a href="#s-ethics"><span class="toc-tag toc-both">⭐ BOTH</span> Ethics — NCARB Model Rules</a></li>
+      <li><a href="#s-ca"><span class="toc-tag toc-ce">CE / CA</span> Construction Administration ✦</a></li>
+      <li><a href="#s-aia"><span class="toc-tag toc-pjm">PjM</span> AIA Contract Documents — Detail ✦</a></li>
+      <li><a href="#s-pcm-fin"><span class="toc-tag toc-pcm">PcM</span> Finances, Risk &amp; Development (Section 2) ✦</a></li>
+      <li><a href="#s-pcm-ops"><span class="toc-tag toc-pcm">PcM</span> Business Operations &amp; Agency ✦</a></li>
+      <li><a href="#s-pcm-meth"><span class="toc-tag toc-pcm">PcM</span> Practice Methodologies (Section 4)</a></li>
+      <li><a href="#s-pjm-plan"><span class="toc-tag toc-pjm">PjM</span> Project Work Planning (Section 2)</a></li>
+      <li><a href="#s-pjm-contracts"><span class="toc-tag toc-pjm">PjM</span> Contracts (Section 3) ✦</a></li>
+      <li><a href="#s-pjm-exec"><span class="toc-tag toc-pjm">PjM</span> Project Execution (Section 4)</a></li>
+      <li><a href="#s-pjm-qc"><span class="toc-tag toc-pjm">PjM</span> Project Quality Control (Section 5)</a></li>
+    </ul>
+  </div>
+
+  <!-- B101 -->
+  <div class="sum-section" id="s-b101">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>B101 Owner-Architect Agreement</h3></div>
+    <div class="sum-body">
+      <p>B101 is the most tested document across both divisions. PcM tests <strong>analysis</strong> of contract types and delivery methods (PcM 3.2). PjM tests <strong>application</strong> — evaluate adherence, identify phase completions, determine billing (PjM 3.1).</p>
+      <div class="sum-subsection"><h4>The 13 Articles</h4>
+        <p>Initial Information → Architect's Responsibilities → Scope of Basic Services → Additional Services → Owner's Responsibilities → Cost of the Work → Copyright and Licenses → Claims and Disputes → Termination/Suspension → Miscellaneous → Compensation → Special Terms → Scope of Agreement.</p>
+      </div>
+      <div class="sum-subsection"><h4>Basic vs. Additional Services</h4>
+        <p><strong>Basic:</strong> Five phases (SD, DD, CD, Bidding, CA) plus cost estimation at each phase, consultant coordination, and code compliance.</p>
+        <p><strong>Additional (not basic):</strong> Programming, multiple preliminary designs, BIM, civil engineering, detailed cost estimating, on-site project rep beyond agreed visits, as-built drawings, POE, LEED certification, FF&amp;E, fast-track, commissioning.</p>
+        <div class="callout gold">Fast-track always charges as an additional service.</div>
+      </div>
+      <div class="sum-subsection"><h4>Owner's Responsibilities</h4>
+        <p>Owner provides: geotechnical reports, surveys, legal descriptions, building permits (owner pays; contractor pays construction permits), and information about pre-existing hazardous conditions. Owner is liable for delays caused by owner-hired separate contractors.</p>
+      </div>
+      <div class="sum-subsection"><h4>Cost of the Work &amp; Budget</h4>
+        <p>= contractor's materials + labor + overhead + profit. Does NOT include architect's fee, land, or contingencies. When fee is a percentage, it's calculated on the owner's <strong>budget</strong> — not the final construction cost.</p>
+        <div class="callout warn">If bids exceed budget: Architect redesigns at no additional cost to the owner.</div>
+      </div>
+      <div class="sum-subsection"><h4>Termination, Suspension &amp; Copyright</h4>
+        <ul>
+          <li>Owner can terminate for convenience at any time — pays work-to-date + overhead + profit.</li>
+          <li>Either party can terminate for cause with 7 days written notice.</li>
+          <li>If <strong>architect</strong> terminates for cause → owner loses access to drawings.</li>
+          <li>If <strong>owner</strong> terminates for cause → owner retains access (limited license continues).</li>
+          <li>If suspended &gt; 90 days → architect may terminate.</li>
+          <li>Contract auto-terminates one year after substantial completion.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Dispute Resolution &amp; Claims</h4>
+        <p>Informal → <strong>Mediation (mandatory, non-binding)</strong> → Arbitration or Litigation (chosen at signing). Claims period: 10 years from substantial completion.</p>
+        <div class="callout">AIA contracts mutually waive consequential damages (lost rent, lost business, loan penalties). Direct damages limited to architect's fee. Liquidated damages = per-day delay penalty agreed in advance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standard of Care -->
+  <div class="sum-section" id="s-soc">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Standard of Care</h3></div>
+    <div class="sum-body">
+      <p>Skill, care, and diligence consistent with other architects in the <strong>same locality</strong> on <strong>similar projects</strong> at <strong>the same time</strong>. Not a guarantee of outcomes.</p>
+      <div class="callout warn">Never modify standard of care language. "Highest standard of care" is nearly uninsurable.</div>
+      <p><strong>Responsible control</strong> allows an architect to stamp work if they possess knowledge of, or supervision over, a drawing set consistent with the standard of care. An architect can stamp plans they did not create — but cannot stamp plans they know little about. Plan-stamping (sealing work without responsible control) is one of the most common disciplinary violations.</p>
+    </div>
+  </div>
+
+  <!-- Delivery Methods -->
+  <div class="sum-section" id="s-delivery">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Project Delivery Methods ✦</h3></div>
+    <div class="sum-body">
+      <table class="inline-table">
+        <thead><tr><th>Method</th><th>Key characteristic</th><th>Contract</th><th>Architect risk</th></tr></thead>
+        <tbody>
+          <tr><td>DBB</td><td>Separate design + bid + build; competitive bidding; lowest competent bidder wins</td><td>B101</td><td>Lowest</td></tr>
+          <tr><td>DBB Negotiated</td><td>Trusted contractor selected early; fabrication can start on difficult portions before design is complete</td><td>B101</td><td>Low</td></tr>
+          <tr><td>Design-Build</td><td>Single entity for design + construction; no independent owner advocate</td><td>B143</td><td>Reduced quality oversight</td></tr>
+          <tr><td>Bridged D-B</td><td>Architect completes ~35% then hands off; may continue as owner's advocate</td><td>B101 (bridging)</td><td>Split accountability</td></tr>
+          <tr><td>CMa</td><td>CM advises on constructability and cost during design; does not build</td><td>B101</td><td>Low</td></tr>
+          <tr><td>CMc (CM at-Risk)</td><td>CM replaces GC; assumes construction risk; GMP established by end of SD</td><td>A133</td><td>Complexity</td></tr>
+          <tr><td>Multiple Prime</td><td>Owner contracts directly with several contractors; no GC; CM coordinates; common in public projects</td><td>B101</td><td>Coordination gaps</td></tr>
+          <tr><td>IPD</td><td>Shared-risk; owner, architect, contractor in one agreement; parties agree not to sue each other; bonuses tied to performance</td><td>A195</td><td>Shared; insurance complex</td></tr>
+          <tr><td>Phased construction</td><td>Portions open while others continue building; used for airports, staged funding, incremental growth</td><td>Varies</td><td>Coordination complexity</td></tr>
+        </tbody>
+      </table>
+      <div class="sum-subsection" style="margin-top:16px"><h4>DBB Bid Types</h4>
+        <ul>
+          <li><strong>Competitive bid:</strong> Open to all qualified bidders; lowest responsible bidder wins; drives cost down.</li>
+          <li><strong>Invited bid:</strong> Limited to pre-qualified contractors; evaluated on best value not just cost; used for specialty or sensitive projects.</li>
+          <li><strong>Negotiated bid:</strong> Single contractor works with architect from the start; price negotiated with owner; highest quality, highest cost.</li>
+        </ul>
+        <p>A <strong>responsive</strong> bid addresses all requirements in the solicitation. A <strong>responsible</strong> bidder is qualified to perform the work. Both are required for award.</p>
+      </div>
+      <div class="sum-subsection"><h4>Owner-Contractor Payment Structures</h4>
+        <ul>
+          <li><strong>Stipulated lump sum:</strong> Fixed price; contractor absorbs overruns; owner has lowest cost risk.</li>
+          <li><strong>Cost plus fixed fee:</strong> Owner pays all costs + a fixed profit; no limit on change orders; owner bears cost risk.</li>
+          <li><strong>GMP:</strong> Like cost-plus but contractor absorbs costs above the guaranteed maximum price.</li>
+          <li><strong>Unit cost:</strong> Owner pays per unit completed; quantity determined later.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Fast-Track vs. Phased Construction</h4>
+        <p><strong>Fast-track</strong> overlaps design and construction phases to compress the overall schedule — requires staged bidding, a CM, and close coordination. Always charge as an additional service. <strong>Phased construction</strong> staggers occupancy (portions open while others are still under construction) but does not necessarily overlap design and construction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Risk Management -->
+  <div class="sum-section" id="s-risk">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Risk Management &amp; Insurance</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Four Risk Methods</h4>
+        <ul><li><strong>Avoid</strong> — turn down risky project types</li><li><strong>Assume</strong> — accept what you can cover</li><li><strong>Transfer</strong> — to insurance or consultants</li><li><strong>Control</strong> — QA/QC processes</li></ul>
+      </div>
+      <div class="sum-subsection"><h4>Five Insurance Types Required by B101</h4>
+        <ul><li><strong>General Liability</strong> — property damage and bodily injury</li><li><strong>Professional Liability (E&amp;O)</strong> — design mistakes</li><li><strong>Automobile Liability</strong> — vehicles used in firm business</li><li><strong>Workers' Compensation</strong> — employee on-the-job injuries</li><li><strong>Employer's Liability</strong> — employment-related injury claims</li></ul>
+        <p>Additional types: Employment Practice Liability, Intellectual Property, Business Interruption, Contractual Liability, Tail Insurance (post-retirement coverage).</p>
+        <p>Key terms: <strong>Deductible</strong> = initial amount insured pays; <strong>Premium</strong> = monthly/annual cost; <strong>Aggregate Limit</strong> = total maximum insurer will pay.</p>
+      </div>
+      <div class="sum-subsection"><h4>Key Legal Doctrines</h4>
+        <p><strong>Waiver of subrogation</strong> (A201): All parties waive the right to have their insurer sue other project parties after a claim is paid.</p>
+        <p><strong>Spearin Doctrine:</strong> Owner — not contractor — is liable for errors in drawings (United States v. Spearin).</p>
+        <p><strong>Privity:</strong> In DBB, contractor cannot generally sue architect directly for economic damages (no contract relationship between them).</p>
+        <p><strong>Breach vs. Negligence:</strong> To prove negligence, plaintiff must show: (1) architect owed a duty, (2) duty was breached, (3) breach caused an event, (4) damage occurred. Breach of contract is simpler — architect failed to do something required by contract.</p>
+      </div>
+      <div class="callout warn">Highest litigation risk: Condominiums and residential projects. Most important firm risk action: use standard AIA contracts.</div>
+    </div>
+  </div>
+
+  <!-- Scope Creep -->
+  <div class="sum-section" id="s-scope">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Scope Creep &amp; Scope Changes</h3></div>
+    <div class="sum-body">
+      <p>Scope creep = incremental program additions during design that accumulate into significant budget and schedule impacts.</p>
+      <div class="callout">Document every change → get written owner agreement → tie to fee and schedule → use AIA G802 to amend the agreement. Never proceed on verbal instructions.</div>
+    </div>
+  </div>
+
+  <!-- QC -->
+  <div class="sum-section" id="s-qc">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Quality Control</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Two QC Methods</h4>
+        <ul><li><strong>Process-based</strong> — performing tasks correctly the first time: checklists, BIM clash detection (semi-automated)</li><li><strong>Inspection/Checking-based</strong> — reviewing finished work before delivery: third-party drawing review by an architect not on the project</li></ul>
+        <div class="callout">Best QC programs use both. QC goal: meet client expectations and standard of care — NOT winning awards.</div>
+      </div>
+      <div class="sum-subsection"><h4>QM Cost Categories</h4>
+        <ul><li><strong>Prevention</strong> — checklists, training before projects</li><li><strong>Appraisal</strong> — measuring quality during production</li><li><strong>Internal failure</strong> — fixing before delivery</li><li><strong>External failure</strong> — fixing after delivery (high RFI volume = high external failure costs)</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ethics -->
+  <div class="sum-section" id="s-ethics">
+    <div class="sum-section-header"><span class="sum-section-tag toc-both">⭐ BOTH DIVISIONS</span><h3>Ethics — NCARB Model Rules of Conduct</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Rule 1 — Competence</h4><p>Standard of care (1.1). Cannot perform outside competence without engaging a qualified consultant (1.3). Ordinary vs. gross negligence: ordinary = failed to meet standard; gross = reckless disregard.</p></div>
+      <div class="sum-subsection"><h4>Rule 2 — Conflict of Interest</h4><p>No dual compensation without full disclosure and written waiver (2.1). <strong>Never accept compensation from material suppliers — no waiver permitted (2.2).</strong> Must act impartially as contract interpreter (2.4).</p></div>
+      <div class="sum-subsection"><h4>Rule 3 — Full Disclosure</h4><p>No misleading statements (3.1). Must report known violations of licensing laws (3.6–3.9).</p></div>
+      <div class="sum-subsection"><h4>Rule 5 — Signing and Sealing</h4><p><strong>Seal only work under your responsible control (5.1). Plan-stamping is one of the most common disciplinary violations.</strong> Prototype designs are permitted to be sealed by the architect of record for each jurisdiction (Rule 5.3).</p></div>
+    </div>
+  </div>
+
+  <!-- Construction Administration (NEW) -->
+  <div class="sum-section" id="s-ca">
+    <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE / CA</span><h3>Construction Administration <span class="new-badge">NEW</span></h3></div>
+    <div class="sum-body">
+      <div class="callout">The architect administers the contract — does NOT administer the construction. The architect does not control the contractor's means, methods, or site safety.</div>
+      <div class="sum-subsection"><h4>Architect's CA Responsibilities</h4>
+        <ul>
+          <li>Review submittals and shop drawings for <strong>design intent only</strong> (not for accuracy — that's the contractor's obligation)</li>
+          <li>Certify contractor pay applications (G702)</li>
+          <li>Issue ASIs (minor changes, no cost/schedule impact) via G710</li>
+          <li>Issue change orders (G701) and CCDs (G714)</li>
+          <li>Respond to RFIs within 7 days of receiving information from the owner</li>
+          <li>Certify substantial completion (G704)</li>
+          <li>Maintain field reports (G711)</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Change Instruments — Critical Distinctions</h4>
+        <table class="inline-table">
+          <thead><tr><th>Instrument</th><th>When</th><th>Cost/Schedule?</th><th>Who signs</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Addendum</strong></td><td>After bidding begins, before contract signed</td><td>Baked into bids</td><td>Architect issues; labeled A, B, C…</td></tr>
+            <tr><td><strong>ASI (G710)</strong></td><td>Post-contract; minor change only</td><td>NO</td><td>Architect only</td></tr>
+            <tr><td><strong>Change Order (G701)</strong></td><td>Post-contract; alters scope/cost/schedule</td><td>YES — known amount</td><td>Owner + Architect + Contractor</td></tr>
+            <tr><td><strong>CCD (G714)</strong></td><td>Post-contract; cost/schedule disputed — must keep moving</td><td>YES — amount TBD</td><td>Owner + Architect (NOT contractor)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sum-subsection"><h4>Pay Applications &amp; Retainage</h4>
+        <p>Pay application path: Contractor → Architect (certifies) → Owner (pays). G702 lists change orders and amount due; G703 is the schedule of values breakdown.</p>
+        <p><strong>Retainage:</strong> 10% of work-in-place; 5% of stored materials. Releases after substantial completion at typically double the cost of outstanding punch list work.</p>
+      </div>
+      <div class="sum-subsection"><h4>Substantial Completion &amp; Closeout</h4>
+        <p>Substantial completion = building is sufficiently complete for occupancy. Architect certifies via G704. Often coincides with the municipality's Certificate of Occupancy. Starts contractor's 1-year warranty period.</p>
+        <p><strong>Punch list:</strong> Contractor prepares list of incomplete/non-conforming items to resolve before final completion.</p>
+        <p><strong>As-built drawings:</strong> Preferred term is "as-constructed record drawings" (prepared by contractor, called out in Division 01). The architect may provide "as-designed record drawings" as a supplemental service.</p>
+      </div>
+      <div class="sum-subsection"><h4>Nonconforming Work &amp; Site Safety</h4>
+        <p>Architect is not liable for catching all nonconforming work — contractor bears full responsibility for building per contract documents. When architect observes nonconforming work: notify contractor in writing, copy owner, withhold payment certification until corrected.</p>
+        <p><strong>Site safety</strong> is the contractor's responsibility. Architect must document nonconforming work that creates a life safety risk (e.g., faulty structural connection).</p>
+      </div>
+      <div class="sum-subsection"><h4>Surety Bonds &amp; Mechanics Liens</h4>
+        <ul>
+          <li><strong>Bid bond</strong> — guarantees bidder enters contract if selected</li>
+          <li><strong>Performance bond</strong> — surety completes project if contractor defaults; owner pays no more than original contract sum</li>
+          <li><strong>Payment bond</strong> — protects subs from GC nonpayment</li>
+        </ul>
+        <p><strong>Mechanics lien:</strong> Subcontractors (and architects) can file a lien against the owner's property if unpaid. Forces a sale of property through court.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIA Documents Detail (NEW/EXPANDED) -->
+  <div class="sum-section" id="s-aia">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM</span><h3>AIA Contract Documents — Detail <span class="new-badge">NEW</span></h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Series Structure</h4>
+        <ul>
+          <li><strong>A-series:</strong> Owner-Contractor (and contractor-subcontractor)</li>
+          <li><strong>B-series:</strong> Owner-Architect</li>
+          <li><strong>C-series:</strong> Architect-Consultant and IPD</li>
+          <li><strong>G-series:</strong> Administration and project management forms</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>C401 — Architect-Consultant Agreement</h4>
+        <p>Mirrors B101 but governs the architect-consultant relationship. Key C401 rules: consultant owns their own instruments of service (overrides B101's provision granting owner rights to all); must carry same insurance types as architect; must redesign their portion for free if they exceed their portion of the budget; <strong>cannot sub-out work to a subconsultant without architect's written permission.</strong></p>
+      </div>
+      <div class="sum-subsection"><h4>Documents vs. Instruments</h4>
+        <p><strong>Contract documents</strong> (legally binds parties to build): drawings, specs, addenda, change orders, ASIs, CCDs, bidding docs. RFIs are NOT contract documents — but their resolutions may become contract documents.</p>
+        <p><strong>Instruments of service:</strong> Everything the architect and consultants create — larger category. Includes sketches, abandoned designs, field notes, models. All contract documents are instruments of service; not all instruments of service are contract documents.</p>
+      </div>
+      <div class="sum-subsection"><h4>Project Manual Hierarchy</h4>
+        <p>Instruments of service → Bidding documents (contract drawings + project manual) → Project manual contains: bidding requirements, contract forms, general and supplementary conditions, and specifications (MasterFormat Div. 01–49) → Contract documents = subset of project manual + drawings + addenda + contract modifications.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PcM Finances -->
+  <div class="sum-section" id="s-pcm-fin">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 2</span><h3>Finances, Risk &amp; Development (29–35% — LARGEST) ✦</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Revenue Flow Hierarchy</h4>
+        <p><strong>Gross Revenue</strong> → deduct consultant fees and reimbursables → <strong>Net Operating Revenue (NOR)</strong> → deduct all employee costs, rent, indirect costs → <strong>Profits Before Taxes</strong> → deduct taxes → <strong>Current Earnings.</strong></p>
+        <p>NOR is the denominator for most firm metrics. Net Billing = fees for architect's own time only (excludes consultants and reimbursables).</p>
+      </div>
+      <div class="sum-subsection"><h4>Key Financial Metrics</h4>
+        <ul>
+          <li><strong>Utilization Rate:</strong> DSE ÷ Total salary. Profitable firms: 0.60–0.65. Technical staff ~85%, principals ~60%, admin ~12.5%.</li>
+          <li><strong>Overhead Rate:</strong> Total indirect expense ÷ DSE. Typically 100–200% of DSE.</li>
+          <li><strong>Break-even Multiplier:</strong> (DSE + Overhead) ÷ DSE. Floor — anything below loses money.</li>
+          <li><strong>Net DSE Multiplier:</strong> Net revenue ÷ DSE. Target 3.0–4.0. If below break-even, firm loses money on every project.</li>
+          <li><strong>Profit:</strong> Reasonable range 10–15% of net revenues. Industry average 11–12%.</li>
+          <li><strong>Net Revenue per Employee:</strong> NOR ÷ # employees. Higher = healthier firm.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Balance Sheet Ratios</h4>
+        <ul>
+          <li>Current Ratio: ≥ 1.5</li><li>Quick Ratio: ≥ 1.0</li><li>Debt-to-Equity: &lt; 35%</li><li>Return on Equity: ~20%</li>
+        </ul>
+        <div class="callout">Aged AR over 90 days signals a collection problem.</div>
+      </div>
+      <div class="sum-subsection"><h4>Accounting Methods</h4>
+        <p><strong>Accrual basis:</strong> Counts credits and debts even when unpaid — better for business decisions. <strong>Cash basis:</strong> Counts only actual receipts and payments — used for taxes. Large firms often do both.</p>
+      </div>
+      <div class="sum-subsection"><h4>Revenue Planning</h4>
+        <p><strong>Prospect</strong> = ≥50% likelihood of becoming a project. <strong>Suspect</strong> = &lt;50%. For planning, multiply projected fee × likelihood % to estimate expected revenue. <strong>Pro Forma</strong> = financial feasibility document tracking projects, fees, revenue, and profit projections.</p>
+      </div>
+      <div class="sum-subsection"><h4>Fee Types &amp; Determination ✦</h4>
+        <p><strong>Fee structures:</strong> Percentage of construction cost (~15% residential; lower for large/economy, higher for complex) — most common; fixed (stipulated sum — use only when scope is very well defined); hourly/time charge (best for poorly-defined scope like renovations; can set a Not to Exceed cap); unit cost (repetitive buildings — fee = units × cost/unit); retainer (regular services for ongoing clients); combination.</p>
+        <p><strong>Fee determination methods:</strong></p>
+        <ul>
+          <li><strong>Bottom-up:</strong> Break project into phases and tasks → estimate hours and staff per task → add contingency. Most accurate but time-consuming. Best for larger projects.</li>
+          <li><strong>Top-down:</strong> Start with the gross fee the owner will pay → subtract known expenses to see what's left for design time. Requires experience; better for smaller projects.</li>
+          <li><strong>Both together:</strong> Using top-down and bottom-up simultaneously establishes upper and lower fee limits.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Bid Pricing Tools ✦</h4>
+        <ul>
+          <li><strong>Allowances:</strong> Placeholder money in contract documents for items whose final price may change (window coverings, light fixtures, appliances). Contractor must include all installation costs within the allowance.</li>
+          <li><strong>Unit prices:</strong> Set in the bid for items where the type is known but the quantity is not (e.g., contaminated soil removal per cubic yard). Quantity determined later.</li>
+          <li><strong>Add alternates:</strong> Optional items priced separately so the owner can decide after seeing bids whether to include them.</li>
+        </ul>
+        <p><strong>Construction contingency:</strong> Set aside by the owner (not the architect) for unforeseen construction costs. NOT included in the Cost of the Work for fee calculation. Do not raid contingency to cover design-phase budget overruns.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PcM Business Ops -->
+  <div class="sum-section" id="s-pcm-ops">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 1</span><h3>Business Operations &amp; Agency ✦</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Agency</h4>
+        <p>The architect acts as an <strong>agent</strong> of the owner (principal) in dealings with the contractor (third party). As agent, the architect can create legal relationships between the owner and contractor. Contractors are vendors (act in own interest); architects are agents (act on owner's behalf).</p>
+        <div class="callout">This is why change orders require owner signatures — the architect cannot unilaterally bind the owner to changes.</div>
+      </div>
+      <div class="sum-subsection"><h4>Three Sources of an Architect's Duties</h4>
+        <ul>
+          <li><strong>Contract terms</strong> — AIA standard forms define scope; extensions require owner written consent</li>
+          <li><strong>Legislative enactment</strong> — building codes and licensing laws impose duties independent of contracts</li>
+          <li><strong>Conduct (implied duties)</strong> — courts recognize duties based on how parties have acted, even when not written into contracts</li>
+        </ul>
+        <p>Key implied duties: cooperate with contractors; do not interfere with contractor's work; give relevant information; assist owner in coordination.</p>
+      </div>
+      <div class="sum-subsection"><h4>Business Development</h4>
+        <p><strong>QBS (Qualifications-Based Selection):</strong> Public projects evaluate firm experience and qualifications — fee is negotiated after selection. <strong>Brooks Act:</strong> Mandates QBS for federal A&amp;E services. Price is not a factor in initial selection.</p>
+        <p><strong>Proposal process:</strong> RFQ (qualifications only) → RFP (qualifications + fee) → selection → fee negotiation. Strong proposals are tailored to the specific client and project.</p>
+      </div>
+      <div class="sum-subsection"><h4>HR Compliance</h4>
+        <p>ADA, EEOC, OSHA, Fair Labor Standards Act (FLSA), workers' comp. Document performance evaluations and termination decisions to limit employment-related liability.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PcM Methodologies -->
+  <div class="sum-section" id="s-pcm-meth">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 4</span><h3>Practice Methodologies (17–23%) ✦</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Business Entity Structures</h4>
+        <table class="inline-table">
+          <thead><tr><th>Form</th><th>Personal liability</th><th>Tax treatment</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Sole proprietorship</td><td>Unlimited — personal assets exposed</td><td>Pass-through</td><td>Not recommended for construction industry</td></tr>
+            <tr><td>General partnership</td><td>All partners jointly liable for all debts, including each other's malpractice</td><td>Pass-through</td><td>Must address profit division, debt authority, exit in partnership agreement</td></tr>
+            <tr><td>Limited partnership</td><td>General partner: full personal risk. Limited partners (investors): only liable up to their investment</td><td>Pass-through</td><td>Allows investors to hold partial ownership with limited management roles</td></tr>
+            <tr><td>LLP</td><td>Partners protected from each other's malpractice; general partner manages</td><td>Pass-through</td><td>Filed with state; annual fees</td></tr>
+            <tr><td><strong>LLC</strong></td><td>Limited liability; personal assets protected</td><td>All profit taxed as earned income + FICA</td><td>Simpler to administer than S-Corp; best for small–medium firms</td></tr>
+            <tr><td><strong>S-Corp</strong></td><td>Limited liability</td><td>Only "reasonable salary" subject to income tax + FICA; additional distributions taxed at lower investment rate</td><td>≤100 shareholders; best for very profitable small firms</td></tr>
+            <tr><td>C-Corp</td><td>Limited liability</td><td>Double taxed — corporate profits + individual dividends</td><td>Publicly traded stock; appropriate for large firms (AECOM); not typical for architecture</td></tr>
+            <tr><td>B-Corp</td><td>Limited liability</td><td>Varies by underlying structure</td><td>Social mission embedded in charter; "triple bottom line" — people, profit, planet</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">LLC and S-Corp are the best options for most architecture firms. LLC is simpler; S-Corp offers tax advantages in highly profitable years.</div>
+      </div>
+      <div class="sum-subsection"><h4>Firm Combination Structures <span class="new-badge">NEW</span></h4>
+        <ul>
+          <li><strong>Strategic alliance:</strong> Two firms share technology, resources, or risk via a teaming agreement. No new entity is formed.</li>
+          <li><strong>Joint venture:</strong> Two firms create a temporary third entity to pursue a specific commission. Profits and risks are shared.</li>
+          <li><strong>Merger:</strong> Total combination of two firms into one permanent entity.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Design-Led vs. Management-Led Firms</h4>
+        <p><strong>Design-led:</strong> Prioritizes design quality; may accept lower profit margins. <strong>Management-led:</strong> Prioritizes efficiency, predictability, and financial performance. Both appear on the exam — neither is "wrong."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PjM Work Planning -->
+  <div class="sum-section" id="s-pjm-plan">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 2</span><h3>Project Work Planning (17–23%)</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>Work Plan &amp; PDCA</h4>
+        <p>~2 pages: project description, deliverables, team organization, responsibilities matrix, preliminary schedule, staffing, delivery method, budget, profit plan. <strong>PDCA:</strong> Plan → Do → Check → Adjust → repeat.</p>
+      </div>
+      <div class="sum-subsection"><h4>Scheduling Tools</h4>
+        <ul>
+          <li><strong>Gantt:</strong> Tasks + durations + dependencies on a timeline. Includes task duration — distinguishes it from PERT.</li>
+          <li><strong>PERT/CPM:</strong> Identifies task sequence and critical path. PERT unspecific on duration; CPM includes durations. Typically developed by the contractor.</li>
+          <li><strong>Critical path:</strong> Longest path through the project — any delay extends total duration.</li>
+          <li><strong>Float:</strong> Total float = project-level slack. Free float = slack a task can absorb without delaying the next task.</li>
+          <li><strong>Task dependencies:</strong> Start-Start, Finish-Start, Finish-Finish.</li>
+        </ul>
+      </div>
+      <div class="sum-subsection"><h4>Documentation</h4>
+        <p><strong>Contemporaneous documentation:</strong> Real-time recording of non-routine communications, decisions, and actions. Facts only — no conjecture.</p>
+        <p><strong>Project notebook:</strong> Tracks budget, schedule, tasks, contracts throughout project. Closeout notebook contains: summary of costs, Certificate of Substantial Completion, fee expenditure summary, and comments on completed work.</p>
+        <div class="callout warn">Designing during programming is not the proper order per AIA/NCARB — the exam tests the AIA position.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PjM Contracts -->
+  <div class="sum-section" id="s-pjm-contracts">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 3</span><h3>Contracts (25–31% — LARGEST) ✦</h3></div>
+    <div class="sum-body">
+      <div class="sum-subsection"><h4>C401 — Architect-Consultant Agreement</h4>
+        <p>Mirrors B101. Architect acts as "owner" to the consultant. Consultant owns their own instruments of service. Cannot sub-out work without architect's written permission. Must carry same insurance types as architect. Must redesign their portion for free if they blow their portion of the budget.</p>
+      </div>
+      <div class="sum-subsection"><h4>A101 &amp; A201</h4>
+        <p><strong>A101:</strong> Owner-Contractor Agreement (stipulated sum). Architect is not a party. <strong>A201:</strong> General Conditions — incorporated into B101 by reference; defines vocabulary and standard terms that don't change project-to-project; requires waiver of subrogation; architect administers the contract but does not supervise the contractor or control means and methods.</p>
+      </div>
+      <div class="sum-subsection"><h4>Change Instruments (see CA section above)</h4>
+        <p>ASI (no cost/schedule) → Change Order (all agree, cost known) → CCD (cost disputed, must keep moving). Key: CCD is signed by owner + architect, NOT contractor.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PjM Execution -->
+  <div class="sum-section" id="s-pjm-exec">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 4</span><h3>Project Execution (17–23%)</h3></div>
+    <div class="sum-body">
+      <p>At every phase, compare construction estimate to owner's budget. If estimates exceed budget, notify owner immediately. Under B101, if bids exceed the fixed limit, the architect must redesign at no additional cost.</p>
+      <p><strong>AHJ approvals:</strong> Identify all authorities early — zoning, building department, fire marshal, historic commission, accessibility agencies. Missing an AHJ submission late in design is costly.</p>
+      <p><strong>Documentation by delivery:</strong> DBB requires complete, coordinated CDs. CMc may use bridging documents. Design-build may use performance specifications.</p>
+    </div>
+  </div>
+
+  <!-- PjM QC -->
+  <div class="sum-section" id="s-pjm-qc">
+    <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 5</span><h3>Project Quality Control (19–25%)</h3></div>
+    <div class="sum-body">
+      <p>Perform the full code analysis. Building code, zoning, energy code, accessibility code, and specialty codes apply simultaneously.</p>
+      <p><strong>QC checkpoints:</strong> Inspect for coordination (do drawings agree across disciplines?) and constructability (can this actually be built as drawn?).</p>
+      <p><strong>Design integrity:</strong> Document intent of key SD decisions so they aren't value-engineered away in DD/CDs. Avoid <strong>project perfection syndrome</strong> — over-detailing beyond what the phase or budget requires. <strong>Corporate memory</strong> = institutional accumulated knowledge (reliable subcontractors, building department contacts, past project details) — organizing it is a QC function.</p>
+    </div>
+  </div>
 </div>
 
 <script>
-const phases = [
-  {
-    id: 1, label: "NOW", date: "Mar 27 – Apr 13", title: "Search & Secure", color: "#c8441a",
-    tasks: [
-      { id: "t1", text: "Tour remaining apartment options (Wesley St. James & others)", priority: true },
-      { id: "t2", text: "Submit application for chosen unit", priority: true },
-      { id: "t3", text: "Request quotes from Big & Small Moving, Two Men and a Truck, and Easy Moving Services", priority: true },
-      { id: "t4", text: "Confirm July 1 move-in date with new landlord", priority: false },
-      { id: "t5", text: "Review lease terms carefully before signing", priority: false },
-    ]
-  },
-  {
-    id: 2, label: "6 WKS OUT", date: "Apr 14 – May 11", title: "Plan & Book", color: "#b5621f",
-    tasks: [
-      { id: "t6", text: "Book movers — lock in July 1 date", priority: true },
-      { id: "t7", text: "Create a full inventory of big items to be moved", priority: true },
-      { id: "t8", text: "Begin researching packing supplies (boxes, bubble wrap, tape)", priority: false },
-      { id: "t9", text: "Measure furniture vs. new unit doorways & rooms", priority: false },
-      { id: "t10", text: "Notify current landlord of July 14 move-out date in writing", priority: true },
-      { id: "t11", text: "Arrange storage if any items won't fit in new place", priority: false },
-    ]
-  },
-  {
-    id: 3, label: "4 WKS OUT", date: "May 12 – Jun 1", title: "Prep & Purge", color: "#8a6a30",
-    tasks: [
-      { id: "t12", text: "Start packing non-essential items (books, off-season clothes)", priority: false },
-      { id: "t13", text: "Sell, donate, or toss anything you won't move", priority: false },
-      { id: "t14", text: "Transfer or cancel utilities at current address", priority: true },
-      { id: "t15", text: "Set up utilities at new address (internet, electric, gas)", priority: true },
-      { id: "t16", text: "Confirm internet provider / Google Fiber availability at new unit", priority: true },
-      { id: "t17", text: "Update address with USPS (mail forwarding)", priority: false },
-    ]
-  },
-  {
-    id: 4, label: "2 WKS OUT", date: "Jun 2 – Jun 21", title: "Final Push", color: "#5a7a4a",
-    tasks: [
-      { id: "t18", text: "Pack all remaining non-daily-use items", priority: false },
-      { id: "t19", text: "Confirm mover arrival time, truck size, and crew count", priority: true },
-      { id: "t20", text: "Update address: bank, employer, subscriptions, USPS", priority: false },
-      { id: "t21", text: "Update drivers license / ID address", priority: false },
-      { id: "t22", text: "Defrost & clean fridge if moving it", priority: false },
-      { id: "t23", text: "Arrange to be off work on July 1 (move day)", priority: true },
-    ]
-  },
-  {
-    id: 5, label: "MOVE WEEK", date: "Jun 22 – Jun 30", title: "Final Week", color: "#3a7a6a",
-    tasks: [
-      { id: "t24", text: "Pack a 'first night' bag (essentials you'll need immediately)", priority: true },
-      { id: "t25", text: "Disassemble large furniture that movers won't break down", priority: false },
-      { id: "t26", text: "Do a final walkthrough and check all rooms, closets, cabinets", priority: false },
-      { id: "t27", text: "Charge all devices the night before move day", priority: false },
-      { id: "t28", text: "Confirm movers once more 24 hrs before", priority: true },
-    ]
-  },
-  {
-    id: 6, label: "MOVE DAY", date: "July 1, 2026", title: "Move Day 🎉", color: "#2a6a8a",
-    tasks: [
-      { id: "t29", text: "Be present to direct movers at both locations", priority: true },
-      { id: "t30", text: "Do a final walkthrough of old place before leaving", priority: true },
-      { id: "t31", text: "Photograph any existing damage at new place on arrival", priority: true },
-      { id: "t32", text: "Tip movers (typically $20–$50/mover)", priority: false },
-      { id: "t33", text: "Get keys and confirm parking/elevator access with new building", priority: false },
-    ]
-  },
-  {
-    id: 7, label: "WIND DOWN", date: "Jul 2 – Jul 14", title: "Old Place Close-Out", color: "#4a4a6a",
-    tasks: [
-      { id: "t34", text: "Deep clean old apartment", priority: true },
-      { id: "t35", text: "Return keys and complete move-out inspection with landlord", priority: true },
-      { id: "t36", text: "Document the condition of the unit with photos/video", priority: true },
-      { id: "t37", text: "Follow up on security deposit return timeline", priority: false },
-      { id: "t38", text: "Cancel any services tied to old address", priority: false },
-    ]
-  },
+const cards = [
+  // BOTH DIVISIONS
+  {q:"What are the five phases of B101 basic services?",a:"Schematic Design, Design Development, Construction Documents, Bidding/Negotiation, Construction Administration.",div:"both",section:"B101 Basics"},
+  {q:'What does "Cost of the Work" include under B101?',a:"Contractor's materials, labor, overhead, and profit. Does NOT include the architect's fee, land cost, or contingencies.",div:"both",section:"B101 Cost"},
+  {q:"If the lowest bid exceeds the owner's budget, what must the architect do?",a:"Redesign at no additional cost to the owner (and revise consultant drawings too if in scope).",div:"both",section:"B101 Cost"},
+  {q:"How long does the owner have to terminate the architect for convenience?",a:"Any time — no waiting period required. Owner pays work-to-date plus overhead and profit.",div:"both",section:"B101 Termination"},
+  {q:"What happens to drawing access if the owner terminates the architect for cause?",a:"Owner retains access (limited license continues). If the architect terminates for cause, the owner loses access.",div:"both",section:"B101 Copyright"},
+  {q:"What are the owner's primary responsibilities under B101?",a:"Provide geotechnical reports, surveys, legal descriptions, building permits (owner pays; contractor pays construction permits), and information about pre-existing hazardous conditions.",div:"both",section:"B101 Owner's Duties"},
+  {q:"What is the mandatory first step in AIA dispute resolution?",a:"Mediation (non-binding, private). Arbitration or litigation only if mediation fails.",div:"both",section:"Dispute Resolution"},
+  {q:"How long is the claims period under B101?",a:"10 years from substantial completion (may vary by state).",div:"both",section:"B101 Claims"},
+  {q:"Define standard of care.",a:"Skill, care, and diligence consistent with other architects in the same locality practicing on similar projects at the same time. Not a guarantee of outcomes.",div:"both",section:"Standard of Care"},
+  {q:'Why can\'t the architect accept "highest standard of care" language?',a:"Professional liability insurance will not cover performance beyond the standard of care. Accepting elevated language makes the architect nearly uninsurable.",div:"both",section:"Standard of Care"},
+  {q:"Name the five insurance types required by B101.",a:"(1) General Liability, (2) Professional Liability (E&O), (3) Automobile Liability, (4) Workers' Compensation, (5) Employer's Liability.",div:"both",section:"Risk & Insurance"},
+  {q:"What is the Spearin Doctrine?",a:"The contractor has the right to expect accurate and proper plans. The owner — not the contractor — is liable for errors in the drawings.",div:"both",section:"Risk & Insurance"},
+  {q:"What is privity and why does it matter in disputes?",a:"A legal relationship arising from a contract. In DBB, the contractor has no privity with the architect, so the contractor generally cannot sue the architect directly for economic damages.",div:"both",section:"Risk & Insurance"},
+  {q:"What does waiver of subrogation mean?",a:"After paying a claim, insurers waive the right to sue other project parties to recover the payment. Required by A201 for all parties.",div:"both",section:"Risk & Insurance"},
+  {q:"What four elements must a plaintiff prove to establish architectural negligence?",a:"(1) The architect owed a duty, (2) the duty was breached, (3) the breach caused an event, (4) damage occurred.",div:"both",section:"Risk"},
+  {q:"What is SPI and what does SPI < 1.0 mean?",a:"Schedule Performance Index = Earned Value ÷ Planned Value. SPI < 1.0 means the project is behind schedule.",div:"both",section:"Earned Value"},
+  {q:"What does CPI < 1.0 mean?",a:"Cost Performance Index (EV ÷ Actual Cost) < 1.0 means the project is over budget.",div:"both",section:"Earned Value"},
+  {q:"Which project type carries the highest litigation risk for architects?",a:"Condominiums and residential projects.",div:"both",section:"Risk"},
+  {q:"Name the four methods of managing risk.",a:"Avoid, Assume, Transfer, Control.",div:"both",section:"Risk"},
+  {q:"What does A201 say about the architect's role during construction?",a:"The architect is the contract administrator — not the supervisor of construction. The architect does not control the contractor's means and methods.",div:"both",section:"A201 / CA"},
+  {q:"What is the difference between DBB and CM as Constructor?",a:"In DBB, a GC bids after design is complete. In CMc, the CM is brought on early and assumes construction risk at a GMP established by end of schematic design.",div:"both",section:"Delivery Methods"},
+  {q:"Which delivery method uses AIA A195?",a:"Integrated Project Delivery (IPD).",div:"both",section:"Delivery Methods"},
+  {q:'What is "bridged design-build"?',a:"A design architect completes design to approximately 35% and then hands off to a design-build firm. The bridging architect may continue as the owner's advocate.",div:"both",section:"Delivery Methods"},
+  {q:"What is Rule 2.2 of the NCARB Model Rules of Conduct?",a:"An architect may never accept compensation from material or equipment suppliers for specifying or endorsing their products. No waiver is possible — this rule is absolute.",div:"both",section:"NCARB Rules"},
+  {q:"What is Rule 5.1?",a:"An architect shall sign and seal only technical submissions prepared under the architect's responsible control. Sealing drawings you didn't control is plan-stamping — one of the most frequently disciplined violations.",div:"both",section:"NCARB Rules"},
+  {q:"What is Rule 2.4?",a:"When the architect serves as an independent interpreter of contract documents, they must render decisions impartially — even though they are paid by the owner.",div:"both",section:"NCARB Rules"},
+  {q:"What does scope creep mean and how should it be managed?",a:"Incremental additions to program or scope during design. Manage by documenting every change, getting written owner consent, and tying each change to fee and schedule implications.",div:"both",section:"Scope Creep"},
+  {q:"What are consequential damages and how does AIA treat them?",a:"Consequential damages are indirect losses like lost rent, lost business, or loan penalties from delays. AIA contracts mutually waive them (since 1997). Direct damages (cost of fixing work) are limited to the architect's fee.",div:"both",section:"AIA Contracts"},
+  {q:"What is the difference between contract documents and instruments of service?",a:"Contract documents legally bind parties to build (drawings, specs, addenda, change orders). Instruments of service is a larger category — everything the architect creates, including sketches, field notes, abandoned designs. RFIs are NOT contract documents.",div:"both",section:"AIA Contracts"},
+
+  // PcM
+  {q:"What is the utilization rate, and what range do profitable firms typically operate in?",a:"Utilization = DSE ÷ Total salary expense. Profitable firms typically operate at 0.60–0.65 (AHPP).",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the overhead rate formula?",a:"Total indirect expense ÷ Direct Salary Expense (DSE). Typically 100–200% of DSE.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the break-even DSE multiplier?",a:"(DSE + Overhead) ÷ DSE = Overhead Rate + 1.0. The firm loses money on any project billed below this multiplier.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the net DSE multiplier?",a:"Net revenue ÷ DSE. Typical range 3.0–4.0. AHPP example: 3.20 to achieve 20% profit with 156% overhead.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the typical industry profit range per AHPP?",a:"Reasonably attainable: 10–15% of net revenues. Recent industry average: 11–12%.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the current ratio and what does the target indicate?",a:"Current Assets ÷ Current Liabilities. Target ≥ 1.5. Measures ability to pay short-term obligations.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the quick ratio?",a:"(Cash + Accounts Receivable) ÷ Current Liabilities. Target ≥ 1.0. Excludes inventory and prepaid assets.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What does aged accounts receivable over 90 days signal?",a:"A collection problem — money billed but not paid within the normal collection window.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is payroll burden?",a:"Costs beyond salary: payroll taxes (FICA), health insurance, paid time off, pension contributions. Expressed as a percentage of base salary.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is tail insurance?",a:"Professional liability coverage that extends after retirement or closure to cover claims for work completed while the firm was active but within the statute of limitations.",div:"pcm",section:"PcM S1: Ops"},
+  {q:"What is the difference between direct and indirect salary?",a:"Direct salary = compensation for hours charged to projects. Indirect salary = compensation for non-billable hours (admin, marketing, training, vacation).",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is Net Operating Revenue (NOR)?",a:"Gross revenue minus consultant fees and reimbursables. It does not count fees paid to cover reimbursable project expenses. NOR pays: direct expenses, indirect expenses, and profit.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the revenue flow hierarchy for an architecture firm?",a:"Gross Revenue → NOR (minus consultant fees and reimbursables) → Profits Before Taxes (minus employee costs, rent, indirect) → Current Earnings (after taxes).",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is the difference between accrual and cash basis accounting?",a:"Accrual counts credits and debts even when unpaid — better for business decisions. Cash counts only actual receipts and payments — used for taxes.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What is a prospect vs. a suspect in revenue planning?",a:"Prospect = ≥50% likelihood of becoming a revenue-generating project. Suspect = <50%. For planning, multiply projected fee × likelihood % to estimate expected revenue.",div:"pcm",section:"PcM S2: Finances"},
+  {q:"What firm structure provides personal liability protection AND pass-through taxation with no shareholder limit?",a:"LLC (Limited Liability Company).",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"What firm structure limits shareholders to 100 and has pass-through taxation?",a:"S-Corporation.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"In a general partnership, who is liable for the firm's debts?",a:"All partners are jointly and severally liable for all debts — including malpractice by any individual partner.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"What is a B-Corp?",a:"A benefit corporation — a for-profit entity with a social mission embedded in its charter. Directors have legal authority to consider stakeholder interests beyond shareholders.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"What federal act mandates qualifications-based selection (QBS) for federal A&E services?",a:"The Brooks Act.",div:"pcm",section:"PcM S1: Ops"},
+  {q:"What is a retainer in the context of architectural fees?",a:"A pre-payment for the architect's availability or initial services, before work on the project begins.",div:"pcm",section:"PcM S3: Delivery"},
+  {q:"What is the key difference between a design-led and management-led firm?",a:"Design-led firms prioritize design quality and may accept lower profit margins. Management-led firms prioritize efficiency, predictability, and financial performance. Both exist on the exam — neither is 'wrong.'",div:"pcm",section:"PcM S4: Methodology"},
+  {q:"What is the architect's role in relation to the owner and contractor (agency)?",a:"The architect is the agent of the owner (principal) in dealings with the contractor. The architect can create legal relationships between the owner and contractor. This is why change orders require owner signatures.",div:"pcm",section:"PcM S1: Ops"},
+  {q:"What are the three sources of an architect's duties?",a:"(1) Contract terms, (2) Legislative enactment (building codes, licensing laws), (3) Conduct — implied duties courts recognize based on how parties have acted.",div:"pcm",section:"PcM S1: Ops"},
+
+  // PjM
+  {q:"What is a work plan and what does it contain?",a:"A 2-page project management document covering: project description, deliverables, team organization, responsibilities matrix, preliminary schedule, staffing, delivery method, budget, profit plan.",div:"pjm",section:"PjM S2: Work Planning"},
+  {q:"What is the PDCA cycle?",a:"Plan, Do, Check, Adjust — the iterative project management cycle applied to the work plan.",div:"pjm",section:"PjM S2: Work Planning"},
+  {q:"What distinguishes a Gantt chart from a PERT diagram?",a:"Gantt charts show task duration on a timeline. PERT diagrams show task sequence and dependencies but are less specific about duration.",div:"pjm",section:"PjM S2: Scheduling"},
+  {q:"What is the critical path?",a:"The longest sequence of dependent tasks in a project — any delay on the critical path extends the total project duration.",div:"pjm",section:"PjM S2: Scheduling"},
+  {q:"What is float/slack?",a:"Total float = total project slack before end date slips. Free float = delay a specific task can absorb without delaying the next task.",div:"pjm",section:"PjM S2: Scheduling"},
+  {q:"What is contemporaneous documentation?",a:"Real-time recording of non-routine project events, communications, and decisions. Facts only — no speculation.",div:"pjm",section:"PjM S2: Documentation"},
+  {q:"What does C401 govern?",a:"The Architect-Consultant Agreement — the contract between the architect and the structural, mechanical, electrical, or other design consultants.",div:"pjm",section:"PjM S3: Contracts"},
+  {q:"What is the architect's role relative to the consultant under C401?",a:"The architect acts as the 'owner' in the architect-consultant relationship, with obligations and rights mirroring those in B101.",div:"pjm",section:"PjM S3: Contracts"},
+  {q:"What special rule governs subconsulting under C401?",a:"The consultant cannot sub-out work to a subconsultant without the architect's written permission.",div:"pjm",section:"PjM S3: Contracts"},
+  {q:"When is the GMP typically established in a CM-as-Constructor arrangement?",a:"By the end of schematic design.",div:"pjm",section:"PjM S3: Contracts"},
+  {q:"What AIA document governs the owner-contractor relationship in DBB?",a:"A101 (Standard Form of Agreement) together with A201 (General Conditions).",div:"pjm",section:"PjM S3: Contracts"},
+  {q:"What should the architect do if a construction estimate exceeds the owner's budget?",a:"Notify the owner immediately. Under B101, if bids exceed the fixed limit of construction cost, the architect must redesign at no additional cost.",div:"pjm",section:"PjM S4: Execution"},
+  {q:"Who are examples of Authorities Having Jurisdiction (AHJ)?",a:"Zoning commission, building department (plan review/permits), fire marshal, historic preservation commission, accessibility enforcement agencies.",div:"pjm",section:"PjM S4: AHJ"},
+  {q:'What does "constructability review" test in the QC process?',a:"Whether the design can actually be built as drawn — sequencing, access, tolerances, material availability, and contractor means and methods.",div:"pjm",section:"PjM S5: QC"},
+  {q:"What is project perfection syndrome?",a:"Over-detailing or over-designing beyond what the project phase or budget requires. The law of diminishing returns applies — excessive quality costs time and money without proportional benefit.",div:"pjm",section:"PjM S5: QC"},
+
+  // CE / CA
+  {q:"What is the difference between an ASI and a Change Order?",a:"An ASI (G710) is a minor change that does not alter cost or schedule — only the architect signs. A Change Order (G701) alters scope, cost, or schedule and requires signatures from owner, architect, and contractor.",div:"ce",section:"CA: Change Instruments"},
+  {q:"What is a Construction Change Directive (CCD) and when is it used?",a:"A change that affects cost or schedule but where owner and contractor cannot yet agree on the cost. The architect and owner sign it; the contractor proceeds. Keeps the project moving while cost is resolved. It does NOT require the contractor's signature.",div:"ce",section:"CA: Change Instruments"},
+  {q:"What is the difference between an Addendum and a Change Order?",a:"An Addendum is issued after bidding begins but BEFORE the contract is signed — the cost is baked into bids, so no CO is needed. A Change Order modifies the contract after it is signed.",div:"ce",section:"CA: Change Instruments"},
+  {q:"What is retainage and what are the typical amounts?",a:"Money owed to the GC but held back to compel completion. Typically 10% of work-in-place and 5% of stored materials. Releases after substantial completion.",div:"ce",section:"CA: Pay Applications"},
+  {q:"What does G702 cover and who signs it?",a:"The Application and Certificate for Payment. The contractor submits it; the architect certifies it; the owner pays. G703 (Continuation Sheet) is the schedule of values breakdown.",div:"ce",section:"CA: Pay Applications"},
+  {q:"What triggers the contractor's one-year warranty period?",a:"Substantial completion, certified by the architect via G704.",div:"ce",section:"CA: Substantial Completion"},
+  {q:"Who prepares the punch list?",a:"The contractor prepares the list of incomplete or non-conforming work items that must be resolved before final completion.",div:"ce",section:"CA: Closeout"},
+  {q:"Who is responsible for site safety during construction?",a:"The contractor. The architect does not control the contractor's means and methods or site safety. The architect must document nonconforming work that creates a life safety risk.",div:"ce",section:"CA: Roles"},
+  {q:"What is the architect's role when reviewing shop drawings?",a:"Review for design intent only — not for accuracy. The contractor bears full responsibility for building per the contract documents.",div:"ce",section:"CA: Submittals"},
+  {q:"What are the three types of surety bonds?",a:"Bid bond (guarantees bidder enters contract if selected), Performance bond (surety completes project if contractor defaults), Payment bond (protects subs from GC nonpayment). All purchased by the contractor.",div:"ce",section:"CA: Surety Bonds"},
+  {q:"What is a mechanics lien?",a:"A legal claim filed by a subcontractor (or architect) against the owner's property for unpaid fees. Can force a sale of the property through court.",div:"ce",section:"CA: Liens"},
+  {q:"What is the preferred term for 'as-built drawings' and who prepares them?",a:"'As-constructed record drawings,' prepared by the contractor and called out in Division 01 of the specifications. The architect may provide 'as-designed record drawings' as a supplemental service.",div:"ce",section:"CA: Closeout"},
+  {q:"What is liquidated damages?",a:"A per-day delay penalty agreed upon in advance by all parties in the contract.",div:"ce",section:"CA: Contracts"},
+  {q:"What are RFIs and what form are they issued on?",a:"Requests for Information (G716) — the contractor's mechanism for asking the architect to clarify anything that cannot be built as drawn. If the response changes cost or schedule, a change order follows.",div:"ce",section:"CA: RFIs"},
+
+  // PcM — Fee structures & delivery
+  {q:"What is the bottom-up method of fee determination?",a:"Break the project into phases and small tasks, estimate hours and staff needed for each, then add contingency. Most accurate but time-consuming. Best for larger projects.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What is the top-down method of fee determination?",a:"Start with the gross fee the owner will pay, subtract known expenses to see what's left for design time. Requires experience. Better for smaller jobs.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What percentage fee is typically charged for residential projects?",a:"Approximately 15% of the Cost of the Work. Lower for large or economy projects; higher for complex program types.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What are allowances in bid documents?",a:"Money set aside in contract documents for products whose final selection may change in price (e.g., window coverings, light fixtures, appliances). The contractor must include all installation costs within the allowance amount.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What are unit prices in bid documents?",a:"Used where the type of item is known but the quantity is not (e.g., removal of contaminated soil per cubic yard). Prices are set in the bid; quantity is determined later.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What are add alternates?",a:"Optional items priced separately in each bid so the owner can make an informed decision about including them. The owner may choose any bidder after reviewing alternates.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What is construction contingency and is it included in the Cost of the Work?",a:"Money set aside by the owner (not the architect) to cover unforeseen construction costs. It is NOT included in the Cost of the Work for purposes of calculating a percentage-based architect's fee.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What are the four owner-contractor payment structures?",a:"(1) Stipulated lump sum — fixed price; (2) Cost plus fixed fee — owner pays costs plus a fixed profit; (3) GMP (Guaranteed Maximum Price) — like cost plus but contractor absorbs costs above the cap; (4) Unit cost — owner pays per unit completed.",div:"pcm",section:"PcM S3: Fees"},
+  {q:"What is the difference between a Limited Partnership and an LLP?",a:"In a Limited Partnership, the general partner manages and carries full personal risk; limited partners (investors) are only liable up to their investment. In an LLP, all partners are protected from each other's malpractice but the general partner still manages.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"What is the tax advantage of an S-Corp over an LLC?",a:"In an S-Corp, only a 'reasonable salary' is subject to income tax and FICA. Additional profit distributions can be taxed at the lower investment rate. In an LLC, all profit is taxed as earned income (higher rate + FICA). Best for very profitable small firms.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"What is the difference between a strategic alliance, joint venture, and merger?",a:"Strategic alliance — two firms share resources via a teaming agreement; no new entity formed. Joint venture — two firms create a temporary third entity to pursue a specific commission; profits and risks are shared. Merger — total combination of two firms into one.",div:"pcm",section:"PcM S4: Entity Types"},
+  {q:"Why is a C-Corporation generally inappropriate for most architecture firms?",a:"C-Corps are double taxed — profits taxed at the corporate level, then dividends taxed again at the individual level. They also require publicly traded stock. Large firms like AECOM are C-Corps, but most architecture firms use LLC or S-Corp.",div:"pcm",section:"PcM S4: Entity Types"},
+
+  // PjM — Delivery method detail
+  {q:"What are the three DBB bid types and how do they differ?",a:"Competitive bid — open to all qualified bidders; lowest responsible bidder wins. Invited bid — limited to pre-qualified contractors; best value rather than pure cost. Negotiated bid — GC works with architect from beginning; price is negotiated with owner; tends toward higher quality.",div:"pjm",section:"PjM: Delivery Methods"},
+  {q:"What is the difference between a responsive and responsible bidder?",a:"A responsive bid addresses all requirements in the solicitation. A responsible bidder is qualified to perform the work. Both are required for award in DBB.",div:"pjm",section:"PjM: Delivery Methods"},
+  {q:"What is the DBB bid process sequence?",a:"Owner issues RFP → pre-bid conference → contractor questions answered and distributed as addenda → bids opened publicly → award to lowest responsive and responsible bidder (or best value, depending on bid type).",div:"pjm",section:"PjM: Delivery Methods"},
+  {q:"What is phased construction and how does it differ from fast-track?",a:"Phased construction staggers occupancy so portions open while others continue — used for airports, staged funding, or incremental growth. Fast-track overlaps design and construction phases to compress overall schedule. Both can require a CM; fast-track must be charged as an additional service.",div:"pjm",section:"PjM: Delivery Methods"},
+  {q:"What are the three IPD variants?",a:"(1) Single Purpose Entity — highest risk/reward; all parties in a shared legal entity. (2) Project Alliance — shared risk without a new entity. (3) Relational Contract — least formal; parties agree not to sue each other and tie bonuses to project performance.",div:"pjm",section:"PjM: Delivery Methods"},
 ];
 
-// State
-const done = {};
-phases.forEach(p => p.tasks.forEach(t => { done[t.id] = false; }));
-let activePhase = 1;
+let currentFilter='all', deck=[], currentIndex=0, isFlipped=false;
+const cardStatus={};
 
-function totalTasks() { return phases.flatMap(p => p.tasks).length; }
-function totalDone() { return Object.values(done).filter(Boolean).length; }
-function phaseDone(phase) { return phase.tasks.filter(t => done[t.id]).length; }
-function phasePct(phase) { return Math.round((phaseDone(phase) / phase.tasks.length) * 100); }
-
-function updateProgress() {
-  const total = totalTasks(), d = totalDone();
-  const pct = Math.round((d / total) * 100);
-  document.getElementById('progress-bar-fill').style.width = pct + '%';
-  document.getElementById('progress-label').textContent = `${d}/${total} tasks · ${pct}%`;
+function buildDeck(){
+  if(currentFilter==='all') deck=[...cards];
+  else if(currentFilter==='review') deck=cards.filter((_,i)=>cardStatus[i]==='review');
+  else deck=cards.filter(c=>c.div===currentFilter);
+  currentIndex=0; isFlipped=false; renderCard(); updateStats();
 }
 
-function renderSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.innerHTML = '';
-  phases.forEach(phase => {
-    const btn = document.createElement('button');
-    btn.className = 'phase-btn' + (phase.id === activePhase ? ' active' : '');
-    btn.style.borderLeftColor = phase.id === activePhase ? phase.color : 'transparent';
-    btn.innerHTML = `
-      <div class="phase-label" style="color:${phase.id === activePhase ? phase.color : '#555'}">${phase.label}</div>
-      <div class="phase-title">${phase.title}</div>
-      <div class="phase-mini-bar-bg">
-        <div class="phase-mini-bar-fill" style="width:${phasePct(phase)}%;background:${phase.color}"></div>
-      </div>
-      <div class="phase-count">${phaseDone(phase)}/${phase.tasks.length}</div>
-    `;
-    btn.addEventListener('click', () => { activePhase = phase.id; render(); });
-    sidebar.appendChild(btn);
-  });
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.fc-filter').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  buildDeck();
 }
 
-function renderMain() {
-  const main = document.getElementById('main');
-  const phase = phases.find(p => p.id === activePhase);
-  if (!phase) return;
-
-  const priorityTasks = phase.tasks.filter(t => t.priority);
-  const standardTasks = phase.tasks.filter(t => !t.priority);
-
-  let html = `
-    <div class="phase-date" style="color:${phase.color}">${phase.date}</div>
-    <h2 class="phase-heading">${phase.title}</h2>
-    <div class="divider"></div>
-  `;
-
-  if (priorityTasks.length) {
-    html += `<div class="section-label priority">◆ PRIORITY</div>`;
-    priorityTasks.forEach(task => { html += taskHTML(task, phase.color, true); });
-  }
-  if (standardTasks.length) {
-    html += `<div class="section-label standard" style="margin-top:${priorityTasks.length ? '20px' : '0'}">○ STANDARD</div>`;
-    standardTasks.forEach(task => { html += taskHTML(task, phase.color, false); });
-  }
-
-  main.innerHTML = html;
-
-  // Attach click handlers
-  phase.tasks.forEach(task => {
-    const row = document.getElementById('row-' + task.id);
-    if (row) row.addEventListener('click', () => { done[task.id] = !done[task.id]; render(); });
-  });
-}
-
-function taskHTML(task, color, isPriority) {
-  const isDone = done[task.id];
-  return `
-    <div id="row-${task.id}" class="task-row${isDone ? ' done' : ''}${isPriority ? ' priority-task' : ''}" style="--phase-color:${color}">
-      <div class="task-circle">${isDone ? '✓' : ''}</div>
-      <span class="task-text">${task.text}</span>
-    </div>
-  `;
-}
-
-function render() {
-  renderSidebar();
-  renderMain();
+function renderCard(){
+  const area=document.getElementById('cardArea');
+  if(deck.length===0){area.innerHTML='<div class="fc-complete"><h3>No cards in this filter.</h3><p>Try selecting a different category.</p></div>';document.getElementById('cardCounter').textContent='0 / 0';updateProgress();return;}
+  if(currentIndex>=deck.length){area.innerHTML=`<div class="fc-complete"><h3>🎉 Deck complete!</h3><p>You went through all ${deck.length} cards.</p><button class="btn btn-primary" onclick="buildDeck()">Restart</button></div>`;document.getElementById('cardCounter').textContent=`${deck.length} / ${deck.length}`;updateProgress();return;}
+  if(!document.getElementById('flashcard')){area.innerHTML='<div class="card" id="flashcard" onclick="flipCard()"><div class="card-section-tag" id="cardSection"></div><div class="card-division-badge badge-both" id="cardBadge"></div><div class="card-inner"><div class="card-q" id="cardQ"></div><div class="card-a" id="cardA"></div></div><div class="card-hint">Tap to reveal answer</div></div>';}
+  const card=deck[currentIndex];
+  document.getElementById('flashcard').classList.remove('flipped');
+  isFlipped=false;
+  document.getElementById('btnKnow').disabled=true;
+  document.getElementById('btnReview').disabled=true;
+  document.getElementById('cardQ').textContent=card.q;
+  document.getElementById('cardA').textContent=card.a;
+  document.getElementById('cardSection').textContent=card.section;
+  const badge=document.getElementById('cardBadge');
+  if(card.div==='both'){badge.className='card-division-badge badge-both';badge.textContent='⭐ BOTH';}
+  else if(card.div==='pcm'){badge.className='card-division-badge badge-pcm';badge.textContent='PcM';}
+  else if(card.div==='ce'){badge.className='card-division-badge badge-ce';badge.textContent='CE / CA';}
+  else{badge.className='card-division-badge badge-pjm';badge.textContent='PjM';}
+  document.getElementById('cardCounter').textContent=`${currentIndex+1} / ${deck.length}`;
   updateProgress();
 }
 
-render();
+function updateProgress(){const pct=deck.length>0?(currentIndex/deck.length)*100:0;document.getElementById('progressBar').style.width=pct+'%';}
+function flipCard(){const c=document.getElementById('flashcard');if(!c||isFlipped)return;c.classList.add('flipped');isFlipped=true;document.getElementById('btnKnow').disabled=false;document.getElementById('btnReview').disabled=false;}
+function markCard(status){if(!isFlipped||currentIndex>=deck.length)return;const gi=cards.indexOf(deck[currentIndex]);cardStatus[gi]=status;currentIndex++;updateStats();renderCard();}
+function nextCard(){if(currentIndex<deck.length)currentIndex++;renderCard();}
+function prevCard(){if(currentIndex>0){currentIndex--;renderCard();}}
+function resetDeck(){Object.keys(cardStatus).forEach(k=>delete cardStatus[k]);buildDeck();}
+function updateStats(){
+  const known=Object.values(cardStatus).filter(v=>v==='know').length;
+  const review=Object.values(cardStatus).filter(v=>v==='review').length;
+  document.getElementById('knownCount').textContent=known;
+  document.getElementById('reviewCount').textContent=review;
+  document.getElementById('remCount').textContent=cards.length-known-review;
+}
+function showTable(id,el){
+  document.querySelectorAll('.table-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.table-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+function switchPanel(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+buildDeck();
+
+// ===== SUMMARY SEARCH =====
+function filterSummary(query) {
+  const sections = document.querySelectorAll('#summary .sum-section');
+  const toc = document.querySelector('#summary .sum-toc');
+  const msg = document.getElementById('sumSearchMsg');
+  const q = query.trim().toLowerCase();
+
+  if (!q) {
+    sections.forEach(s => {
+      s.style.display = '';
+      s.querySelectorAll('mark.sh').forEach(m => { m.outerHTML = m.innerHTML; });
+    });
+    if (toc) toc.style.display = '';
+    msg.style.display = 'none';
+    return;
+  }
+
+  if (toc) toc.style.display = 'none';
+  let matchCount = 0;
+
+  sections.forEach(s => {
+    s.querySelectorAll('mark.sh').forEach(m => { m.outerHTML = m.innerHTML; });
+    if (s.textContent.toLowerCase().includes(q)) {
+      s.style.display = '';
+      matchCount++;
+      highlightText(s, q);
+    } else {
+      s.style.display = 'none';
+    }
+  });
+
+  msg.style.display = '';
+  msg.textContent = matchCount === 0
+    ? 'No sections matched "' + query + '"'
+    : matchCount + ' section' + (matchCount > 1 ? 's' : '') + ' matched — clear search to see all';
+}
+
+function highlightText(node, q) {
+  if (node.nodeType === 3) {
+    const idx = node.textContent.toLowerCase().indexOf(q);
+    if (idx === -1) return;
+    const before = document.createTextNode(node.textContent.slice(0, idx));
+    const mark = document.createElement('mark');
+    mark.className = 'sh';
+    mark.style.cssText = 'background:#fef08a;color:#1e2132;border-radius:2px;padding:0 1px;';
+    mark.textContent = node.textContent.slice(idx, idx + q.length);
+    const after = document.createTextNode(node.textContent.slice(idx + q.length));
+    const parent = node.parentNode;
+    parent.insertBefore(before, node);
+    parent.insertBefore(mark, node);
+    parent.insertBefore(after, node);
+    parent.removeChild(node);
+    highlightText(after, q);
+  } else if (node.nodeType === 1 && !['SCRIPT','STYLE','INPUT','BUTTON'].includes(node.tagName)) {
+    Array.from(node.childNodes).forEach(child => highlightText(child, q));
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('sumSearch');
+  input.value = '';
+  filterSummary('');
+}
 </script>
 </body>
 </html>
