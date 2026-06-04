@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARE PcM + PjM + CE Study Aid</title>
 <style>
-<style>
   /* ── PALETTE ── */
   :root {
     --bg: #0d0d1a;
@@ -29,7 +28,6 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0d0d1a; color: #e8e4f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
-
   /* ── NAV — dark / typographic ── */
   .nav {
     background: var(--nav-bg);
@@ -76,10 +74,8 @@
   }
   .nav-tab:hover { color: rgba(255,255,255,0.85); }
   .nav-tab.active { color: #fff; border-bottom-color: #fff; }
-
   .panel { display: none; }
   .panel.active { display: block; }
-
   /* ── FLASHCARDS ── */
   #flashcards { padding: 24px 20px; max-width: 880px; margin: 0 auto; }
   .fc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -99,7 +95,6 @@
   .stat-known span { color: #34d399; }
   .stat-review span { color: #f87171; }
   .fc-stat span + span { display: none; }
-
   /* Scher-style rectangular filter chips */
   .fc-filters { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
   .fc-filter {
@@ -126,13 +121,11 @@
   .fc-filter.f-ce:hover, .fc-filter.f-ce.active { background: var(--ce); color: #fff; }
   .fc-filter.f-review { border-color: var(--red); color: var(--red); }
   .fc-filter.f-review:hover, .fc-filter.f-review.active { background: var(--red); color: #fff; }
-
   .fc-progress {
     height: 6px; background: #1c1c2f; border-radius: 0;
     margin-bottom: 20px; overflow: hidden; border: none;
   }
   .fc-progress-bar { height: 100%; background: var(--all3); border-radius: 0; transition: width 0.3s; }
-
   /* ── FLASHCARD ── */
   .card {
     background: #16162a;
@@ -147,14 +140,12 @@
     box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
   }
   .card:hover { box-shadow: 6px 6px 0 rgba(0,0,0,0.7); }
-
   /* Division-colored left border set by JS */
   .card.div-all3 { border-left-color: var(--all3); }
   .card.div-both { border-left-color: var(--both); }
   .card.div-pcm  { border-left-color: var(--pcm); }
   .card.div-pjm  { border-left-color: var(--pjm); }
   .card.div-ce   { border-left-color: var(--ce); }
-
   .card-division-badge {
     position: absolute; top: 14px; right: 16px;
     padding: 3px 10px;
@@ -167,7 +158,6 @@
   .badge-pcm  { background: var(--pcm);  color: #fff; }
   .badge-pjm  { background: var(--pjm);  color: #fff; }
   .badge-ce   { background: var(--ce);   color: #fff; }
-
   /* Scher-style: section name as oversized background type */
   .card-section-tag {
     position: absolute; top: 12px; left: 20px;
@@ -197,7 +187,6 @@
   }
   .card-hint { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9090b8; margin-top: 10px; padding-bottom: 12px; }
   .card.flipped .card-hint { display: none; }
-
   /* Answer panel: dark background, colored top bar */
   .card-a {
     display: none;
@@ -215,7 +204,6 @@
   .card.div-pjm  .card-a { border-top-color: var(--pjm); }
   .card.div-ce   .card-a { border-top-color: var(--ce); }
   .card.flipped .card-a { display: block; }
-
   .fc-controls { display: flex; gap: 8px; margin-top: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
   .btn {
     padding: 9px 22px; border-radius: 0;
@@ -239,7 +227,6 @@
   .fc-complete { text-align: center; padding: 60px 20px; }
   .fc-complete h3 { font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 8px; color: #e8e4f0; }
   .fc-complete p { color: #9090b8; margin-bottom: 20px; font-size: 14px; }
-
   /* ── TABLES ── */
   #tables { padding: 24px 20px; max-width: 1080px; margin: 0 auto; }
   #tables h2 { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 18px; }
@@ -277,7 +264,6 @@
   th[style*="color:var(--pjm)"] { background: var(--pjm) !important; color: #fff !important; }
   th[style*="color:var(--ce)"]  { background: var(--ce)  !important; color: #fff !important; }
   th[style*="color:var(--all3)"]{ background: var(--all3)!important; color: #fff !important; }
-
   td { padding: 11px 14px; border-bottom: 1px solid #2d2d48; vertical-align: top; line-height: 1.5; color: #e8e4f0; }
   tr:last-child td { border-bottom: none; }
   tr:nth-child(even) td { background: #1c1c2f; }
@@ -290,7 +276,6 @@
   .pill-no { background: #1c1c2f; color: #9090b8; }
   .pill-pri { background: #d97706; color: #fff; padding: 2px 8px; }
   .star { color: var(--both); }
-
   /* ── SUMMARY ── */
   #summary { padding: 24px 20px; max-width: 840px; margin: 0 auto; }
   .sum-header { margin-bottom: 24px; }
@@ -319,7 +304,6 @@
   .toc-pcm  { background: var(--pcm);  color: #fff; }
   .toc-pjm  { background: var(--pjm);  color: #fff; }
   .toc-ce   { background: var(--ce);   color: #fff; }
-
   .sum-section { margin-bottom: 44px; }
   .sum-section-header {
     display: flex; align-items: center; gap: 12px;
@@ -329,7 +313,6 @@
   }
   .sum-section-header h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; color: #e8e4f0; }
   .sum-section-tag { font-size: 9px; padding: 4px 10px; border-radius: 0; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
-
   /* Section header border-bottom matches division color */
   .sum-section:has(.toc-all3) .sum-section-header,
   .sum-section:has([class*="all3"]) .sum-section-header { border-bottom-color: var(--all3); }
@@ -339,7 +322,6 @@
   .sum-section:has([class*="toc-pcm"]) .sum-section-header { border-bottom-color: var(--pcm); }
   .sum-section:has(.toc-ce) .sum-section-header,
   .sum-section:has([class*="toc-ce"]) .sum-section-header { border-bottom-color: var(--ce); }
-
   .sum-subsection { margin-bottom: 22px; }
   .sum-subsection h4 {
     font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em;
@@ -351,7 +333,6 @@
   .sum-body p { margin-bottom: 10px; }
   .sum-body strong { color: #b0aadc; }
   .sum-body ul { padding-left: 20px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 4px; }
-
   .callout {
     background: #14142a; border-left: 4px solid #6366f1;
     border-radius: 0; padding: 12px 16px;
@@ -360,20 +341,17 @@
   }
   .callout.warn { background: #1e0a0c; border-left-color: #f87171; }
   .callout.gold { background: #1a1204; border-left-color: #d97706; }
-
   .inline-table { width: 100%; font-size: 12px; margin: 10px 0 16px; border-collapse: collapse; border: 2px solid var(--text); overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.5); }
   .inline-table th { background: var(--nav-bg); color: #fff; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 900; padding: 8px 10px; text-align: left; border-bottom: none; }
   .inline-table td { padding: 8px 10px; border-bottom: 1px solid #2d2d48; vertical-align: top; color: #e8e4f0; }
   .inline-table tr:nth-child(even) td { background: #1c1c2f; }
   .inline-table tr:last-child td { border-bottom: none; }
-
   .new-badge {
     display: inline-block; background: var(--all3); color: #fff;
     font-size: 9px; font-weight: 900; letter-spacing: 0.08em;
     text-transform: uppercase; padding: 2px 7px;
     border-radius: 0; margin-left: 8px; vertical-align: middle;
   }
-
   /* ── SEARCH ── */
   #sumSearch {
     border-radius: 0 !important;
@@ -384,7 +362,6 @@
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="nav-brand">
     <div>
@@ -403,7 +380,6 @@
     <div class="nav-tab" onclick="switchPanel('summary',this)">📖 Summary</div>
   </div>
 </nav>
-
 <!-- FLASHCARDS -->
 <div id="flashcards" class="panel active">
   <div class="fc-header">
@@ -444,7 +420,6 @@
     <button class="btn btn-know" id="btnKnow" onclick="markCard('know')" disabled>✓ Got It</button>
   </div>
 </div>
-
 <!-- TABLES -->
 <div id="tables" class="panel">
   <h2>Reference Tables</h2>
@@ -463,7 +438,6 @@
     <div class="table-btn" onclick="showTable('t-pjm',this)">PjM Exclusive</div>
     <div class="table-btn" onclick="showTable('t-ce',this)" style="color:var(--ce);border-color:#99f6e4;">CE Exclusive ✦</div>
   </div>
-
   <!-- Division Snapshot -->
   <div class="table-section active" id="t-snapshot">
     <h3>Division Snapshot</h3>
@@ -498,7 +472,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- Overlapping Topics -->
   <div class="table-section" id="t-overlap">
     <h3>🔺 Overlapping Topics — Study These First (All 3 Exams)</h3>
@@ -517,7 +490,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- AIA Documents -->
   <div class="table-section" id="t-aia">
     <h3>AIA Contract Documents — Which Division Tests Them</h3>
@@ -554,7 +526,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- G-Series Forms (NEW) -->
   <div class="table-section" id="t-gforms">
     <h3>G-Series Administration Forms <span class="new-badge">NEW</span></h3>
@@ -575,7 +546,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- CA Change Instruments (NEW) -->
   <div class="table-section" id="t-ca">
     <h3>Construction Administration — Change Instruments <span class="new-badge">NEW</span></h3>
@@ -612,7 +582,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- Delivery Methods -->
   <div class="table-section" id="t-delivery">
     <h3>Project Delivery Methods</h3>
@@ -650,7 +619,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- Financial Metrics -->
   <div class="table-section" id="t-financial">
     <h3>Financial Metrics Quick Reference (PcM Section 2)</h3>
@@ -672,7 +640,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- Revenue Flow (NEW) -->
   <div class="table-section" id="t-revenue">
     <h3>Revenue Flow Hierarchy <span class="new-badge">NEW</span></h3>
@@ -704,7 +671,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- Dispute Resolution -->
   <div class="table-section" id="t-dispute">
     <h3>Dispute Resolution Sequence (AIA B101)</h3>
@@ -718,7 +684,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- NCARB Rules -->
   <div class="table-section" id="t-rules">
     <h3>NCARB Model Rules of Conduct (PcM 1.3)</h3>
@@ -736,7 +701,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- PcM Exclusive -->
   <div class="table-section" id="t-pcm">
     <h3 style="color:var(--pcm)">PcM-Exclusive Topics</h3>
@@ -758,7 +722,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- PjM Exclusive -->
   <div class="table-section" id="t-pjm">
     <h3 style="color:var(--pjm)">PjM-Exclusive Topics</h3>
@@ -779,7 +742,6 @@
       </tbody>
     </table></div>
   </div>
-
   <!-- CE Exclusive -->
   <div class="table-section" id="t-ce">
     <h3 style="color:var(--ce)">CE Exclusive Topics <span class="new-badge">NEW</span></h3>
@@ -810,7 +772,6 @@
     </table></div>
   </div>
 </div>
-
 <!-- SUMMARY -->
 <div id="summary" class="panel">
   <div class="sum-header">
@@ -822,7 +783,6 @@
     </div>
     <div id="sumSearchMsg" style="display:none;margin-top:8px;font-size:13px;color: #9090b8;"></div>
   </div>
-
   <div class="sum-toc">
     <h4>Contents</h4>
     <ul>
@@ -847,7 +807,6 @@
       <li><a href="#s-legend"><span class="toc-tag" style="background:#2a2a40;color:#9090b8;">REF</span> Abbreviations Legend</a></li>
     </ul>
   </div>
-
   <!-- B101 -->
   <div class="sum-section" id="s-b101">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>B101 Owner-Architect Agreement</h3></div>
@@ -884,7 +843,6 @@
       </div>
     </div>
   </div>
-
   <!-- Standard of Care -->
   <div class="sum-section" id="s-soc">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Standard of Care</h3></div>
@@ -894,7 +852,6 @@
       <p><strong>Responsible control</strong> allows an architect to stamp work if they possess knowledge of, or supervision over, a drawing set consistent with the standard of care. An architect can stamp plans they did not create — but cannot stamp plans they know little about. Plan-stamping (sealing work without responsible control) is one of the most common disciplinary violations.</p>
     </div>
   </div>
-
   <!-- Delivery Methods -->
   <div class="sum-section" id="s-delivery">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Project Delivery Methods ✦</h3></div>
@@ -934,7 +891,6 @@
       </div>
     </div>
   </div>
-
   <!-- Risk Management -->
   <div class="sum-section" id="s-risk">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Risk Management &amp; Insurance</h3></div>
@@ -956,7 +912,6 @@
       <div class="callout warn">Highest litigation risk: Condominiums and residential projects. Most important firm risk action: use standard AIA contracts.</div>
     </div>
   </div>
-
   <!-- Scope Creep -->
   <div class="sum-section" id="s-scope">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Scope Creep &amp; Scope Changes</h3></div>
@@ -965,7 +920,6 @@
       <div class="callout">Document every change → get written owner agreement → tie to fee and schedule → use AIA G802 to amend the agreement. Never proceed on verbal instructions.</div>
     </div>
   </div>
-
   <!-- QC -->
   <div class="sum-section" id="s-qc">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Quality Control</h3></div>
@@ -979,7 +933,6 @@
       </div>
     </div>
   </div>
-
   <!-- Ethics -->
   <div class="sum-section" id="s-ethics">
     <div class="sum-section-header"><span class="sum-section-tag toc-all3">🔺 ALL 3 EXAMS</span><h3>Ethics — NCARB Model Rules of Conduct</h3></div>
@@ -990,7 +943,6 @@
       <div class="sum-subsection"><h4>Rule 5 — Signing and Sealing</h4><p><strong>Seal only work under your responsible control (5.1). Plan-stamping is one of the most common disciplinary violations.</strong> Prototype designs are permitted to be sealed by the architect of record for each jurisdiction (Rule 5.3).</p></div>
     </div>
   </div>
-
   <!-- CE Exam Strategy -->
   <div class="sum-section" id="s-ce-strategy">
     <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE</span><h3>CE Exam Strategy &amp; Content Split <span class="new-badge">NEW</span></h3></div>
@@ -1010,7 +962,6 @@
       </div>
     </div>
   </div>
-
   <!-- Construction Administration (NEW) -->
   <div class="sum-section" id="s-ca">
     <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE / CA</span><h3>Construction Administration <span class="new-badge">NEW</span></h3></div>
@@ -1061,7 +1012,6 @@
       </div>
     </div>
   </div>
-
   <!-- Commissioning and POE -->
   <div class="sum-section" id="s-commissioning">
     <div class="sum-section-header"><span class="sum-section-tag toc-ce">CE</span><h3>Building Commissioning &amp; POE <span class="new-badge">NEW</span></h3></div>
@@ -1089,7 +1039,6 @@
       </div>
     </div>
   </div>
-
   <!-- AIA Documents Detail (NEW/EXPANDED) -->
   <div class="sum-section" id="s-aia">
     <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM</span><h3>AIA Contract Documents — Detail <span class="new-badge">NEW</span></h3></div>
@@ -1114,7 +1063,6 @@
       </div>
     </div>
   </div>
-
   <!-- PcM Finances -->
   <div class="sum-section" id="s-pcm-fin">
     <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 2</span><h3>Finances, Risk &amp; Development (29–35% — LARGEST) ✦</h3></div>
@@ -1164,7 +1112,6 @@
       </div>
     </div>
   </div>
-
   <!-- PcM Business Ops -->
   <div class="sum-section" id="s-pcm-ops">
     <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 1</span><h3>Business Operations &amp; Agency ✦</h3></div>
@@ -1190,7 +1137,6 @@
       </div>
     </div>
   </div>
-
   <!-- PcM Methodologies -->
   <div class="sum-section" id="s-pcm-meth">
     <div class="sum-section-header"><span class="sum-section-tag toc-pcm">PcM — Section 4</span><h3>Practice Methodologies (17–23%) ✦</h3></div>
@@ -1223,7 +1169,6 @@
       </div>
     </div>
   </div>
-
   <!-- PjM Work Planning -->
   <div class="sum-section" id="s-pjm-plan">
     <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 2</span><h3>Project Work Planning (17–23%)</h3></div>
@@ -1247,7 +1192,6 @@
       </div>
     </div>
   </div>
-
   <!-- PjM Contracts -->
   <div class="sum-section" id="s-pjm-contracts">
     <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 3</span><h3>Contracts (25–31% — LARGEST) ✦</h3></div>
@@ -1263,7 +1207,6 @@
       </div>
     </div>
   </div>
-
   <!-- PjM Execution -->
   <div class="sum-section" id="s-pjm-exec">
     <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 4</span><h3>Project Execution (17–23%)</h3></div>
@@ -1273,7 +1216,6 @@
       <p><strong>Documentation by delivery:</strong> DBB requires complete, coordinated CDs. CMc may use bridging documents. Design-build may use performance specifications.</p>
     </div>
   </div>
-
   <!-- PjM QC -->
   <div class="sum-section" id="s-pjm-qc">
     <div class="sum-section-header"><span class="sum-section-tag toc-pjm">PjM — Section 5</span><h3>Project Quality Control (19–25%)</h3></div>
@@ -1283,13 +1225,11 @@
       <p><strong>Design integrity:</strong> Document intent of key SD decisions so they aren't value-engineered away in DD/CDs. Avoid <strong>project perfection syndrome</strong> — over-detailing beyond what the phase or budget requires. <strong>Corporate memory</strong> = institutional accumulated knowledge (reliable subcontractors, building department contacts, past project details) — organizing it is a QC function.</p>
     </div>
   </div>
-
   <!-- Abbreviations Legend -->
   <div class="sum-section" id="s-legend" style="border-top:2px solid var(--border);padding-top:24px">
     <div class="sum-section-header"><span class="sum-section-tag" style="background:#2a2a40;color:#9090b8;">REF</span><h3>Abbreviations Legend</h3></div>
     <div class="sum-body">
       <p style="font-size:12px;color: #9090b8;margin-bottom:14px">All abbreviations used in this study aid, grouped by category.</p>
-
       <div class="sum-subsection"><h4>ARE Divisions</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
@@ -1303,7 +1243,6 @@
           <tr><td><strong>CE</strong></td><td>Construction &amp; Evaluation</td><td>CA, commissioning, closeout</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Organizations &amp; Programs</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th></tr></thead>
@@ -1320,7 +1259,6 @@
           <tr><td><strong>CSI</strong></td><td>Construction Specifications Institute</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Project Delivery &amp; Contracting</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
@@ -1338,7 +1276,6 @@
           <tr><td><strong>RFP</strong></td><td>Request for Proposals</td><td>Owner requests qualifications + fee from firms</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>AIA Contract Documents</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Document</th><th>Full name</th><th>Who signs</th></tr></thead>
@@ -1357,7 +1294,6 @@
           <tr><td><strong>G802</strong></td><td>Amendment to the Professional Services Agreement</td><td>Used to add POE and other additional services</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Construction Administration</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
@@ -1375,7 +1311,6 @@
           <tr><td><strong>SD / DD</strong></td><td>Schematic Design / Design Development</td><td>First two design phases before CDs</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Financial &amp; Firm Metrics</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th><th>Formula / target</th></tr></thead>
@@ -1390,7 +1325,6 @@
           <tr><td><strong>P&amp;L</strong></td><td>Profit &amp; Loss Statement</td><td>Tracks revenue and expenses over a period</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Business Entities</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th></tr></thead>
@@ -1405,7 +1339,6 @@
           <tr><td><strong>JV</strong></td><td>Joint Venture (temporary third entity formed by two firms for a specific project)</td></tr>
         </tbody>
       </table></div>
-
       <div class="sum-subsection" style="margin-top:16px"><h4>Quality &amp; Scheduling</h4></div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Abbr.</th><th>Full name</th><th>Notes</th></tr></thead>
@@ -1422,7 +1355,6 @@
     </div>
   </div>
 </div>
-
 <script>
 const cards = [
   // ALL 3 EXAMS
@@ -1455,7 +1387,6 @@ const cards = [
   {q:"What does scope creep mean and how should it be managed?",a:"Incremental additions to program or scope during design. Manage by documenting every change, getting written owner consent, and tying each change to fee and schedule implications.",div:"all3",section:"Scope Creep"},
   {q:"What are consequential damages and how does AIA treat them?",a:"Consequential damages are indirect losses like lost rent, lost business, or loan penalties from delays. AIA contracts mutually waive them (since 1997). Direct damages (cost of fixing work) are limited to the architect's fee.",div:"all3",section:"AIA Contracts"},
   {q:"What is the difference between contract documents and instruments of service?",a:"Contract documents legally bind parties to build (drawings, specs, addenda, change orders). Instruments of service is a larger category — everything the architect creates, including sketches, field notes, abandoned designs. RFIs are NOT contract documents.",div:"all3",section:"AIA Contracts"},
-
   // PcM
   {q:"What is the utilization rate, and what range do profitable firms typically operate in?",a:"Utilization = DSE ÷ Total salary expense. Profitable firms typically operate at 0.60–0.65 (AHPP).",div:"pcm",section:"PcM S2: Finances"},
   {q:"What is the overhead rate formula?",a:"Total indirect expense ÷ Direct Salary Expense (DSE). Typically 100–200% of DSE.",div:"pcm",section:"PcM S2: Finances"},
@@ -1481,7 +1412,6 @@ const cards = [
   {q:"What is the key difference between a design-led and management-led firm?",a:"Design-led firms prioritize design quality and may accept lower profit margins. Management-led firms prioritize efficiency, predictability, and financial performance. Both exist on the exam — neither is 'wrong.'",div:"pcm",section:"PcM S4: Methodology"},
   {q:"What is the architect's role in relation to the owner and contractor (agency)?",a:"The architect is the agent of the owner (principal) in dealings with the contractor. The architect can create legal relationships between the owner and contractor. This is why change orders require owner signatures.",div:"pcm",section:"PcM S1: Ops"},
   {q:"What are the three sources of an architect's duties?",a:"(1) Contract terms, (2) Legislative enactment (building codes, licensing laws), (3) Conduct — implied duties courts recognize based on how parties have acted.",div:"pcm",section:"PcM S1: Ops"},
-
   // PjM
   {q:"What is a work plan and what does it contain?",a:"A 2-page project management document covering: project description, deliverables, team organization, responsibilities matrix, preliminary schedule, staffing, delivery method, budget, profit plan.",div:"pjm",section:"PjM S2: Work Planning"},
   {q:"What is the PDCA cycle?",a:"Plan, Do, Check, Adjust — the iterative project management cycle applied to the work plan.",div:"pjm",section:"PjM S2: Work Planning"},
@@ -1498,7 +1428,6 @@ const cards = [
   {q:"Who are examples of Authorities Having Jurisdiction (AHJ)?",a:"Zoning commission, building department (plan review/permits), fire marshal, historic preservation commission, accessibility enforcement agencies.",div:"pjm",section:"PjM S4: AHJ"},
   {q:'What does "constructability review" test in the QC process?',a:"Whether the design can actually be built as drawn — sequencing, access, tolerances, material availability, and contractor means and methods.",div:"pjm",section:"PjM S5: QC"},
   {q:"What is project perfection syndrome?",a:"Over-detailing or over-designing beyond what the project phase or budget requires. The law of diminishing returns applies — excessive quality costs time and money without proportional benefit.",div:"pjm",section:"PjM S5: QC"},
-
   // CE / CA
   {q:"What is the difference between an ASI and a Change Order?",a:"An ASI (G710) is a minor change that does not alter cost or schedule — only the architect signs. A Change Order (G701) alters scope, cost, or schedule and requires signatures from owner, architect, and contractor.",div:"ce",section:"CA: Change Instruments"},
   {q:"What is a Construction Change Directive (CCD) and when is it used?",a:"A change that affects cost or schedule but where owner and contractor cannot yet agree on the cost. The architect and owner sign it; the contractor proceeds. Keeps the project moving while cost is resolved. It does NOT require the contractor's signature.",div:"ce",section:"CA: Change Instruments"},
@@ -1524,7 +1453,6 @@ const cards = [
   {q:"What is the approximate content split for CE?",a:"~70% professional practice (CA procedures, contracts, delivery methods, risk) + ~30% technical (commissioning, building systems, specifications). The professional practice portion overlaps directly with PcM and PjM — study it once, test on it three times.",div:"ce",section:"CE: Exam Strategy"},
   {q:"What is weather day responsibility during construction?",a:"Past data establishes expected weather days. The architect decides if additional days are warranted. If the owner or architect causes a delay, the schedule is extended by change order. If the GC causes a delay, they earn no extra time — the owner can require extra labor at GC's cost.",div:"ce",section:"CA: Schedule"},
   {q:"What are RFIs and what form are they issued on?",a:"Requests for Information (G716) — the contractor's mechanism for asking the architect to clarify anything that cannot be built as drawn. If the response changes cost or schedule, a change order follows.",div:"ce",section:"CA: RFIs"},
-
   // PcM — Fee structures & delivery
   {q:"What is the bottom-up method of fee determination?",a:"Break the project into phases and small tasks, estimate hours and staff needed for each, then add contingency. Most accurate but time-consuming. Best for larger projects.",div:"pcm",section:"PcM S3: Fees"},
   {q:"What is the top-down method of fee determination?",a:"Start with the gross fee the owner will pay, subtract known expenses to see what's left for design time. Requires experience. Better for smaller jobs.",div:"pcm",section:"PcM S3: Fees"},
@@ -1538,7 +1466,6 @@ const cards = [
   {q:"What is the tax advantage of an S-Corp over an LLC?",a:"In an S-Corp, only a 'reasonable salary' is subject to income tax and FICA. Additional profit distributions can be taxed at the lower investment rate. In an LLC, all profit is taxed as earned income (higher rate + FICA). Best for very profitable small firms.",div:"pcm",section:"PcM S4: Entity Types"},
   {q:"What is the difference between a strategic alliance, joint venture, and merger?",a:"Strategic alliance — two firms share resources via a teaming agreement; no new entity formed. Joint venture — two firms create a temporary third entity to pursue a specific commission; profits and risks are shared. Merger — total combination of two firms into one.",div:"pcm",section:"PcM S4: Entity Types"},
   {q:"Why is a C-Corporation generally inappropriate for most architecture firms?",a:"C-Corps are double taxed — profits taxed at the corporate level, then dividends taxed again at the individual level. They also require publicly traded stock. Large firms like AECOM are C-Corps, but most architecture firms use LLC or S-Corp.",div:"pcm",section:"PcM S4: Entity Types"},
-
   // PjM — Delivery method detail
   {q:"What are the three DBB bid types and how do they differ?",a:"Competitive bid — open to all qualified bidders; lowest responsible bidder wins. Invited bid — limited to pre-qualified contractors; best value rather than pure cost. Negotiated bid — GC works with architect from beginning; price is negotiated with owner; tends toward higher quality.",div:"pjm",section:"PjM: Delivery Methods"},
   {q:"What is the difference between a responsive and responsible bidder?",a:"A responsive bid addresses all requirements in the solicitation. A responsible bidder is qualified to perform the work. Both are required for award in DBB.",div:"pjm",section:"PjM: Delivery Methods"},
@@ -1546,10 +1473,8 @@ const cards = [
   {q:"What is phased construction and how does it differ from fast-track?",a:"Phased construction staggers occupancy so portions open while others continue — used for airports, staged funding, or incremental growth. Fast-track overlaps design and construction phases to compress overall schedule. Both can require a CM; fast-track must be charged as an additional service.",div:"pjm",section:"PjM: Delivery Methods"},
   {q:"What are the three IPD variants?",a:"(1) Single Purpose Entity — highest risk/reward; all parties in a shared legal entity. (2) Project Alliance — shared risk without a new entity. (3) Relational Contract — least formal; parties agree not to sue each other and tie bonuses to project performance.",div:"pjm",section:"PjM: Delivery Methods"},
 ];
-
 let currentFilter='all', deck=[], currentIndex=0, isFlipped=false;
 const cardStatus={};
-
 function buildDeck(){
   if(currentFilter==='all') deck=[...cards];
   else if(currentFilter==='review') deck=cards.filter((_,i)=>cardStatus[i]==='review');
@@ -1559,14 +1484,12 @@ function buildDeck(){
   const pbColors={'all3':'var(--all3)','both':'var(--both)','pcm':'var(--pcm)','pjm':'var(--pjm)','ce':'var(--ce)','review':'var(--red)','all':'var(--nav-bg)'};
   document.getElementById('progressBar').style.background=pbColors[currentFilter]||'var(--nav-bg)';
 }
-
 function setFilter(f,el){
   currentFilter=f;
   document.querySelectorAll('.fc-filter').forEach(e=>e.classList.remove('active'));
   el.classList.add('active');
   buildDeck();
 }
-
 function renderCard(){
   const area=document.getElementById('cardArea');
   if(deck.length===0){area.innerHTML='<div class="fc-complete"><h3>No cards in this filter.</h3><p>Try selecting a different category.</p></div>';document.getElementById('cardCounter').textContent='0 / 0';updateProgress();return;}
@@ -1596,7 +1519,6 @@ function renderCard(){
   document.getElementById('cardCounter').textContent=`${currentIndex+1} / ${deck.length}`;
   updateProgress();
 }
-
 function updateProgress(){const pct=deck.length>0?(currentIndex/deck.length)*100:0;document.getElementById('progressBar').style.width=pct+'%';}
 function flipCard(){const c=document.getElementById('flashcard');if(!c||isFlipped)return;c.classList.add('flipped');isFlipped=true;document.getElementById('btnKnow').disabled=false;document.getElementById('btnReview').disabled=false;}
 function markCard(status){if(!isFlipped||currentIndex>=deck.length)return;const gi=cards.indexOf(deck[currentIndex]);cardStatus[gi]=status;currentIndex++;updateStats();renderCard();}
@@ -1623,14 +1545,12 @@ function switchPanel(id,el){
   el.classList.add('active');
 }
 buildDeck();
-
 // ===== SUMMARY SEARCH =====
 function filterSummary(query) {
   const sections = document.querySelectorAll('#summary .sum-section');
   const toc = document.querySelector('#summary .sum-toc');
   const msg = document.getElementById('sumSearchMsg');
   const q = query.trim().toLowerCase();
-
   if (!q) {
     sections.forEach(s => {
       s.style.display = '';
@@ -1640,10 +1560,8 @@ function filterSummary(query) {
     msg.style.display = 'none';
     return;
   }
-
   if (toc) toc.style.display = 'none';
   let matchCount = 0;
-
   sections.forEach(s => {
     s.querySelectorAll('mark.sh').forEach(m => { m.outerHTML = m.innerHTML; });
     if (s.textContent.toLowerCase().includes(q)) {
@@ -1654,13 +1572,11 @@ function filterSummary(query) {
       s.style.display = 'none';
     }
   });
-
   msg.style.display = '';
   msg.textContent = matchCount === 0
     ? 'No sections matched "' + query + '"'
     : matchCount + ' section' + (matchCount > 1 ? 's' : '') + ' matched — clear search to see all';
 }
-
 function highlightText(node, q) {
   if (node.nodeType === 3) {
     const idx = node.textContent.toLowerCase().indexOf(q);
@@ -1681,7 +1597,6 @@ function highlightText(node, q) {
     Array.from(node.childNodes).forEach(child => highlightText(child, q));
   }
 }
-
 function clearSearch() {
   const input = document.getElementById('sumSearch');
   input.value = '';
