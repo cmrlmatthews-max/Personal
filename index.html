@@ -359,6 +359,66 @@
     font-size: 14px !important;
   }
   #sumSearch:focus { border-color: #9090b8 !important; }
+  /* ── QUIZ ── */
+  #quiz { padding: 24px 20px; max-width: 880px; margin: 0 auto; }
+  .qz-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .qz-header h2 { font-size: 28px; font-weight: 900; flex: 1; letter-spacing: -0.03em; text-transform: uppercase; color: #e8e4f0; }
+  .qz-stats { display: flex; gap: 6px; }
+  .qz-stat { background: #0f0f1a; border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+  .qz-stat span { font-size: 18px; font-weight: 900; display: block; line-height: 1.1; }
+  .stat-correct span { color: #34d399; }
+  .stat-wrong span { color: #f87171; }
+  .qz-filters { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
+  .qz-progress { height: 6px; background: #1c1c2f; margin-bottom: 22px; overflow: hidden; }
+  .qz-progress-bar { height: 100%; background: var(--all3); transition: width 0.3s; }
+  /* Question card */
+  .qz-card { background: #16162a; border-left: 6px solid #3a3a58; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); position: relative; padding: 26px 28px 24px; margin-bottom: 18px; }
+  .qz-card.div-all3 { border-left-color: var(--all3); }
+  .qz-card.div-both { border-left-color: var(--both); }
+  .qz-card.div-pcm  { border-left-color: var(--pcm); }
+  .qz-card.div-pjm  { border-left-color: var(--pjm); }
+  .qz-card.div-ce   { border-left-color: var(--ce); }
+  .qz-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .qz-badge { padding: 3px 10px; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+  .qz-badge.badge-all3 { background: var(--all3); color: #fff; }
+  .qz-badge.badge-both { background: var(--both); color: #fff; }
+  .qz-badge.badge-pcm  { background: var(--pcm); color: #fff; }
+  .qz-badge.badge-pjm  { background: var(--pjm); color: #fff; }
+  .qz-badge.badge-ce   { background: var(--ce); color: #fff; }
+  .qz-section { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: #9090b8; }
+  .qz-q { font-size: 17px; font-weight: 700; line-height: 1.55; color: #e8e4f0; margin-bottom: 18px; }
+  .qz-options { display: flex; flex-direction: column; gap: 9px; }
+  .qz-opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 13px 16px; background: #0f0f1a;
+    border: 2px solid #2d2d48; cursor: pointer;
+    font-size: 14px; line-height: 1.5; color: #e8e4f0;
+    text-align: left; transition: all 0.12s; width: 100%;
+  }
+  .qz-opt:hover:not(:disabled) { border-color: #6366f1; background: #14142a; }
+  .qz-opt:disabled { cursor: default; }
+  .qz-opt-letter { font-weight: 900; font-size: 12px; letter-spacing: 0.05em; color: #9090b8; flex-shrink: 0; width: 16px; padding-top: 1px; }
+  .qz-opt.correct { border-color: var(--green); background: #052e16; }
+  .qz-opt.correct .qz-opt-letter { color: #34d399; }
+  .qz-opt.wrong { border-color: var(--red); background: #2d0a0a; }
+  .qz-opt.wrong .qz-opt-letter { color: #f87171; }
+  .qz-opt-mark { margin-left: auto; font-weight: 900; flex-shrink: 0; }
+  .qz-explain { display: none; margin-top: 18px; padding: 16px 18px; background: #0f0f1a; border-top: 4px solid #3a3a58; font-size: 13.5px; line-height: 1.75; color: #f5f4f0; }
+  .qz-card.div-all3 .qz-explain { border-top-color: var(--all3); }
+  .qz-card.div-both .qz-explain { border-top-color: var(--both); }
+  .qz-card.div-pcm  .qz-explain { border-top-color: var(--pcm); }
+  .qz-card.div-pjm  .qz-explain { border-top-color: var(--pjm); }
+  .qz-card.div-ce   .qz-explain { border-top-color: var(--ce); }
+  .qz-explain.show { display: block; }
+  .qz-explain strong { color: #b0aadc; }
+  .qz-explain .qz-verdict { font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; display: block; margin-bottom: 8px; }
+  .qz-verdict.v-correct { color: #34d399; }
+  .qz-verdict.v-wrong { color: #f87171; }
+  .qz-controls { display: flex; gap: 8px; margin-top: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .qz-complete { text-align: center; padding: 50px 20px; }
+  .qz-complete h3 { font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 10px; color: #e8e4f0; }
+  .qz-complete .qz-score { font-size: 48px; font-weight: 900; color: #34d399; line-height: 1; margin-bottom: 6px; }
+  .qz-complete p { color: #9090b8; margin-bottom: 22px; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -378,6 +438,7 @@
     <div class="nav-tab active" onclick="switchPanel('flashcards',this)">⚡ Flashcards</div>
     <div class="nav-tab" onclick="switchPanel('tables',this)">📊 Tables</div>
     <div class="nav-tab" onclick="switchPanel('summary',this)">📖 Summary</div>
+    <div class="nav-tab" onclick="switchPanel('quiz',this)">📝 Practice Q</div>
   </div>
 </nav>
 <!-- FLASHCARDS -->
@@ -1357,6 +1418,33 @@
     </div>
   </div>
 </div>
+<!-- QUIZ -->
+<div id="quiz" class="panel">
+  <div class="qz-header">
+    <h2>Practice Questions</h2>
+    <div class="qz-stats">
+      <div class="qz-stat stat-correct">Correct: <span id="qzCorrect">0</span></div>
+      <div class="qz-stat stat-wrong">Wrong: <span id="qzWrong">0</span></div>
+      <div class="qz-stat">Left: <span id="qzLeft">0</span></div>
+    </div>
+    <button class="btn-ghost" onclick="resetQuiz()">↺ Reset</button>
+  </div>
+  <div class="qz-filters">
+    <div class="fc-filter active" onclick="setQzFilter('all',this)">All Questions</div>
+    <div class="fc-filter f-all3" onclick="setQzFilter('all3',this)">🔺 All 3 / Cross</div>
+    <div class="fc-filter f-pcm" onclick="setQzFilter('pcm',this)">PcM</div>
+    <div class="fc-filter f-pjm" onclick="setQzFilter('pjm',this)">PjM</div>
+    <div class="fc-filter f-ce" onclick="setQzFilter('ce',this)">CE / CA</div>
+    <div class="fc-filter f-review" onclick="setQzFilter('wrong',this)">🔁 Missed</div>
+  </div>
+  <div class="qz-progress"><div class="qz-progress-bar" id="qzProgressBar" style="width:0%"></div></div>
+  <div id="qzArea"></div>
+  <div class="qz-controls" id="qzControls">
+    <button class="btn btn-outline" onclick="prevQuestion()">← Back</button>
+    <div class="fc-counter" id="qzCounter">1 / 0</div>
+    <button class="btn btn-primary" id="qzNextBtn" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
 <script>
 const cards = [
   // ALL 3 EXAMS
@@ -1547,6 +1635,140 @@ function switchPanel(id,el){
   el.classList.add('active');
 }
 buildDeck();
+// ===== QUIZ =====
+const quizQs = [
+  // ── PcM ──
+  {div:"pcm",section:"PcM: Finances",q:"Profitable architecture firms typically operate at what utilization rate (per AHPP)?",opts:["0.30–0.40","0.45–0.55","0.60–0.65","0.85–0.95"],correct:2,exp:"<strong>0.60–0.65.</strong> Utilization rate = Direct Salary Expense ÷ Total Salary Expense — the fraction of paid time that is billable to projects. Below ~0.60 the firm carries too much non-billable time; near 1.0 is unrealistic (everyone needs admin, training, and vacation time)."},
+  {div:"pcm",section:"PcM: Finances",q:"How is the overhead rate calculated?",opts:["Total indirect expense ÷ Direct Salary Expense","Net revenue ÷ Direct Salary Expense","Gross revenue ÷ Total Salary Expense","Direct Salary Expense ÷ Total Salary Expense"],correct:0,exp:"<strong>Total indirect expense ÷ DSE</strong>, typically 100–200% of DSE. (Net revenue ÷ DSE is the <em>net multiplier</em>; DSE ÷ Total Salary is <em>utilization</em>.)"},
+  {div:"pcm",section:"PcM: Finances",q:"What does Net Operating Revenue (NOR) represent?",opts:["Gross revenue before any deductions","Gross revenue minus consultant fees and reimbursables","Profit remaining after taxes","Revenue minus only employee salaries"],correct:1,exp:"<strong>Gross revenue minus consultant fees and reimbursables.</strong> NOR is the money the firm actually controls — it must cover direct expenses, indirect expenses, and profit. Pass-through fees to consultants and reimbursable expenses don't count as the firm's revenue."},
+  {div:"pcm",section:"PcM: Finances",q:"A firm's current ratio target should be at least:",opts:["0.5","1.0","1.5","3.0"],correct:2,exp:"<strong>≥ 1.5.</strong> Current ratio = Current Assets ÷ Current Liabilities, measuring ability to pay short-term obligations. The <em>quick ratio</em> (cash + A/R ÷ current liabilities) has a lower target of ≥ 1.0 because it excludes inventory and prepaid assets."},
+  {div:"pcm",section:"PcM: Entity Types",q:"Which firm structure provides personal liability protection AND pass-through taxation with no limit on the number of owners?",opts:["S-Corporation","LLC","C-Corporation","General Partnership"],correct:1,exp:"<strong>LLC.</strong> An S-Corp also has pass-through taxation but caps shareholders at 100. A C-Corp is double-taxed. A general partnership offers no liability protection — partners are jointly and severally liable."},
+  {div:"pcm",section:"PcM: Business Ops",q:"Which federal act mandates qualifications-based selection (QBS) for federal architecture and engineering services?",opts:["The Sherman Act","The Miller Act","The Brooks Act","The Spearin Doctrine"],correct:2,exp:"<strong>The Brooks Act.</strong> It requires federal agencies to select A&E firms on qualifications first, then negotiate fee — price cannot be the primary selection factor. (The Miller Act governs bonds on federal projects; Spearin is the implied warranty of design adequacy.)"},
+  {div:"pcm",section:"PcM: Business Ops",q:"Which insurance type protects a firm specifically against a wrongful-termination lawsuit?",opts:["General liability insurance","Professional liability insurance","Employment practice liability insurance","Workers compensation insurance"],correct:2,exp:"<strong>Employment practice liability insurance (EPLI)</strong> covers wrongful termination, discrimination, and harassment claims. Professional liability (errors & omissions) covers design negligence; workers comp covers on-the-job injury; general liability covers property damage and bodily injury."},
+  {div:"pcm",section:"PcM: Entity Types",q:"Why is a C-Corporation generally inappropriate for most architecture firms?",opts:["It offers no liability protection","Profits are taxed twice — at the corporate level and again as dividends","It cannot have more than 100 shareholders","Partners remain personally liable for malpractice"],correct:1,exp:"<strong>Double taxation.</strong> Corporate profits are taxed, then dividends to owners are taxed again. Large publicly traded firms (e.g., AECOM) use the C-Corp form, but most firms choose an LLC or S-Corp to avoid the second layer of tax."},
+  {div:"pcm",section:"PcM: Fees",q:"What is the typical percentage fee for a residential project, as a share of the Cost of the Work?",opts:["~5%","~15%","~25%","~40%"],correct:1,exp:"<strong>~15%.</strong> Residential work carries higher fees because of complexity, client involvement, and risk. Large or repetitive/economy projects command lower percentages; highly complex program types run higher."},
+  {div:"pcm",section:"PcM: Fees",q:"In bid documents, what is the correct use of a 'unit price'?",opts:["A lump sum set aside for items that may change brand or style","A price per unit used when the item type is known but the quantity is not","An optional item priced separately for owner decision","Money the owner reserves for unforeseen construction costs"],correct:1,exp:"<strong>Per-unit pricing when quantity is unknown</strong> (e.g., removal of contaminated soil per cubic yard). An <em>allowance</em> covers items whose selection/price may change; an <em>add alternate</em> is an optional priced item; a <em>construction contingency</em> is the owner's reserve for the unforeseen."},
+  {div:"pcm",section:"PcM: Fees",q:"Which fee-determination method breaks the project into phases and tasks, estimates hours for each, then adds contingency?",opts:["Top-down method","Bottom-up method","Percentage-of-construction method","Multiple-of-DSE method"],correct:1,exp:"<strong>Bottom-up.</strong> It is the most accurate but most time-consuming method, best for larger projects. The <em>top-down</em> method starts from the gross fee the owner will pay and subtracts expenses to find what's left for design — faster but reliant on experience, better for small jobs."},
+  {div:"pcm",section:"PcM: Finances",q:"In revenue planning, a 'prospect' is distinguished from a 'suspect' by what threshold?",opts:["Project fee above $1M","≥ 50% likelihood of becoming a real project","A signed contract in hand","Repeat client status"],correct:1,exp:"<strong>≥ 50% likelihood.</strong> A prospect has at least a 50% chance of becoming revenue-generating; a suspect is below 50%. For forecasting, multiply projected fee × likelihood % to estimate expected revenue."},
+  {div:"pcm",section:"PcM: Finances",q:"Which statement about accrual vs. cash basis accounting is correct?",opts:["Cash basis counts debts and credits before they are paid","Accrual basis is used only for tax filing","Accrual basis counts credits and debts even when unpaid; cash basis counts only actual receipts and payments","They produce identical results in every period"],correct:2,exp:"<strong>Accrual records earned/owed amounts before cash changes hands</strong> — better for business decisions. Cash basis counts only money actually received or paid and is typically used for taxes."},
+  {div:"pcm",section:"PcM: Finances",q:"Aged accounts receivable sitting beyond 90 days most directly signals:",opts:["Strong cash reserves","A collection problem","Excess profit","High utilization"],correct:1,exp:"<strong>A collection problem</strong> — work has been billed but not paid within the normal collection window, straining cash flow. It does not indicate profitability or reserves."},
+  {div:"pcm",section:"PcM: Methodology",q:"What best describes the difference between a design-led and a management-led firm?",opts:["Design-led firms are always more profitable","Management-led firms refuse complex projects","Design-led firms prioritize design quality and may accept lower margins; management-led firms prioritize efficiency and financial performance","Only management-led firms appear on the ARE"],correct:2,exp:"<strong>It's a values/priority distinction</strong>, not a right-vs-wrong one. Both models appear on the exam. Design-led practices may trade margin for design excellence; management-led practices optimize for predictability and financial performance."},
+  // ── PjM ──
+  {div:"pjm",section:"PjM: Scheduling",q:"The critical path in a project schedule is:",opts:["The shortest sequence of tasks","The longest sequence of dependent tasks — any delay on it extends the whole project","The set of tasks with the most float","The path with the most parallel activities"],correct:1,exp:"<strong>The longest chain of dependent tasks.</strong> It determines the minimum project duration; any slip on a critical-path activity pushes out the finish date. Tasks off the critical path have float."},
+  {div:"pjm",section:"PjM: Scheduling",q:"What is 'free float'?",opts:["Total slack before the project end date slips","The delay a specific task can absorb without delaying the next task","Time built in for weather days","Unbillable time charged to overhead"],correct:1,exp:"<strong>Delay a task can absorb without affecting its successor.</strong> <em>Total float</em> is the slack available before the project's end date itself slips."},
+  {div:"pjm",section:"PjM: Contracts",q:"AIA Document C401 governs which relationship?",opts:["Owner–Architect","Owner–Contractor","Architect–Consultant","Contractor–Subcontractor"],correct:2,exp:"<strong>Architect–Consultant.</strong> Under C401 the architect acts as the 'owner' toward the consultant, with rights and duties mirroring B101. The consultant may not sub out work without the architect's written permission."},
+  {div:"pjm",section:"PjM: Work Planning",q:"A project work plan is best described as:",opts:["A single-line construction schedule","A short management document covering scope, team, responsibilities, schedule, staffing, delivery method, budget, and profit plan","The owner-architect contract","The contractor's means-and-methods document"],correct:1,exp:"<strong>A concise (~2-page) management roadmap</strong> covering project description, deliverables, team organization, a responsibilities matrix, preliminary schedule, staffing, delivery method, budget, and profit plan. It is iterated using the Plan-Do-Check-Adjust (PDCA) cycle."},
+  {div:"pjm",section:"PjM: Scheduling",q:"How does a Gantt chart differ from a PERT diagram?",opts:["Gantt shows dependencies only; PERT shows durations only","Gantt shows task duration on a timeline; PERT shows sequence and dependencies","They are identical","Only PERT can show a critical path"],correct:1,exp:"<strong>Gantt = duration on a timeline; PERT = sequence and dependencies.</strong> Gantt bars make durations and overlaps visual; PERT (network) diagrams emphasize the order and interdependence of tasks but are less precise about duration."},
+  {div:"pjm",section:"PjM: Contracts",q:"In a CM-as-Constructor (CMc) arrangement, the Guaranteed Maximum Price is typically established:",opts:["Before schematic design begins","By the end of schematic design","At 100% construction documents","At substantial completion"],correct:1,exp:"<strong>By the end of schematic design.</strong> The CM is engaged early and commits to a GMP once enough design exists to price the work, assuming construction risk above the cap."},
+  {div:"pjm",section:"PjM: Consultants",q:"Which group of consultants typically contracts DIRECTLY with the architect (not the owner)?",opts:["Geotechnical engineer and hazardous-materials consultant","Surveyor and permitting consultant","Civil, landscape, lighting, and MEP","Demolition contractor and subcontractors"],correct:2,exp:"<strong>Civil, landscape, lighting, and MEP</strong> are typically the architect's sub-consultants. Site-related parties — surveyor, geotechnical engineer, hazardous-materials consultant, permitting — are usually contracted by the <em>owner</em>, because the owner is responsible for the site."},
+  {div:"pjm",section:"PjM: AHJ",q:"Which of the following is an example of an Authority Having Jurisdiction (AHJ)?",opts:["The structural engineer","The fire marshal","The general contractor","The owner's lender"],correct:1,exp:"<strong>The fire marshal.</strong> AHJs enforce codes and approvals — zoning commissions, building departments (plan review/permits), fire marshals, historic preservation commissions, and accessibility enforcement agencies. Design team members and lenders are not AHJs."},
+  {div:"pjm",section:"PjM: QC",q:"A constructability review primarily tests whether:",opts:["The design meets the owner's budget","The design can actually be built as drawn","The fee covers the scope","The drawings match the specifications"],correct:1,exp:"<strong>Whether it can be built as drawn</strong> — checking sequencing, access, tolerances, material availability, and means-and-methods feasibility. Budget and fee are separate concerns."},
+  {div:"pjm",section:"PjM: Delivery Methods",q:"What is the difference between a 'responsive' and a 'responsible' bidder in design-bid-build?",opts:["Responsive = qualified to do the work; responsible = bid on time","Responsive = bid addresses all solicitation requirements; responsible = qualified/capable of performing","They mean the same thing","Responsive applies only to public work"],correct:1,exp:"<strong>Responsive addresses all requirements; responsible is qualified to perform.</strong> Award in DBB requires both — the lowest <em>responsive and responsible</em> bidder (or best value, depending on bid type)."},
+  {div:"pjm",section:"PjM: Delivery Methods",q:"Why are late bids never accepted in a public design-bid-build opening, regardless of excuse?",opts:["It would violate the architect's license","Bids are opened publicly at the same time, so a late bidder could know competitors' numbers — an unfair advantage","The owner lacks authority to extend deadlines","Late bids are automatically the lowest"],correct:1,exp:"<strong>To preserve a level playing field.</strong> Because bids open publicly and simultaneously, accepting a late bid could let that bidder undercut the now-known competing prices. The rule is absolute — no exceptions."},
+  {div:"pjm",section:"PjM: Delivery Methods",q:"Which AIA agreement is associated with Integrated Project Delivery (IPD)?",opts:["A101","A195","B101","A201"],correct:1,exp:"<strong>A195.</strong> IPD shares risk and reward among owner, architect, and contractor. A101 is the owner-contractor agreement (DBB), A201 the general conditions, and B101 the owner-architect agreement."},
+  // ── CE / CA ──
+  {div:"ce",section:"CA: Change Instruments",q:"What is the key difference between an ASI (G710) and a Change Order (G701)?",opts:["An ASI changes cost; a CO does not","An ASI is a minor change with no cost/schedule impact, signed only by the architect; a CO alters scope/cost/schedule and needs owner, architect, and contractor signatures","An ASI is issued before bidding; a CO after","They are interchangeable"],correct:1,exp:"<strong>ASI = minor, no cost/time change, architect-only signature. CO = alters scope, cost, or schedule and requires all three signatures</strong> (owner, architect, contractor)."},
+  {div:"ce",section:"CA: Change Instruments",q:"A Construction Change Directive (CCD) is used when:",opts:["The change has no cost or schedule impact","Owner and contractor cannot yet agree on the cost, but work must proceed","The contract has not yet been signed","Only the contractor wants a change"],correct:1,exp:"<strong>When cost/schedule are affected but not yet agreed.</strong> The owner and architect sign the CCD and the contractor proceeds, keeping the project moving while the price is resolved. It does NOT require the contractor's signature."},
+  {div:"ce",section:"CA: Change Instruments",q:"A change the architect makes to the drawings after bidding begins but BEFORE the contract is signed is called a(n):",opts:["Change order","Addendum","Construction change directive","Allowance"],correct:1,exp:"<strong>Addendum.</strong> Because it is issued before the contract is signed, its cost is folded into the bids — no change order is needed. A change order modifies the contract only after it is signed."},
+  {div:"ce",section:"CA: Pay Applications",q:"Typical retainage amounts withheld from the contractor's payments are:",opts:["5% of all work","10% of work-in-place and 5% of stored materials","25% until final completion","A flat $10,000"],correct:1,exp:"<strong>~10% of work-in-place and ~5% of stored materials.</strong> At substantial completion most retainage is released, but an amount equal to roughly double the cost of the outstanding punch-list items is held back until final completion."},
+  {div:"ce",section:"CA: Pay Applications",q:"What does AIA Document G702 cover, and who certifies it?",opts:["The schedule of values; the owner certifies it","The Application and Certificate for Payment; the contractor submits, the architect certifies, the owner pays","The certificate of substantial completion; the contractor certifies","The punch list; the architect certifies"],correct:1,exp:"<strong>G702 = Application and Certificate for Payment.</strong> The contractor submits it, the architect certifies it, the owner pays. G703 (Continuation Sheet) is the schedule-of-values breakdown."},
+  {div:"ce",section:"CA: Substantial Completion",q:"What event triggers the start of the contractor's one-year warranty period?",opts:["Final completion","Notice to proceed","Substantial completion (certified via G704)","The owner's first occupancy permit"],correct:2,exp:"<strong>Substantial completion</strong>, certified by the architect on G704 (Certificate of Substantial Completion). This is also when most retainage is released and the statute of limitations generally begins."},
+  {div:"ce",section:"CA: Closeout",q:"Who prepares the punch list?",opts:["The architect","The owner","The contractor","The commissioning agent"],correct:2,exp:"<strong>The contractor</strong> prepares the list of incomplete or non-conforming items to resolve before final completion. The architect reviews and verifies it, but the contractor compiles it."},
+  {div:"ce",section:"CA: Roles",q:"Who is responsible for site safety and the contractor's means and methods during construction?",opts:["The architect","The contractor","The owner","The building official"],correct:1,exp:"<strong>The contractor.</strong> The architect does not control means, methods, or site safety — but must document non-conforming work that creates a life-safety risk. Assuming safety responsibility would expose the architect to liability."},
+  {div:"ce",section:"CA: Submittals",q:"When reviewing the contractor's shop drawings, the architect reviews for:",opts:["Dimensional accuracy and quantities","Conformance with design intent only","The contractor's pricing","Means and methods"],correct:1,exp:"<strong>Design intent only.</strong> The contractor remains fully responsible for accuracy, dimensions, quantities, and building per the contract documents. Reviewing for accuracy would shift that responsibility onto the architect."},
+  {div:"ce",section:"CA: Surety Bonds",q:"Which set correctly names the three surety bonds — and who purchases them?",opts:["Bid, performance, payment — purchased by the contractor","Bid, builder's risk, payment — purchased by the owner","Performance, professional liability, payment — purchased by the architect","Bid, performance, warranty — purchased by the owner"],correct:0,exp:"<strong>Bid, performance, and payment bonds, all purchased by the contractor.</strong> A bid bond guarantees the bidder will enter the contract if selected; a performance bond has the surety complete the work if the contractor defaults; a payment bond protects subs from GC nonpayment."},
+  {div:"ce",section:"CE: Commissioning",q:"What is the relationship between the Owner's Project Requirements (OPR) and the Basis of Design (BOD)?",opts:["The OPR explains how the design works; the BOD lists owner goals","The OPR states WHAT the building must do; the BOD explains HOW the design achieves it","They are two names for the same document","The BOD is written first, before the OPR"],correct:1,exp:"<strong>OPR = 'what'; BOD = 'how.'</strong> The OPR is written first and states functional, environmental, energy, and occupancy requirements. The BOD is more technical, documenting system selection, integration, and sequences of operation that satisfy the OPR."},
+  {div:"ce",section:"CE: Commissioning",q:"The commissioning agent (CxA) on a project is best described as:",opts:["A member of the architect's design team","A subcontractor to the general contractor","An independent third party hired by the owner","An employee of the building department"],correct:2,exp:"<strong>An independent third party hired by the owner.</strong> The CxA verifies that building systems are installed and operate as intended, working from pre-design through about one year post-occupancy. Fundamental commissioning is a LEED prerequisite."},
+  {div:"ce",section:"CE: POE",q:"A post-occupancy evaluation (POE) is added to the architect's services using which document, and is classified as:",opts:["AIA G704; a basic service","AIA G802; an additional service","AIA B101; a basic service","AIA A201; a contractor obligation"],correct:1,exp:"<strong>AIA G802 (Amendment to the Professional Services Agreement); an additional service.</strong> Documenting the POE as a separate contracted service avoids inadvertently resetting the statute-of-limitations clock, which begins at substantial completion."},
+  {div:"ce",section:"CA: RFIs",q:"What is a Request for Information (RFI), and on what AIA form is it issued?",opts:["The contractor's payment request; G702","The contractor's request to clarify something that can't be built as drawn; G716","The architect's instruction with no cost impact; G710","The owner's change directive; G714"],correct:1,exp:"<strong>An RFI (G716) is the contractor's mechanism to ask the architect to clarify anything that cannot be built as drawn.</strong> If the answer changes cost or schedule, a change order follows. (G702 = pay app; G710 = ASI; CCD = G714.)"},
+  // ── Cross-division / All 3 ──
+  {div:"all3",section:"Risk Management",q:"What are the four recognized methods of managing risk?",opts:["Identify, Quantify, Insure, Litigate","Avoid, Assume, Transfer, Control","Plan, Do, Check, Adjust","Accept, Reject, Defer, Escalate"],correct:1,exp:"<strong>Avoid, Assume, Transfer, Control.</strong> You can avoid the risk (decline the job), assume it (build it into the fee), transfer it (insurance/indemnification), or control it (QA/QC, documentation). Risk management is about assessing and managing risk — not eliminating it. (Plan-Do-Check-Adjust is the work-plan cycle.)"},
+  {div:"all3",section:"Risk Management",q:"Which building typology is generally considered the MOST prone to litigation?",opts:["Office buildings","Schools","Condominiums","Shopping centers"],correct:2,exp:"<strong>Condominiums.</strong> Occupants have high expectations, and a condo association provides a ready-made entity — with dues, a budget, and often a resident attorney — to bring suit. Residential work in general carries elevated risk from inexperienced, emotionally invested owners."},
+  {div:"all3",section:"AIA Contracts",q:"How do standard AIA contracts treat consequential damages?",opts:["The owner may recover them in full","The architect's fee caps them","Both parties mutually waive them","They are converted to liquidated damages"],correct:2,exp:"<strong>Mutually waived (since 1997).</strong> Consequential damages are indirect losses — lost rent, lost business, financing penalties. Direct damages (the cost to fix defective work) are not waived but are typically limited to the architect's fee."},
+  {div:"all3",section:"Agency",q:"In the owner-architect-contractor structure, the architect functions as:",opts:["The owner's agent, acting on the owner's behalf within granted authority","The contractor's supervisor","An independent entity with no duty to the owner","The owner's employee"],correct:0,exp:"<strong>The owner's agent (the owner is the principal).</strong> The architect acts on the owner's behalf toward the contractor but only within the authority granted — which is why change orders need the owner's signature. (When interpreting the contract documents, the architect must act as an impartial arbiter per NCARB Rule 2.4.)"},
+  {div:"all3",section:"NCARB Rules",q:"NCARB Model Rule 2.2 states that an architect may never:",opts:["Serve as an impartial interpreter of the contract","Accept compensation from a material or equipment supplier for specifying their products","Sign and seal documents prepared under their responsible control","Decline a project for risk reasons"],correct:1,exp:"<strong>Accept supplier compensation for specifying/endorsing products.</strong> This rule is absolute — no waiver is possible — because it protects the architect's independent professional judgment. (Rule 5.1 governs sealing only work under your responsible control; Rule 2.4 covers impartial interpretation.)"},
+  {div:"all3",section:"AIA Contracts",q:"Which is NOT a contract document?",opts:["The drawings","The specifications","An executed change order","An RFI"],correct:3,exp:"<strong>An RFI is not a contract document.</strong> Contract documents (drawings, specs, addenda, change orders) legally bind the parties. RFIs, sketches, and field notes are 'instruments of service' — the broader category of everything the architect produces — but they do not modify the contract."},
+];
+let qzFilter='all', qzDeck=[], qzIndex=0;
+const qzStatus={}; // global index -> 'correct'|'wrong'
+function buildQuiz(){
+  if(qzFilter==='all') qzDeck=[...quizQs];
+  else if(qzFilter==='wrong') qzDeck=quizQs.filter(q=>qzStatus[quizQs.indexOf(q)]==='wrong');
+  else if(qzFilter==='all3') qzDeck=quizQs.filter(q=>q.div==='all3'||q.div==='both');
+  else qzDeck=quizQs.filter(q=>q.div===qzFilter);
+  qzIndex=0; renderQuestion(); updateQzStats();
+  const cols={'all3':'var(--all3)','pcm':'var(--pcm)','pjm':'var(--pjm)','ce':'var(--ce)','wrong':'var(--red)','all':'var(--nav-bg)'};
+  document.getElementById('qzProgressBar').style.background=cols[qzFilter]||'var(--nav-bg)';
+}
+function setQzFilter(f,el){
+  qzFilter=f;
+  el.parentElement.querySelectorAll('.fc-filter').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  buildQuiz();
+}
+const badgeText={all3:'ALL 3',both:'PcM + PjM',pcm:'PcM',pjm:'PjM',ce:'CE'};
+function renderQuestion(){
+  const area=document.getElementById('qzArea');
+  const controls=document.getElementById('qzControls');
+  if(qzDeck.length===0){area.innerHTML='<div class="qz-complete"><h3>No questions in this filter.</h3><p>Try another category, or answer some questions to populate "Missed".</p></div>';document.getElementById('qzCounter').textContent='0 / 0';controls.style.display='none';updateQzProgress();return;}
+  if(qzIndex>=qzDeck.length){
+    const answered=qzDeck.filter(q=>qzStatus[quizQs.indexOf(q)]!==undefined);
+    const right=qzDeck.filter(q=>qzStatus[quizQs.indexOf(q)]==='correct').length;
+    const pct=answered.length?Math.round(right/answered.length*100):0;
+    area.innerHTML=`<div class="qz-complete"><div class="qz-score">${pct}%</div><h3>Set complete</h3><p>${right} correct out of ${answered.length} answered in this filter.</p><button class="btn btn-primary" onclick="buildQuiz()">Restart Set</button></div>`;
+    document.getElementById('qzCounter').textContent=`${qzDeck.length} / ${qzDeck.length}`;
+    controls.style.display='none';updateQzProgress();return;
+  }
+  controls.style.display='flex';
+  const item=qzDeck[qzIndex];
+  const gi=quizQs.indexOf(item);
+  const prevAnswer=qzStatus[gi]; // if already answered, show locked state
+  let answeredIdx=item._chosen;
+  let html=`<div class="qz-card div-${item.div}">`;
+  html+=`<div class="qz-meta"><span class="qz-badge badge-${item.div}">${badgeText[item.div]||item.div}</span><span class="qz-section">${item.section}</span></div>`;
+  html+=`<div class="qz-q">${item.q}</div>`;
+  html+=`<div class="qz-options">`;
+  const letters=['A','B','C','D','E','F'];
+  item.opts.forEach((opt,i)=>{
+    let cls='qz-opt', mark='', dis='';
+    if(prevAnswer!==undefined){
+      dis='disabled';
+      if(i===item.correct){cls+=' correct';mark='<span class="qz-opt-mark">✓</span>';}
+      else if(i===answeredIdx){cls+=' wrong';mark='<span class="qz-opt-mark">✗</span>';}
+    }
+    html+=`<button class="${cls}" ${dis} onclick="answerQuestion(${i})"><span class="qz-opt-letter">${letters[i]}</span><span>${opt}</span>${mark}</button>`;
+  });
+  html+=`</div>`;
+  const showExp=prevAnswer!==undefined?' show':'';
+  const verdict=prevAnswer==='correct'?'<span class="qz-verdict v-correct">✓ Correct</span>':(prevAnswer==='wrong'?'<span class="qz-verdict v-wrong">✗ Not quite</span>':'');
+  html+=`<div class="qz-explain${showExp}" id="qzExplain">${verdict}${item.exp}</div>`;
+  html+=`</div>`;
+  area.innerHTML=html;
+  document.getElementById('qzCounter').textContent=`${qzIndex+1} / ${qzDeck.length}`;
+  document.getElementById('qzNextBtn').textContent=qzIndex===qzDeck.length-1?'Finish →':'Next →';
+  updateQzProgress();
+}
+function answerQuestion(i){
+  const item=qzDeck[qzIndex];
+  const gi=quizQs.indexOf(item);
+  if(qzStatus[gi]!==undefined)return; // already answered
+  item._chosen=i;
+  qzStatus[gi]=(i===item.correct)?'correct':'wrong';
+  updateQzStats();
+  renderQuestion();
+}
+function nextQuestion(){if(qzIndex<qzDeck.length)qzIndex++;renderQuestion();}
+function prevQuestion(){if(qzIndex>0){qzIndex--;renderQuestion();}}
+function resetQuiz(){Object.keys(qzStatus).forEach(k=>delete qzStatus[k]);quizQs.forEach(q=>delete q._chosen);buildQuiz();}
+function updateQzProgress(){const pct=qzDeck.length>0?(qzIndex/qzDeck.length)*100:0;document.getElementById('qzProgressBar').style.width=pct+'%';}
+function updateQzStats(){
+  const correct=Object.values(qzStatus).filter(v=>v==='correct').length;
+  const wrong=Object.values(qzStatus).filter(v=>v==='wrong').length;
+  document.getElementById('qzCorrect').textContent=correct;
+  document.getElementById('qzWrong').textContent=wrong;
+  document.getElementById('qzLeft').textContent=quizQs.length-correct-wrong;
+}
+buildQuiz();
 // ===== SUMMARY SEARCH =====
 function filterSummary(query) {
   const sections = document.querySelectorAll('#summary .sum-section');
