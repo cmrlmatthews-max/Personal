@@ -543,6 +543,71 @@
   .qz-complete h3 { font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 10px; color: var(--text); }
   .qz-complete .qz-score { font-size: 48px; font-weight: 900; color: var(--ok); line-height: 1; margin-bottom: 6px; }
   .qz-complete p { color: var(--muted); margin-bottom: 22px; font-size: 14px; }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 760px) {
+    .nav { padding: 0 10px; }
+    .nav-brand { font-size: 12px; padding: 12px 10px 12px 0; margin-right: 0; gap: 8px; }
+    .nav-brand > div:first-child > div:first-child { display: none; } /* hide "LICENSURE EXAM" */
+    .nav-brand-accent { display: none; }
+    .nav-tab { padding: 14px 11px; font-size: 11px; letter-spacing: 0.05em; }
+    .nav-right { gap: 6px; padding-left: 8px; }
+    .nav-profile-name { display: none; }
+    .nav-profile { padding: 5px; }
+    .nav-profile-caret { display: none; }
+    .nav-theme { width: 32px; height: 32px; font-size: 14px; }
+
+    #flashcards, #tables, #summary, #quiz { padding: 16px 12px; }
+    .fc-header h2, .qz-header h2 { font-size: 22px; }
+    .sum-header h2 { font-size: 24px; }
+    #tables h2 { font-size: 22px; }
+    .fc-stat, .qz-stat { padding: 5px 10px; font-size: 10px; }
+
+    .card { min-height: 240px; }
+    .card-inner { padding: 46px 18px 64px; }
+    .card-q { font-size: 16px; min-height: 56px; }
+    .card-watermark { font-size: 38px; }
+    .card-division-badge { font-size: 9px; padding: 3px 8px; }
+
+    .qz-card { padding: 20px 16px 18px; }
+    .qz-q { font-size: 16px; }
+    .qz-opt { padding: 12px 12px; font-size: 13px; }
+
+    th, td { padding: 9px 10px; font-size: 12px; }
+    .table-section h3 { font-size: 16px; }
+
+    .modal-overlay { padding: 56px 12px 12px; }
+    .sum-section-header h3 { font-size: 18px; }
+  }
+  @media (max-width: 480px) {
+    .nav-brand { font-size: 11px; padding: 11px 8px 11px 0; border-right: none; }
+    /* tab strip becomes horizontally scrollable so all four always fit */
+    .nav-tabs { flex: 1; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab { padding: 12px 9px; font-size: 10px; letter-spacing: 0.03em; flex-shrink: 0; }
+    .nav-right { padding-left: 6px; }
+
+    .fc-header, .qz-header { gap: 8px; }
+    .fc-header h2, .qz-header h2 { font-size: 19px; flex-basis: 100%; }
+    .fc-filter, .qz-filters .fc-filter, .table-btn { font-size: 10px; padding: 5px 10px; }
+    .btn { padding: 8px 14px; font-size: 10px; }
+    .fc-controls { gap: 6px; }
+    .fc-counter { min-width: 56px; font-size: 11px; }
+
+    .card-inner { padding: 42px 14px 60px; }
+    .card-q { font-size: 15px; }
+    .card-watermark { font-size: 30px; }
+    .card-a { font-size: 13px; padding: 14px 14px; }
+
+    .sum-header h2 { font-size: 21px; }
+    .sum-body, .sum-body ul { font-size: 12px; }
+    .inline-table { font-size: 11px; }
+    .inline-table th, .inline-table td { padding: 6px 7px; }
+    th, td { padding: 8px 8px; font-size: 11px; }
+
+    .modal { padding: 18px 16px 20px; }
+    .modal-head h3 { font-size: 16px; }
+  }
 </style>
 <script>
   // Apply saved theme before paint to avoid a flash
