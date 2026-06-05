@@ -1784,10 +1784,18 @@ const cards = [
 ];
 let currentFilter='all', deck=[], currentIndex=0, isFlipped=false;
 const cardStatus={};
+function shuffleArr(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+let cardOrder = shuffleArr(cards.map((_,i)=>i));   // reshuffled each session (page load)
 function buildDeck(){
-  if(currentFilter==='all') deck=[...cards];
-  else if(currentFilter==='review') deck=cards.filter((_,i)=>cardStatus[i]==='review');
-  else deck=cards.filter(c=>c.div===currentFilter);
+  // Walk cards in this session's shuffled order; apply the active filter and
+  // drop any card marked "Got it" (out of rotation until Reset).
+  const passes = gi => {
+    if(cardStatus[gi]==='know') return false;
+    if(currentFilter==='all') return true;
+    if(currentFilter==='review') return cardStatus[gi]==='review';
+    return cards[gi].div===currentFilter;
+  };
+  deck = cardOrder.filter(passes).map(gi=>cards[gi]);
   currentIndex=0; isFlipped=false; renderCard(); updateStats();
   // Update progress bar color to match active filter
   const pbColors={'all3':'var(--all3)','both':'var(--both)','pcm':'var(--pcm)','pjm':'var(--pjm)','ce':'var(--ce)','review':'var(--red)','all':'var(--nav-bg)'};
@@ -1910,11 +1918,16 @@ const quizQs = [
 ];
 let qzFilter='all', qzDeck=[], qzIndex=0;
 const qzStatus={}; // global index -> 'correct'|'wrong'
+let qzOrder = shuffleArr(quizQs.map((_,i)=>i));   // reshuffled each session (page load)
 function buildQuiz(){
-  if(qzFilter==='all') qzDeck=[...quizQs];
-  else if(qzFilter==='wrong') qzDeck=quizQs.filter(q=>qzStatus[quizQs.indexOf(q)]==='wrong');
-  else if(qzFilter==='all3') qzDeck=quizQs.filter(q=>q.div==='all3'||q.div==='both');
-  else qzDeck=quizQs.filter(q=>q.div===qzFilter);
+  const passes = gi => {
+    const q=quizQs[gi];
+    if(qzFilter==='all') return true;
+    if(qzFilter==='wrong') return qzStatus[gi]==='wrong';
+    if(qzFilter==='all3') return q.div==='all3'||q.div==='both';
+    return q.div===qzFilter;
+  };
+  qzDeck = qzOrder.filter(passes).map(gi=>quizQs[gi]);
   qzIndex=0; renderQuestion(); updateQzStats();
   const cols={'all3':'var(--all3)','pcm':'var(--pcm)','pjm':'var(--pjm)','ce':'var(--ce)','wrong':'var(--red)','all':'var(--nav-bg)'};
   document.getElementById('qzProgressBar').style.background=cols[qzFilter]||'var(--nav-bg)';
