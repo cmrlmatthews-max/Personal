@@ -1,41 +1,21 @@
 /* ============================================================================
    LIBRARY TAB  —  ARE PcM + PjM + CE Study Aid
-   ----------------------------------------------------------------------------
-   Adds a "Library" tab (diagrams + audio) next to your existing tabs.
-   Self-contained: injects the nav button, the panel, the styles, and the
-   content list below. Uses your app's existing theme variables, so it follows
-   your theme switcher and dark mode automatically.
-
-   ----------------------------------------------------------------------------
-   HOW TO ADD CONTENT LATER  (this is the only part you edit)
-   ----------------------------------------------------------------------------
-   1. Put files in the repo:
-        Personal/library/diagrams/your-file.png   (or .jpg / .webp / .pdf / .svg)
-        Personal/library/audio/your-file.mp3       (or .m4a / .ogg)
-   2. Add an entry to DIAGRAMS or AUDIO below.
-
-   DIAGRAM entry fields:
-     title    : shown on the card           (required)
-     src      : path to the file            (leave "" to show an "awaiting upload" placeholder)
-     division : "PcM" | "PjM" | "CE"  — one or more, e.g. ["PcM","CE"]
-     topics   : free tags, e.g. ["Contracts","Delivery"]
-     type     : "image" | "pdf"  (optional — auto-detected from the file extension)
-
-   AUDIO entry fields:
-     title    : shown on the row             (required)
-     src      : path to the audio file       (leave "" for a "coming soon" row)
-     division : same as above (optional)
-     topics   : same as above (optional)
-
-   That's it — no other code needs to change.
+   Adds a "Library" tab (diagrams + audio) next to the existing tabs.
+   Edit only the DIAGRAMS and AUDIO lists below; the engine needs no changes.
    ============================================================================ */
-
 (function () {
   "use strict";
 
   /* ----------------------------------------------------------------------
      CONTENT  —  edit these two lists. Seeded with placeholders so the
      structure is visible. Fill in `src` as you upload each file.
+     Put files next to this HTML file:
+       library/diagrams/your-file.png   (or .jpg / .webp / .pdf / .svg)
+       library/audio/your-file.mp3      (or .m4a / .ogg)
+     DIAGRAM fields: title (req) | src ("" = awaiting-upload placeholder)
+       | division: "PcM" | "PjM" | "CE" (one or more) | topics: free tags
+       | type: "image" | "pdf" (optional, auto-detected)
+     AUDIO fields:   title (req) | src ("" = coming-soon row) | division | topics
      ---------------------------------------------------------------------- */
   const DIAGRAMS = [
     { title: "B101 Service Phases (SD → DD → CD → Bid → CA)", src: "", division: ["PcM","PjM","CE"], topics: ["Contracts"] },
@@ -53,10 +33,20 @@
   ];
 
   const AUDIO = [
-    { title: "AIA Contract Documents — audio walkthrough", src: "", division: ["PjM"], topics: ["Contracts"] },
-    { title: "Ethics & NCARB Rules — recap",               src: "", division: ["PcM"], topics: ["Ethics"] },
-    { title: "Delivery Methods — explained",               src: "", division: ["PcM","PjM","CE"], topics: ["Delivery"] },
-    { title: "Construction Administration procedures",     src: "", division: ["CE"], topics: ["CA Procedures"] }
+    { title: "Lecture 01 — Legal Foundation & Dispute Resolution", src: "library/audio/lecture-01-legal-foundation-dispute-resolution.mp3", division: ["PcM"], topics: ["Legal"] },
+    { title: "Lecture 02 — Contract Law & Formation", src: "library/audio/lecture-02-contract-law-formation.mp3", division: ["PcM","PjM"], topics: ["Contracts","Legal"] },
+    { title: "Lecture 03 — Contract Interpretation, Breach & Remedies", src: "library/audio/lecture-03-contract-interpretation-breach-remedies.mp3", division: ["PcM","PjM"], topics: ["Contracts","Legal"] },
+    { title: "Lecture 04 — Tort Law & Insurance", src: "library/audio/lecture-04-tort-law-insurance.mp3", division: ["PcM"], topics: ["Risk","Legal"] },
+    { title: "Lecture 05 — Licensing, Agency & Associations", src: "library/audio/lecture-05-licensing-agency-associations.mp3", division: ["PcM"], topics: ["Ethics","Legal"] },
+    { title: "Lecture 06 — AIA B101 Owner-Architect Agreement (Part 1)", src: "library/audio/lecture-06-b101-owner-architect-part-1.mp3", division: ["PcM","PjM"], topics: ["Contracts"] },
+    { title: "Lecture 07 — AIA B101 Owner-Architect Agreement (Part 2)", src: "library/audio/lecture-07-b101-owner-architect-part-2.mp3", division: ["PcM","PjM"], topics: ["Contracts"] },
+    { title: "Lecture 08 — Contracting Methods & Alt Project Delivery", src: "library/audio/lecture-08-contracting-methods-alt-delivery.mp3", division: ["PcM","PjM","CE"], topics: ["Delivery"] },
+    { title: "Lecture 09 — The Economics of Construction", src: "library/audio/lecture-09-economics-of-construction.mp3", division: ["PcM"], topics: ["Finance"] },
+    { title: "Lecture 10 — A201 General Conditions (Part 1)", src: "library/audio/lecture-10-a201-general-conditions-part-1.mp3", division: ["CE","PjM"], topics: ["Contracts","CA Procedures"] },
+    { title: "Lecture 11.1 — A201 General Conditions (Part 2)", src: "library/audio/lecture-11-1-a201-general-conditions-part-2.mp3", division: ["CE","PjM"], topics: ["Contracts","CA Procedures"] },
+    { title: "Lecture 11.2 — A201 General Conditions (Part 3)", src: "library/audio/lecture-11-2-a201-general-conditions-part-3.mp3", division: ["CE","PjM"], topics: ["Contracts","CA Procedures"] },
+    { title: "Lecture 12 — Office Management & Fee Calculation", src: "library/audio/lecture-12-office-management-fee-calculation.mp3", division: ["PcM"], topics: ["Finance"] },
+    { title: "Lecture 13 — Copyrights, Ownership & Starting a Practice", src: "library/audio/lecture-13-copyrights-ownership-starting-practice.mp3", division: ["PcM"], topics: ["Legal"] }
   ];
 
   /* ----------------------------------------------------------------------
