@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Move — Chattahoochee Ridge → Wesley St. James</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:        #0f7a72;
+    --teal-deep:   #0a5651;
+    --teal-light:  #e4f2f0;
+    --coral:       #e8654b;
+    --coral-deep:  #c94a32;
+    --coral-light: #fdeae4;
+    --ink:         #26302f;
+    --slate:       #5f6f6d;
+    --paper:       #f7f4ee;
+    --card:        #ffffff;
+    --line:        #e5ded3;
+    --gold:        #d9a441;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 90px; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(120% 140% at 85% 0%, rgba(232,101,75,0.14), transparent 55%),
+      linear-gradient(155deg, var(--teal-deep), var(--teal));
+    color: #fff;
+    border-radius: 0 0 30px 30px;
+    padding: 54px 40px 48px;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: -60px; bottom: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 68%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #bfe6e1;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.15rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    max-width: 15ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #ffd9cd;
+  }
+  .route {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #d8ece9;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .route .arrow { color: var(--coral); font-weight: 600; }
+  .route b { color: #fff; font-weight: 600; }
+
+  /* countdown + ring */
+  .hero-meta {
+    margin-top: 34px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .countdown {
+    display: flex;
+    gap: 10px;
+  }
+  .cd-unit {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 70px;
+    backdrop-filter: blur(4px);
+  }
+  .cd-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .cd-lab {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #bfe6e1;
+    margin-top: 6px;
+  }
+  .cd-tag {
+    font-size: 0.82rem;
+    color: #d8ece9;
+    align-self: flex-end;
+    padding-bottom: 4px;
+  }
+
+  /* progress ring */
+  .ring-wrap {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .ring { position: relative; width: 92px; height: 92px; }
+  .ring svg { transform: rotate(-90deg); }
+  .ring-track { stroke: rgba(255,255,255,0.18); }
+  .ring-fill {
+    stroke: var(--coral);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .ring-pct {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
+  .ring-cap {
+    font-size: 0.74rem;
+    color: #d8ece9;
+    max-width: 90px;
+    line-height: 1.35;
+  }
+  .ring-cap b { color: #fff; display: block; font-size: 0.92rem; }
+
+  /* ---------- INFO STRIP ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: -26px 6px 0;
+    position: relative;
+    z-index: 3;
+  }
+  .strip .cell {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 10px 26px -18px rgba(15,122,114,0.4);
+  }
+  .strip .k {
+    font-size: 0.64rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .strip .v { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+  .strip .v small { display:block; color: var(--slate); font-weight: 400; font-size: 0.8rem; margin-top: 2px; }
+
+  /* ---------- PHASES ---------- */
+  .timeline { margin-top: 46px; }
+
+  .phase {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 30px 12px;
+    margin-bottom: 26px;
+    box-shadow: 0 18px 40px -30px rgba(38,48,47,0.55);
+  }
+  .phase-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 0.8;
+    color: var(--coral);
+    letter-spacing: -0.02em;
+  }
+  .phase-titles { flex: 1; min-width: 200px; }
+  .phase-titles h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .phase-when {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .phase-goal {
+    font-size: 0.9rem;
+    color: var(--slate);
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .phase-count {
+    font-size: 0.78rem;
+    color: var(--slate);
+    background: var(--teal-light);
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .now-tag {
+    display:inline-block;
+    background: var(--coral);
+    color:#fff;
+    font-size:0.62rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:14px;
+  }
+
+  .grp-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--coral-deep);
+    margin: 18px 0 8px;
+  }
+
+  /* checklist item */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 11px 6px;
+    border-bottom: 1px solid #f1ece3;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 8px;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: var(--teal-light); }
+
+  .box {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border: 2px solid var(--teal);
+    border-radius: 7px;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s;
+  }
+  .box svg { width: 13px; height: 13px; opacity: 0; transform: scale(0.4); transition: all 0.18s; }
+  .item.done .box { background: var(--teal); border-color: var(--teal); }
+  .item.done .box svg { opacity: 1; transform: scale(1); stroke: #fff; }
+
+  .item-txt { font-size: 0.95rem; color: var(--ink); transition: color 0.18s; }
+  .item.done .item-txt { color: #a7b2b0; text-decoration: line-through; }
+  .item-txt .hi { font-weight: 600; color: var(--coral-deep); }
+  .item.done .item-txt .hi { color: #a7b2b0; }
+  .item-txt .sub { display:block; font-size: 0.82rem; color: var(--slate); margin-top: 2px; }
+  .item.done .item-txt .sub { color: #bcc4c2; }
+  .maybe-badge {
+    font-size: 0.6rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--gold); font-weight:600; border:1px solid var(--gold);
+    border-radius: 12px; padding: 1px 7px; margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* essentials callout */
+  .callout {
+    background: linear-gradient(150deg, var(--coral-light), #fff);
+    border: 1px solid #f4d3c7;
+    border-left: 4px solid var(--coral);
+  }
+  .callout .phase-num { color: var(--coral); }
+
+  /* controls */
+  .controls {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 40px 6px 0; gap: 14px; flex-wrap: wrap;
+  }
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--slate);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 9px 18px;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .reset-btn:hover { border-color: var(--coral); color: var(--coral-deep); }
+  .save-note { font-size: 0.76rem; color: var(--slate); }
+  .save-note b { color: var(--teal); }
+
+  footer {
+    text-align: center;
+    margin-top: 46px;
+    font-size: 0.8rem;
+    color: var(--slate);
+  }
+  footer .heart { color: var(--coral); }
+
+  @media (max-width: 680px) {
+    .hero { padding: 40px 24px 40px; border-radius: 0 0 22px 22px; }
+    .strip { grid-template-columns: 1fr; }
+    .ring-wrap { margin-left: 0; margin-top: 8px; }
+    .hero-meta { gap: 22px; }
+    .phase { padding: 24px 20px 8px; }
+    .phase-num { font-size: 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap" style="padding-bottom:0;">
+      <p class="eyebrow">Moving Plan · July 2026</p>
+      <h1>Two weekends, one truck, <em>and a fresh start.</em></h1>
+      <div class="route">
+        <b>Chattahoochee Ridge</b>
+        <span class="arrow">&rarr;</span>
+        <b>Wesley St. James</b>
+        <span>· 712 Jefferson Drive, Atlanta, GA 30350</span>
+      </div>
+
+      <div class="hero-meta">
+        <div>
+          <div class="countdown" id="countdown">
+            <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-lab">Days</div></div>
+            <div class="cd-unit"><div class="cd-num" id="cd-hrs">--</div><div class="cd-lab">Hours</div></div>
+            <div class="cd-unit"><div class="cd-num" id="cd-min">--</div><div class="cd-lab">Min</div></div>
+          </div>
+          <div class="cd-tag" style="margin-top:10px;">until move day — <b style="color:#fff;">Monday, July 27</b></div>
+        </div>
+
+        <div class="ring-wrap">
+          <div class="ring">
+            <svg width="92" height="92">
+              <circle class="ring-track" cx="46" cy="46" r="40" fill="none" stroke-width="8"/>
+              <circle class="ring-fill" id="ring-fill" cx="46" cy="46" r="40" fill="none" stroke-width="8"
+                      stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
+            </svg>
+            <div class="ring-pct" id="ring-pct">0%</div>
+          </div>
+          <div class="ring-cap"><b id="ring-count">0 / 0</b>tasks complete</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="strip">
+      <div class="cell">
+        <div class="k">Storage Unit</div>
+        <div class="v">Public Storage #1124<small>10 × 15 · across from the new place</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">Move Day</div>
+        <div class="v">Monday, July 27<small>last day at current · keys to new</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">The Truck</div>
+        <div class="v">10-ft U-Haul<small>reserve now · book pads + dolly</small></div>
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline"><!-- injected by JS --></div>
+
+    <div class="controls">
+      <span class="save-note">Progress saves automatically in this browser. <b>Check things off as you go.</b></span>
+      <button class="reset-btn" id="resetBtn">Reset all</button>
+    </div>
+
+    <footer>
+      Built for the move &mdash; made with a little <span class="heart">&hearts;</span> to make the chaos feel handled.
+    </footer>
+  </div>
+
+<script>
+  const DATA = [
+    {
+      num: "00", title: "Do This Now", when: "Before the weekend", goal: "Lock in the time-sensitive stuff.",
+      flagNow: true,
+      groups: [
+        { items: [
+          { t: 'Reserve the <span class="hi">U-Haul for Mon 7/27</span> — 10-ft truck; trucks book up fast', s: 'Reserve furniture pads + a dolly at the same time' },
+          { t: 'Confirm Public Storage #1124 access hours + gate code' },
+          { t: 'Buy/gather supplies: boxes (S/M/L), tape, markers, bubble wrap, stretch wrap, blankets' },
+          { t: 'Set aside a few "storage-run" boxes to fill this weekend' },
+        ]}
+      ]
+    },
+    {
+      num: "01", title: "Storage Run", when: "This weekend · Sat 7/11 – Sun 7/12",
+      goal: "Get non-essential, bulky, and out-of-season items into Unit #1124.",
+      groups: [
+        { label: "Pack & load", items: [
+          { t: 'Pack and label boxes clearly (contents + "STORAGE")' },
+          { t: 'Heavy items on the bottom, lighter on top' },
+          { t: 'Leave a center aisle so you can reach the back later' },
+          { t: 'Keep anything you might need before 7/27 near the front' },
+          { t: 'Take a photo of how the unit is packed (helps on unload day)' },
+        ]},
+        { label: "Good candidates for this trip", items: [
+          { t: 'Out-of-season clothes' },
+          { t: 'Books, décor, extra kitchenware' },
+          { t: 'Holiday / seasonal items' },
+          { t: 'Tools, hobby gear, rarely-used equipment' },
+          { t: "Spare furniture you won't need for two weeks" },
+        ]}
+      ]
+    },
+    {
+      num: "02", title: "Address & Utilities", when: "Start this week", goal: "Now that the new address is set, get these in motion.",
+      groups: [
+        { label: "Set up at 712 Jefferson Drive", items: [
+          { t: '<span class="hi">Google Fiber</span> — schedule install for on/around 7/27 (book early)' },
+          { t: 'Electric — start service for the 27th' },
+          { t: 'Renters insurance — update address, effective 7/27' },
+        ]},
+        { label: "Stop / transfer at current place", items: [
+          { t: 'Schedule electric shutoff for after 7/27' },
+          { t: 'Cancel/transfer current internet; return equipment if applicable' },
+        ]},
+        { label: "Change of address", items: [
+          { t: '<span class="hi">USPS mail forwarding</span> — set start ~7/27 (usps.com)' },
+          { t: 'Bank(s) & credit cards' },
+          { t: 'Employer / HR & payroll' },
+          { t: "Driver's license & vehicle registration (GA DDS)" },
+          { t: 'Voter registration' },
+          { t: 'Insurance (auto, health)' },
+          { t: 'Amazon & regular online shopping' },
+          { t: 'Subscriptions & deliveries (memberships, meal kits, etc.)' },
+          { t: 'Doctor / dentist / pharmacy' },
+        ]}
+      ]
+    },
+    {
+      num: "03", title: "Small Items Run", when: "Next weekend · Sat 7/25 – Sun 7/26",
+      goal: "Move remaining small/medium items, leaving only large furniture + essentials.",
+      groups: [
+        { items: [
+          { t: 'Pack remaining small items — kitchen, closets, bathroom, misc.' },
+          { t: 'Second storage run with boxes + small furniture' },
+          { t: 'Set aside the <span class="hi">first-night essentials box</span> (see below)' },
+          { t: 'Disassemble what you can ahead of time (bed frame, table legs)' },
+          { t: 'Confirm U-Haul reservation details for Monday' },
+          { t: 'Clean as you empty rooms' },
+          { t: 'Take out trash / donations before move day' },
+          { t: '<span class="maybe-badge">Maybe</span>Donation drop-off if storage fills up — set aside items + schedule (Goodwill, Salvation Army)' },
+        ]}
+      ]
+    },
+    {
+      num: "04", title: "Move Day", when: "Monday, July 27 · U-Haul + move-in",
+      goal: "Move the big items, get the keys, get settled.",
+      groups: [
+        { label: "Morning", items: [
+          { t: 'Pick up U-Haul (with dolly + pads)' },
+          { t: 'Get keys / complete move-in at Wesley St. James' },
+          { t: '<span class="hi">Photo/video the new unit</span> for the move-in condition report (protects your deposit)' },
+          { t: 'Confirm Google Fiber install timing' },
+        ]},
+        { label: "Load & transport", items: [
+          { t: 'Load large furniture (couch, bed, dresser, table)' },
+          { t: 'Grab final items from storage if moving them same day' },
+          { t: 'Transport to 712 Jefferson Drive' },
+        ]},
+        { label: "At the new place", items: [
+          { t: 'Unload and place large furniture first' },
+          { t: 'Reassemble beds / furniture' },
+          { t: 'Locate and set up the essentials box' },
+        ]},
+        { label: "Close out the current apartment", items: [
+          { t: 'Final sweep — every closet, cabinet, drawer' },
+          { t: 'Final cleaning per lease requirements' },
+          { t: '<span class="hi">Photo/video the empty unit</span> (proof of condition for deposit)' },
+          { t: 'Turn in keys / complete move-out' },
+          { t: 'Return U-Haul (check gas level + due-back time)' },
+        ]}
+      ]
+    },
+    {
+      num: "★", title: "First-Night Essentials", when: "Keep with you — don't pack in storage!",
+      goal: "The box that saves your sanity on night one.", callout: true,
+      groups: [
+        { items: [
+          { t: 'Toiletries, medications, toilet paper, hand soap' },
+          { t: 'Phone chargers' },
+          { t: 'Change of clothes / pajamas' },
+          { t: 'Bedding & pillows for night one' },
+          { t: 'Basic tools (box cutter, screwdriver for reassembly)' },
+          { t: 'Snacks, water, coffee setup' },
+          { t: 'Paper towels, trash bags, cleaning supplies' },
+          { t: 'Important documents (lease, IDs) — keep with you, not in the truck' },
+        ]}
+      ]
+    }
+  ];
+
+  const STORE_KEY = 'move-checklist-2026';
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { state = {}; }
+
+  const timeline = document.getElementById('timeline');
+  let idCounter = 0;
+  let allIds = [];
+
+  DATA.forEach(phase => {
+    const p = document.createElement('section');
+    p.className = 'phase' + (phase.callout ? ' callout' : '');
+
+    const head = document.createElement('div');
+    head.className = 'phase-head';
+    head.innerHTML =
+      '<div class="phase-num">' + phase.num + '</div>' +
+      '<div class="phase-titles">' +
+        '<h2>' + phase.title + '</h2>' +
+        '<div class="phase-when">' + phase.when + '</div>' +
+        '<div class="phase-goal">' + phase.goal + '</div>' +
+      '</div>' +
+      '<div class="phase-count" data-count></div>';
+    p.appendChild(head);
+
+    if (phase.flagNow) {
+      const tag = document.createElement('div');
+      tag.className = 'now-tag';
+      tag.textContent = 'Time-sensitive';
+      p.appendChild(tag);
+    }
+
+    const phaseIds = [];
+    phase.groups.forEach(g => {
+      if (g.label) {
+        const gl = document.createElement('div');
+        gl.className = 'grp-label';
+        gl.textContent = g.label;
+        p.appendChild(gl);
+      }
+      g.items.forEach(it => {
+        const id = 'i' + (idCounter++);
+        allIds.push(id); phaseIds.push(id);
+        const row = document.createElement('div');
+        row.className = 'item' + (state[id] ? ' done' : '');
+        row.dataset.id = id;
+        row.innerHTML =
+          '<div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+          '<div class="item-txt">' + it.t + (it.s ? '<span class="sub">' + it.s + '</span>' : '') + '</div>';
+        row.addEventListener('click', () => {
+          state[id] = !state[id];
+          row.classList.toggle('done', state[id]);
+          save(); updateCounts();
+        });
+        p.appendChild(row);
+      });
+    });
+
+    head.querySelector('[data-count]').dataset.ids = phaseIds.join(',');
+    timeline.appendChild(p);
+  });
+
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  const RING_CIRC = 2 * Math.PI * 40;
+  function updateCounts() {
+    const total = allIds.length;
+    const done = allIds.filter(id => state[id]).length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+
+    document.getElementById('ring-pct').textContent = pct + '%';
+    document.getElementById('ring-count').textContent = done + ' / ' + total;
+    document.getElementById('ring-fill').style.strokeDashoffset = RING_CIRC * (1 - done / total);
+
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const ids = el.dataset.ids ? el.dataset.ids.split(',') : [];
+      const d = ids.filter(id => state[id]).length;
+      el.textContent = d + ' / ' + ids.length;
+      el.style.background = (d === ids.length && ids.length) ? 'var(--coral-light)' : 'var(--teal-light)';
+      el.style.color = (d === ids.length && ids.length) ? 'var(--coral-deep)' : 'var(--slate)';
+    });
+  }
+  updateCounts();
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Reset all checkmarks? This clears your saved progress.')) return;
+    state = {}; save();
+    document.querySelectorAll('.item').forEach(r => r.classList.remove('done'));
+    updateCounts();
+  });
+
+  // countdown to move day: Mon July 27, 2026, 8:00 AM
+  const TARGET = new Date('2026-07-27T08:00:00-04:00').getTime();
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hrs').textContent = '0';
+      document.getElementById('cd-min').textContent = '0';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor(diff % 86400000 / 3600000);
+    const m = Math.floor(diff % 3600000 / 60000);
+    document.getElementById('cd-days').textContent = d;
+    document.getElementById('cd-hrs').textContent = h;
+    document.getElementById('cd-min').textContent = m;
+  }
+  tick();
+  setInterval(tick, 30000);
+</script>
+</body>
+</html>
