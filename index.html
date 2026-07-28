@@ -1,663 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Move — Chattahoochee Ridge → Wesley St. James</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Week in Sandy Springs · Jul 28 – Aug 1</title>
 <style>
-  :root {
-    --teal:        #0f7a72;
-    --teal-deep:   #0a5651;
-    --teal-light:  #e4f2f0;
-    --coral:       #e8654b;
-    --coral-deep:  #c94a32;
-    --coral-light: #fdeae4;
-    --ink:         #26302f;
-    --slate:       #5f6f6d;
-    --paper:       #f7f4ee;
-    --card:        #ffffff;
-    --line:        #e5ded3;
-    --gold:        #d9a441;
+  :root{
+    --ink:#1d2530;
+    --ink-soft:#55606f;
+    --ink-faint:#8b95a3;
+    --line:#e5e2dc;
+    --paper:#fbf9f5;
+    --card:#ffffff;
+    --sun:#e8843c;
+    --sun-soft:#fdf0e6;
+    --leaf:#3f7d5c;
+    --leaf-soft:#e9f2ed;
+    --sky:#3b6ea8;
+    --sky-soft:#e8eff7;
+    --plum:#7c4f8c;
+    --plum-soft:#f2ebf5;
+    --heat:#c94f38;
+    --heat-soft:#fbeae6;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(29,37,48,.05), 0 8px 24px rgba(29,37,48,.06);
   }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding:0 0 80px;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Instrument Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 90px; }
-
-  /* ---------- HERO ---------- */
-  .hero {
-    position: relative;
-    background:
-      radial-gradient(120% 140% at 85% 0%, rgba(232,101,75,0.14), transparent 55%),
-      linear-gradient(155deg, var(--teal-deep), var(--teal));
-    color: #fff;
-    border-radius: 0 0 30px 30px;
-    padding: 54px 40px 48px;
-    overflow: hidden;
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    right: -60px; bottom: -80px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 68%);
-    pointer-events: none;
-  }
-  .eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #bfe6e1;
-    margin-bottom: 14px;
-  }
-  .hero h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(2rem, 5vw, 3.15rem);
-    line-height: 1.04;
-    letter-spacing: -0.01em;
-    max-width: 15ch;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: #ffd9cd;
-  }
-  .route {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #d8ece9;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .route .arrow { color: var(--coral); font-weight: 600; }
-  .route b { color: #fff; font-weight: 600; }
-
-  /* countdown + ring */
-  .hero-meta {
-    margin-top: 34px;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
-  }
-  .countdown {
-    display: flex;
-    gap: 10px;
-  }
-  .cd-unit {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.16);
-    border-radius: 14px;
-    padding: 12px 16px;
-    text-align: center;
-    min-width: 70px;
-    backdrop-filter: blur(4px);
-  }
-  .cd-num {
-    font-family: 'Fraunces', serif;
-    font-size: 1.9rem;
-    font-weight: 600;
-    line-height: 1;
-  }
-  .cd-lab {
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #bfe6e1;
-    margin-top: 6px;
-  }
-  .cd-tag {
-    font-size: 0.82rem;
-    color: #d8ece9;
-    align-self: flex-end;
-    padding-bottom: 4px;
-  }
-
-  /* progress ring */
-  .ring-wrap {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .ring { position: relative; width: 92px; height: 92px; }
-  .ring svg { transform: rotate(-90deg); }
-  .ring-track { stroke: rgba(255,255,255,0.18); }
-  .ring-fill {
-    stroke: var(--coral);
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.6s cubic-bezier(.4,0,.2,1);
-  }
-  .ring-pct {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.35rem;
-  }
-  .ring-cap {
-    font-size: 0.74rem;
-    color: #d8ece9;
-    max-width: 90px;
-    line-height: 1.35;
-  }
-  .ring-cap b { color: #fff; display: block; font-size: 0.92rem; }
-
-  /* ---------- INFO STRIP ---------- */
-  .strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin: -26px 6px 0;
-    position: relative;
-    z-index: 3;
-  }
-  .strip .cell {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 16px 18px;
-    box-shadow: 0 10px 26px -18px rgba(15,122,114,0.4);
-  }
-  .strip .k {
-    font-size: 0.64rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--teal);
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-  .strip .v { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
-  .strip .v small { display:block; color: var(--slate); font-weight: 400; font-size: 0.8rem; margin-top: 2px; }
-
-  /* ---------- PHASES ---------- */
-  .timeline { margin-top: 46px; }
-
-  .phase {
-    position: relative;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 28px 30px 12px;
-    margin-bottom: 26px;
-    box-shadow: 0 18px 40px -30px rgba(38,48,47,0.55);
-  }
-  .phase-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-  }
-  .phase-num {
-    font-family: 'Fraunces', serif;
-    font-size: 2.4rem;
-    font-weight: 600;
-    line-height: 0.8;
-    color: var(--coral);
-    letter-spacing: -0.02em;
-  }
-  .phase-titles { flex: 1; min-width: 200px; }
-  .phase-titles h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.4rem;
-    color: var(--ink);
-    line-height: 1.1;
-  }
-  .phase-when {
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--teal);
-    font-weight: 600;
-    margin-top: 4px;
-  }
-  .phase-goal {
-    font-size: 0.9rem;
-    color: var(--slate);
-    font-style: italic;
-    margin-top: 2px;
-  }
-  .phase-count {
-    font-size: 0.78rem;
-    color: var(--slate);
-    background: var(--teal-light);
-    border-radius: 20px;
-    padding: 5px 13px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .now-tag {
-    display:inline-block;
-    background: var(--coral);
+  /* ---------- header ---------- */
+  header{
+    background:linear-gradient(150deg,#2b4a6f 0%,#3b6ea8 45%,#e8843c 140%);
     color:#fff;
-    font-size:0.62rem;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    font-weight:600;
-    padding:4px 10px;
-    border-radius:20px;
-    margin-bottom:14px;
+    padding:52px 0 44px;
+    margin-bottom:28px;
+  }
+  header .eyebrow{
+    text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700;
+    opacity:.82;margin:0 0 12px;
+  }
+  header h1{
+    margin:0 0 10px;font-size:clamp(30px,6vw,46px);line-height:1.1;
+    font-weight:800;letter-spacing:-.02em;
+  }
+  header p{margin:0;font-size:17px;opacity:.92;max-width:52ch}
+  .who{
+    margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;
+  }
+  .who span{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+    padding:5px 12px;border-radius:999px;font-size:13px;font-weight:600;
   }
 
-  .grp-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--coral-deep);
-    margin: 18px 0 8px;
+  /* ---------- weather ---------- */
+  .weather{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:22px;margin-bottom:14px;
+  }
+  .weather h2{margin:0 0 4px;font-size:19px;font-weight:750;letter-spacing:-.01em}
+  .weather .src{margin:0 0 18px;font-size:12.5px;color:var(--ink-faint)}
+  .days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .day{
+    border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;
+    background:#fdfcfa;
+  }
+  .day .dow{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint)}
+  .day .date{font-size:11.5px;color:var(--ink-faint);margin-bottom:8px}
+  .day .icon{font-size:24px;line-height:1;margin-bottom:6px}
+  .day .hi{font-size:21px;font-weight:800;letter-spacing:-.02em}
+  .day .lo{font-size:12px;color:var(--ink-faint)}
+  .day.hot{background:var(--heat-soft);border-color:#f0c9c0}
+  .day.hot .hi{color:var(--heat)}
+  .day.best{background:var(--leaf-soft);border-color:#c3ddd0}
+  .day.wet{background:var(--sky-soft);border-color:#c5d8ec}
+
+  .alert{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--heat-soft);border:1px solid #f0c9c0;border-left:4px solid var(--heat);
+    border-radius:12px;padding:14px 16px;margin-bottom:30px;
+  }
+  .alert .bang{font-size:19px;line-height:1.3}
+  .alert strong{color:var(--heat)}
+  .alert p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+  .alert p + p{margin-top:6px}
+
+  /* ---------- day cards ---------- */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin-bottom:22px;overflow:hidden;
+  }
+  .card > .head{
+    padding:20px 24px 18px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
+  }
+  .card .head h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .card .head .sub{margin:3px 0 0;font-size:14px;color:var(--ink-soft)}
+  .wx{
+    text-align:right;font-size:13px;color:var(--ink-soft);white-space:nowrap;
+    background:#fdfcfa;border:1px solid var(--line);border-radius:10px;padding:7px 12px;
+  }
+  .wx b{display:block;font-size:17px;color:var(--ink)}
+
+  .body{padding:6px 24px 22px}
+
+  .block{padding:18px 0;border-bottom:1px dashed var(--line)}
+  .block:last-child{border-bottom:0;padding-bottom:4px}
+  .block > .label{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;
+    color:var(--ink-faint);margin-bottom:12px;
   }
 
-  /* checklist item */
-  .item {
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-    padding: 11px 6px;
-    border-bottom: 1px solid #f1ece3;
-    cursor: pointer;
-    transition: background 0.15s;
-    border-radius: 8px;
-  }
-  .item:last-child { border-bottom: none; }
-  .item:hover { background: var(--teal-light); }
+  .item{margin-bottom:16px}
+  .item:last-child{margin-bottom:0}
+  .item h4{margin:0 0 5px;font-size:16.5px;font-weight:750;letter-spacing:-.01em}
+  .item h4 a{color:var(--sky);text-decoration:none;border-bottom:1px solid rgba(59,110,168,.3)}
+  .item h4 a:hover{border-bottom-color:var(--sky)}
+  .item p{margin:0 0 5px;font-size:14.5px;color:var(--ink-soft)}
+  .item .meta{font-size:13px;color:var(--ink-faint)}
+  .item ul{margin:6px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink-soft)}
+  .item li{margin-bottom:3px}
 
-  .box {
-    flex-shrink: 0;
-    width: 22px; height: 22px;
-    border: 2px solid var(--teal);
-    border-radius: 7px;
-    margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.18s;
+  .star{
+    background:linear-gradient(180deg,#fffdf9,#fdf6ec);
+    border:1px solid #f0dcc0;border-left:4px solid var(--sun);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
   }
-  .box svg { width: 13px; height: 13px; opacity: 0; transform: scale(0.4); transition: all 0.18s; }
-  .item.done .box { background: var(--teal); border-color: var(--teal); }
-  .item.done .box svg { opacity: 1; transform: scale(1); stroke: #fff; }
+  .star h4{color:#b3611f}
 
-  .item-txt { font-size: 0.95rem; color: var(--ink); transition: color 0.18s; }
-  .item.done .item-txt { color: #a7b2b0; text-decoration: line-through; }
-  .item-txt .hi { font-weight: 600; color: var(--coral-deep); }
-  .item.done .item-txt .hi { color: #a7b2b0; }
-  .item-txt .sub { display:block; font-size: 0.82rem; color: var(--slate); margin-top: 2px; }
-  .item.done .item-txt .sub { color: #bcc4c2; }
-  .maybe-badge {
-    font-size: 0.6rem; letter-spacing:0.1em; text-transform:uppercase;
-    color: var(--gold); font-weight:600; border:1px solid var(--gold);
-    border-radius: 12px; padding: 1px 7px; margin-right: 6px;
-    vertical-align: middle;
+  /* badges */
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+  .tag{
+    font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;
+    border:1px solid transparent;white-space:nowrap;
   }
+  .t-free{background:var(--leaf-soft);color:var(--leaf);border-color:#c3ddd0}
+  .t-cost{background:var(--sun-soft);color:#b3611f;border-color:#f0dcc0}
+  .t-time{background:var(--sky-soft);color:var(--sky);border-color:#c5d8ec}
+  .t-drive{background:#f2f1ee;color:var(--ink-soft);border-color:var(--line)}
+  .t-rare{background:var(--plum-soft);color:var(--plum);border-color:#ddc9e5}
 
-  /* essentials callout */
-  .callout {
-    background: linear-gradient(150deg, var(--coral-light), #fff);
-    border: 1px solid #f4d3c7;
-    border-left: 4px solid var(--coral);
+  .note{
+    background:#fdfcfa;border:1px solid var(--line);border-radius:10px;
+    padding:11px 14px;font-size:13.5px;color:var(--ink-soft);margin-top:10px;
   }
-  .callout .phase-num { color: var(--coral); }
+  .note b{color:var(--heat)}
 
-  /* controls */
-  .controls {
-    display: flex; justify-content: space-between; align-items: center;
-    margin: 40px 6px 0; gap: 14px; flex-wrap: wrap;
-  }
-  .reset-btn {
-    background: none;
-    border: 1px solid var(--line);
-    color: var(--slate);
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    padding: 9px 18px;
-    border-radius: 22px;
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-  .reset-btn:hover { border-color: var(--coral); color: var(--coral-deep); }
-  .save-note { font-size: 0.76rem; color: var(--slate); }
-  .save-note b { color: var(--teal); }
-
-  footer {
-    text-align: center;
-    margin-top: 46px;
-    font-size: 0.8rem;
-    color: var(--slate);
-  }
-  footer .heart { color: var(--coral); }
-
-  @media (max-width: 680px) {
-    .hero { padding: 40px 24px 40px; border-radius: 0 0 22px 22px; }
-    .strip { grid-template-columns: 1fr; }
-    .ring-wrap { margin-left: 0; margin-top: 8px; }
-    .hero-meta { gap: 22px; }
-    .phase { padding: 24px 20px 8px; }
-    .phase-num { font-size: 2rem; }
+  .pick{
+    font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--ink-faint);margin:18px 0 10px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+  /* ---------- misc sections ---------- */
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px;margin-bottom:22px;
+  }
+  .panel h2{margin:0 0 6px;font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .panel > p.lede{margin:0 0 18px;font-size:14.5px;color:var(--ink-soft)}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint);font-weight:800}
+  tr:last-child td{border-bottom:0}
+  td.d{font-weight:750;white-space:nowrap}
+
+  .skip li{margin-bottom:9px;font-size:14.5px;color:var(--ink-soft)}
+  .skip b{color:var(--ink)}
+
+  footer{
+    text-align:center;font-size:13px;color:var(--ink-faint);
+    margin-top:34px;padding-top:22px;border-top:1px solid var(--line);
+  }
+  footer a{color:var(--ink-faint)}
+
+  @media (max-width:640px){
+    header{padding:38px 0 32px}
+    .days{grid-template-columns:repeat(3,1fr)}
+    .card .head{flex-direction:column;gap:10px}
+    .wx{text-align:left}
+    .body{padding:6px 18px 20px}
+    .card > .head{padding:18px 18px 16px}
+    .panel{padding:20px 18px}
+  }
+  @media print{
+    body{background:#fff}
+    header{background:#2b4a6f !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.panel,.weather{box-shadow:none;break-inside:avoid}
   }
 </style>
 </head>
 <body>
 
-  <header class="hero">
-    <div class="wrap" style="padding-bottom:0;">
-      <p class="eyebrow">Moving Plan · July 2026</p>
-      <h1>Two weekends, one truck, <em>and a fresh start.</em></h1>
-      <div class="route">
-        <b>Chattahoochee Ridge</b>
-        <span class="arrow">&rarr;</span>
-        <b>Wesley St. James</b>
-        <span>· 712 Jefferson Drive, Atlanta, GA 30350</span>
-      </div>
-
-      <div class="hero-meta">
-        <div>
-          <div class="countdown" id="countdown">
-            <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-lab">Days</div></div>
-            <div class="cd-unit"><div class="cd-num" id="cd-hrs">--</div><div class="cd-lab">Hours</div></div>
-            <div class="cd-unit"><div class="cd-num" id="cd-min">--</div><div class="cd-lab">Min</div></div>
-          </div>
-          <div class="cd-tag" style="margin-top:10px;">until move day — <b style="color:#fff;">Monday, July 27</b></div>
-        </div>
-
-        <div class="ring-wrap">
-          <div class="ring">
-            <svg width="92" height="92">
-              <circle class="ring-track" cx="46" cy="46" r="40" fill="none" stroke-width="8"/>
-              <circle class="ring-fill" id="ring-fill" cx="46" cy="46" r="40" fill="none" stroke-width="8"
-                      stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
-            </svg>
-            <div class="ring-pct" id="ring-pct">0%</div>
-          </div>
-          <div class="ring-cap"><b id="ring-count">0 / 0</b>tasks complete</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
+<header>
   <div class="wrap">
+    <p class="eyebrow">Tuesday July 28 – Saturday August 1, 2026</p>
+    <h1>Our Week in Sandy Springs</h1>
+    <p>Five days, mostly free, built around the actual forecast — with one genuinely rare thing on Friday night that leaves Atlanta this month.</p>
+    <div class="who">
+      <span>👩 Megan + Jada — daytime</span>
+      <span>👨 Cade — after 3pm</span>
+      <span>👩 Casey — evenings + Fri/Sat</span>
+    </div>
+  </div>
+</header>
 
-    <div class="strip">
-      <div class="cell">
-        <div class="k">Storage Unit</div>
-        <div class="v">Public Storage #1124<small>10 × 15 · across from the new place</small></div>
+<div class="wrap">
+
+  <!-- WEATHER -->
+  <section class="weather">
+    <h2>The forecast is running the show</h2>
+    <p class="src">National Weather Service point forecast for Sandy Springs · issued 2:26am Tue Jul 28</p>
+    <div class="days">
+      <div class="day hot">
+        <div class="dow">Tue</div><div class="date">Jul 28</div>
+        <div class="icon">🥵</div>
+        <div class="hi">96°</div><div class="lo">low 75°</div>
       </div>
-      <div class="cell">
-        <div class="k">Move Day</div>
-        <div class="v">Monday, July 27<small>last day at current · keys to new</small></div>
+      <div class="day">
+        <div class="dow">Wed</div><div class="date">Jul 29</div>
+        <div class="icon">☀️</div>
+        <div class="hi">90°</div><div class="lo">low 69°</div>
       </div>
-      <div class="cell">
-        <div class="k">The Truck</div>
-        <div class="v">10-ft U-Haul<small>reserve now · book pads + dolly</small></div>
+      <div class="day best">
+        <div class="dow">Thu</div><div class="date">Jul 30</div>
+        <div class="icon">🌤️</div>
+        <div class="hi">90°</div><div class="lo">low 68°</div>
+      </div>
+      <div class="day best">
+        <div class="dow">Fri</div><div class="date">Jul 31</div>
+        <div class="icon">☀️</div>
+        <div class="hi">91°</div><div class="lo">low 71°</div>
+      </div>
+      <div class="day wet">
+        <div class="dow">Sat</div><div class="date">Aug 1</div>
+        <div class="icon">⛈️</div>
+        <div class="hi">88°</div><div class="lo">50% storms</div>
       </div>
     </div>
+  </section>
 
-    <div class="timeline" id="timeline"><!-- injected by JS --></div>
-
-    <div class="controls">
-      <span class="save-note">Progress saves automatically in this browser. <b>Check things off as you go.</b></span>
-      <button class="reset-btn" id="resetBtn">Reset all</button>
+  <div class="alert">
+    <div class="bang">⚠️</div>
+    <div>
+      <p><strong>Heat Advisory today, noon to 8pm — heat index up to 104°.</strong> Please keep you and Jada indoors through the afternoon. Everything on Tuesday below is air conditioned on purpose.</p>
+      <p>Then a front comes through and Wed–Fri turn lovely — 90° with overnight lows in the 60s, which is not normal for late July here. Saturday's storms roll in after 2pm.</p>
     </div>
-
-    <footer>
-      Built for the move &mdash; made with a little <span class="heart">&hearts;</span> to make the chaos feel handled.
-    </footer>
   </div>
 
-<script>
-  const DATA = [
-    {
-      num: "00", title: "Do This Now", when: "Before the weekend", goal: "Lock in the time-sensitive stuff.",
-      flagNow: true,
-      groups: [
-        { items: [
-          { t: 'Reserve the <span class="hi">U-Haul for Mon 7/27</span> — 10-ft truck; trucks book up fast', s: 'Reserve furniture pads + a dolly at the same time' },
-          { t: 'Confirm Public Storage #1124 access hours + gate code' },
-          { t: 'Buy/gather supplies: boxes (S/M/L), tape, markers, bubble wrap, stretch wrap, blankets' },
-          { t: 'Set aside a few "storage-run" boxes to fill this weekend' },
-        ]}
-      ]
-    },
-    {
-      num: "01", title: "Storage Run", when: "This weekend · Sat 7/11 – Sun 7/12",
-      goal: "Get non-essential, bulky, and out-of-season items into Unit #1124.",
-      groups: [
-        { label: "Pack & load", items: [
-          { t: 'Pack and label boxes clearly (contents + "STORAGE")' },
-          { t: 'Heavy items on the bottom, lighter on top' },
-          { t: 'Leave a center aisle so you can reach the back later' },
-          { t: 'Keep anything you might need before 7/27 near the front' },
-          { t: 'Take a photo of how the unit is packed (helps on unload day)' },
-        ]},
-        { label: "Good candidates for this trip", items: [
-          { t: 'Out-of-season clothes' },
-          { t: 'Books, décor, extra kitchenware' },
-          { t: 'Holiday / seasonal items' },
-          { t: 'Tools, hobby gear, rarely-used equipment' },
-          { t: "Spare furniture you won't need for two weeks" },
-        ]}
-      ]
-    },
-    {
-      num: "02", title: "Address & Utilities", when: "Start this week", goal: "Now that the new address is set, get these in motion.",
-      groups: [
-        { label: "Set up at 712 Jefferson Drive", items: [
-          { t: '<span class="hi">Google Fiber</span> — schedule install for on/around 7/27 (book early)' },
-          { t: 'Electric — start service for the 27th' },
-          { t: 'Renters insurance — update address, effective 7/27' },
-        ]},
-        { label: "Stop / transfer at current place", items: [
-          { t: 'Schedule electric shutoff for after 7/27' },
-          { t: 'Cancel/transfer current internet; return equipment if applicable' },
-        ]},
-        { label: "Change of address", items: [
-          { t: '<span class="hi">USPS mail forwarding</span> — set start ~7/27 (usps.com)' },
-          { t: 'Bank(s) & credit cards' },
-          { t: 'Employer / HR & payroll' },
-          { t: "Driver's license & vehicle registration (GA DDS)" },
-          { t: 'Voter registration' },
-          { t: 'Insurance (auto, health)' },
-          { t: 'Amazon & regular online shopping' },
-          { t: 'Subscriptions & deliveries (memberships, meal kits, etc.)' },
-          { t: 'Doctor / dentist / pharmacy' },
-        ]}
-      ]
-    },
-    {
-      num: "03", title: "Small Items Run", when: "Next weekend · Sat 7/25 – Sun 7/26",
-      goal: "Move remaining small/medium items, leaving only large furniture + essentials.",
-      groups: [
-        { items: [
-          { t: 'Pack remaining small items — kitchen, closets, bathroom, misc.' },
-          { t: 'Second storage run with boxes + small furniture' },
-          { t: 'Set aside the <span class="hi">first-night essentials box</span> (see below)' },
-          { t: 'Disassemble what you can ahead of time (bed frame, table legs)' },
-          { t: 'Confirm U-Haul reservation details for Monday' },
-          { t: 'Clean as you empty rooms' },
-          { t: 'Take out trash / donations before move day' },
-          { t: '<span class="maybe-badge">Maybe</span>Donation drop-off if storage fills up — set aside items + schedule (Goodwill, Salvation Army)' },
-        ]}
-      ]
-    },
-    {
-      num: "04", title: "Move Day", when: "Monday, July 27 · U-Haul + move-in",
-      goal: "Move the big items, get the keys, get settled.",
-      groups: [
-        { label: "Morning", items: [
-          { t: 'Pick up U-Haul (with dolly + pads)' },
-          { t: 'Get keys / complete move-in at Wesley St. James' },
-          { t: '<span class="hi">Photo/video the new unit</span> for the move-in condition report (protects your deposit)' },
-          { t: 'Confirm Google Fiber install timing' },
-        ]},
-        { label: "Load & transport", items: [
-          { t: 'Load large furniture (couch, bed, dresser, table)' },
-          { t: 'Grab final items from storage if moving them same day' },
-          { t: 'Transport to 712 Jefferson Drive' },
-        ]},
-        { label: "At the new place", items: [
-          { t: 'Unload and place large furniture first' },
-          { t: 'Reassemble beds / furniture' },
-          { t: 'Locate and set up the essentials box' },
-        ]},
-        { label: "Close out the current apartment", items: [
-          { t: 'Final sweep — every closet, cabinet, drawer' },
-          { t: 'Final cleaning per lease requirements' },
-          { t: '<span class="hi">Photo/video the empty unit</span> (proof of condition for deposit)' },
-          { t: 'Turn in keys / complete move-out' },
-          { t: 'Return U-Haul (check gas level + due-back time)' },
-        ]}
-      ]
-    },
-    {
-      num: "★", title: "First-Night Essentials", when: "Keep with you — don't pack in storage!",
-      goal: "The box that saves your sanity on night one.", callout: true,
-      groups: [
-        { items: [
-          { t: 'Toiletries, medications, toilet paper, hand soap' },
-          { t: 'Phone chargers' },
-          { t: 'Change of clothes / pajamas' },
-          { t: 'Bedding & pillows for night one' },
-          { t: 'Basic tools (box cutter, screwdriver for reassembly)' },
-          { t: 'Snacks, water, coffee setup' },
-          { t: 'Paper towels, trash bags, cleaning supplies' },
-          { t: 'Important documents (lease, IDs) — keep with you, not in the truck' },
-        ]}
-      ]
-    }
-  ];
+  <!-- TUESDAY -->
+  <section class="card">
+    <div class="head">
+      <div>
+        <h3>Tuesday, July 28</h3>
+        <p class="sub">Beat the heat indoors — and it's the cheapest day of the week</p>
+      </div>
+      <div class="wx"><b>96°</b>Heat advisory 12–8</div>
+    </div>
+    <div class="body">
 
-  const STORE_KEY = 'move-checklist-2026';
-  let state = {};
-  try { state = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { state = {}; }
+      <div class="block">
+        <div class="label">☀️ You + Jada · daytime</div>
+        <div class="star">
+          <h4><a href="https://www.fernbankmuseum.org/experiences/exhibits/">Fernbank Museum — “Dinosaur Summer”</a></h4>
+          <p>The new <em>T. rex: The Ultimate Predator</em> exhibit just opened and runs through September — massive models, interactive and multi-sensory displays. There's also a giant-screen <em>T. REX</em> film narrated by Sam Neill.</p>
+          <p>Jada's exactly the right age for this, and it's an easy 3–4 hours in full air conditioning.</p>
+          <div class="tags">
+            <span class="tag t-cost">$20/person — Tuesdays only</span>
+            <span class="tag t-drive">~25 min</span>
+            <span class="tag t-time">Opens 10am</span>
+          </div>
+          <div class="note">The $20 online rate runs Tuesdays through Sept 1 — that's a real discount, so today is the day to go.</div>
+        </div>
 
-  const timeline = document.getElementById('timeline');
-  let idCounter = 0;
-  let allIds = [];
+        <div class="item">
+          <h4>If you'd rather stay close</h4>
+          <ul>
+            <li>Perimeter Mall, Dunwoody — 10 min, AC, food hall, movie theater</li>
+            <li>Sandy Springs Library, 395 Mount Vernon Hwy — free and cool</li>
+          </ul>
+        </div>
+      </div>
 
-  DATA.forEach(phase => {
-    const p = document.createElement('section');
-    p.className = 'phase' + (phase.callout ? ' callout' : '');
+      <div class="block">
+        <div class="label">🚗 Cade joins ~3pm</div>
+        <div class="item">
+          <h4><a href="https://topgolf.com/us/alpharetta/">Topgolf Alpharetta</a></h4>
+          <p>All game play is <strong>half price on Tuesdays</strong>, no coupon needed. Bays normally run $27–49/hour, so today it's roughly $14–25/hour for all of us.</p>
+          <p class="meta">Bays are covered with fans — but let's book 6pm or later so we're not out there in the worst of it.</p>
+          <div class="tags">
+            <span class="tag t-cost">~$25–50 total</span>
+            <span class="tag t-drive">~25 min</span>
+            <span class="tag t-time">Book 6pm+</span>
+          </div>
+          <div class="note">New players pay a one-time <b>$6</b> membership card. Worth a quick call to confirm the Tuesday deal is running.</div>
+        </div>
+        <div class="item">
+          <h4>Fully indoor alternative — <a href="https://andrettikarting.com/marietta/pricing">Andretti Indoor Karting, Marietta</a></h4>
+          <p>106,000 sq ft of indoor karting, laser tag, 120+ arcade games and blacklight bowling. Zero heat exposure.</p>
+          <div class="tags">
+            <span class="tag t-cost">~$28–47/person</span>
+            <span class="tag t-drive">~20 min</span>
+          </div>
+        </div>
+      </div>
 
-    const head = document.createElement('div');
-    head.className = 'phase-head';
-    head.innerHTML =
-      '<div class="phase-num">' + phase.num + '</div>' +
-      '<div class="phase-titles">' +
-        '<h2>' + phase.title + '</h2>' +
-        '<div class="phase-when">' + phase.when + '</div>' +
-        '<div class="phase-goal">' + phase.goal + '</div>' +
-      '</div>' +
-      '<div class="phase-count" data-count></div>';
-    p.appendChild(head);
+      <div class="block">
+        <div class="label">🌙 Evening</div>
+        <div class="item">
+          <h4>City Springs Splashpad</h4>
+          <p>Free, and open <strong>9am to 10pm every day</strong> all summer. Press the button and it runs a 30-minute cycle. Perfect for letting Jada burn off the day once it finally cools down.</p>
+          <div class="tags"><span class="tag t-free">Free</span><span class="tag t-drive">5 min</span></div>
+        </div>
+      </div>
 
-    if (phase.flagNow) {
-      const tag = document.createElement('div');
-      tag.className = 'now-tag';
-      tag.textContent = 'Time-sensitive';
-      p.appendChild(tag);
-    }
+    </div>
+  </section>
 
-    const phaseIds = [];
-    phase.groups.forEach(g => {
-      if (g.label) {
-        const gl = document.createElement('div');
-        gl.className = 'grp-label';
-        gl.textContent = g.label;
-        p.appendChild(gl);
-      }
-      g.items.forEach(it => {
-        const id = 'i' + (idCounter++);
-        allIds.push(id); phaseIds.push(id);
-        const row = document.createElement('div');
-        row.className = 'item' + (state[id] ? ' done' : '');
-        row.dataset.id = id;
-        row.innerHTML =
-          '<div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>' +
-          '<div class="item-txt">' + it.t + (it.s ? '<span class="sub">' + it.s + '</span>' : '') + '</div>';
-        row.addEventListener('click', () => {
-          state[id] = !state[id];
-          row.classList.toggle('done', state[id]);
-          save(); updateCounts();
-        });
-        p.appendChild(row);
-      });
-    });
+  <!-- WEDNESDAY -->
+  <section class="card">
+    <div class="head">
+      <div>
+        <h3>Wednesday, July 29</h3>
+        <p class="sub">Get outside while the air is dry — this is the nicest morning of the week</p>
+      </div>
+      <div class="wx"><b>90°</b>Sunny, low 69°</div>
+    </div>
+    <div class="body">
 
-    head.querySelector('[data-count]').dataset.ids = phaseIds.join(',');
-    timeline.appendChild(p);
-  });
+      <div class="block">
+        <div class="label">☀️ You + Jada · daytime</div>
+        <div class="star">
+          <h4><a href="https://www.sandyspringsga.gov/places/chattahoochee-river-national-recreation-area-island-ford/">Chattahoochee River NRA — Island Ford</a></h4>
+          <p>Free, and it's basically in our backyard — the National Park Service headquarters is right here in Sandy Springs. About 3 miles of mostly shaded trails running along the river, with rock outcroppings and bluffs.</p>
+          <p>Stop into the <strong>Hewlett Lodge visitor center</strong> (open daily 9–5) — a 1930s stone-and-timber lodge built for a Georgia Supreme Court justice, using stone from Stone Mountain and timber from the Okefenokee. Twenty minutes well spent, and it's air conditioned.</p>
+          <div class="tags">
+            <span class="tag t-free">Free</span>
+            <span class="tag t-drive">In Sandy Springs</span>
+            <span class="tag t-time">Dawn – dusk</span>
+          </div>
+        </div>
 
-  function save() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) {}
-  }
+        <div class="item">
+          <h4>Want to make a bigger morning of it? <a href="https://chattnaturecenter.org/visit/">Chattahoochee Nature Center</a></h4>
+          <p>Boardwalks over the wetlands, birds of prey, river otters. Summer hours through Aug 29 are Mon–Sat 9am–5pm.</p>
+          <div class="tags">
+            <span class="tag t-cost">$20 you + $14 Jada = $34</span>
+            <span class="tag t-drive">~15 min · Roswell</span>
+          </div>
+        </div>
 
-  const RING_CIRC = 2 * Math.PI * 40;
-  function updateCounts() {
-    const total = allIds.length;
-    const done = allIds.filter(id => state[id]).length;
-    const pct = total ? Math.round(done / total * 100) : 0;
+        <div class="item">
+          <h4>Free bonus — Tai Chi on the City Green</h4>
+          <p>10:00am, free, run by Sandy Springs Rec &amp; Parks. Runs again at 5pm.</p>
+          <div class="tags"><span class="tag t-free">Free</span><span class="tag t-drive">5 min</span></div>
+        </div>
+      </div>
 
-    document.getElementById('ring-pct').textContent = pct + '%';
-    document.getElementById('ring-count').textContent = done + ' / ' + total;
-    document.getElementById('ring-fill').style.strokeDashoffset = RING_CIRC * (1 - done / total);
+      <div class="block">
+        <div class="label">🚗 Cade joins ~3pm</div>
+        <div class="item">
+          <h4>Morgan Falls Overlook Park</h4>
+          <p>Thirty acres above the dam — playground, fire pit, and <strong>porch swings looking straight out over the water</strong>. This is the most pleasant free hour in Sandy Springs and it's built for late afternoon into sunset.</p>
+          <p class="meta">High Country Outfitters runs a Paddle Shack on site if we want kayaks or paddleboards.</p>
+          <div class="tags"><span class="tag t-free">Free</span><span class="tag t-drive">10 min</span></div>
+        </div>
+      </div>
 
-    document.querySelectorAll('[data-count]').forEach(el => {
-      const ids = el.dataset.ids ? el.dataset.ids.split(',') : [];
-      const d = ids.filter(id => state[id]).length;
-      el.textContent = d + ' / ' + ids.length;
-      el.style.background = (d === ids.length && ids.length) ? 'var(--coral-light)' : 'var(--teal-light)';
-      el.style.color = (d === ids.length && ids.length) ? 'var(--coral-deep)' : 'var(--slate)';
-    });
-  }
-  updateCounts();
+      <div class="block">
+        <div class="label">🌙 Evening</div>
+        <div class="item">
+          <p>Splashpad and dinner at City Springs, or stay out at Morgan Falls for the sunset.</p>
+        </div>
+      </div>
 
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (!confirm('Reset all checkmarks? This clears your saved progress.')) return;
-    state = {}; save();
-    document.querySelectorAll('.item').forEach(r => r.classList.remove('done'));
-    updateCounts();
-  });
+    </div>
+  </section>
 
-  // countdown to move day: Mon July 27, 2026, 8:00 AM
-  const TARGET = new Date('2026-07-27T08:00:00-04:00').getTime();
-  function tick() {
-    const diff = TARGET - Date.now();
-    if (diff <= 0) {
-      document.getElementById('cd-days').textContent = '0';
-      document.getElementById('cd-hrs').textContent = '0';
-      document.getElementById('cd-min').textContent = '0';
-      return;
-    }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor(diff % 86400000 / 3600000);
-    const m = Math.floor(diff % 3600000 / 60000);
-    document.getElementById('cd-days').textContent = d;
-    document.getElementById('cd-hrs').textContent = h;
-    document.getElementById('cd-min').textContent = m;
-  }
-  tick();
-  setInterval(tick, 30000);
-</script>
+  <!-- THURSDAY -->
+  <section class="card">
+    <div class="head">
+      <div>
+        <h3>Thursday, July 30</h3>
+        <p class="sub">Best weather of the week — and the best free night of the week lands on it</p>
+      </div>
+      <div class="wx"><b>90°</b>Sunny, low 68°</div>
+    </div>
+    <div class="body">
+
+      <div class="block">
+        <div class="label">☀️ You + Jada · daytime</div>
+        <div class="item">
+          <h4><a href="https://www.roswellgov.com/facilities/vickery-creek-old-mill-park/">Old Mill Park &amp; Vickery Creek Trail, Roswell</a></h4>
+          <p>Waterfall views, 1800s mill ruins, and a covered bridge over the creek. Free parking, free entry.</p>
+          <p class="meta">It's an unpaved dirt trail with roots and some mild inclines — real shoes, not sandals.</p>
+          <div class="tags"><span class="tag t-free">Free</span><span class="tag t-drive">~20 min</span></div>
+          <div class="note"><b>Heads up for Jada:</b> water access at the waterfall has been closed since 2024. You can look, but not wade — worth telling her before you get there.</div>
+        </div>
+        <div class="item">
+          <h4>Then: Canton Street, Roswell</h4>
+          <p>Walkable historic district — lunch, boutiques, ice cream. Free to wander.</p>
+        </div>
+        <div class="item">
+          <h4>Or, five minutes from home: Abernathy Greenway Playable Art Park</h4>
+          <p>Six huge sculptures that are <em>built to be climbed on</em> — a playground made of playable art. Genuinely one-of-a-kind. Might skew a touch young for 12, but it's a good 45 minutes.</p>
+          <div class="tags"><span class="tag t-free">Free</span><span class="tag t-drive">5 min</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="label">🌙 Evening · all four of us</div>
+        <div class="star">
+          <h4>⭐ <a href="https://citysprings.com/sundownsocial-073026">Sundown Social — City Green Plaza</a></h4>
+          <p><strong>6:00–8:00pm. Free. No reservations. Five minutes away.</strong></p>
+          <p>This is the one to build the week around — it's the only thing all week that works for all four of us at the same time, and it happens to land on the nicest evening.</p>
+          <ul>
+            <li><strong>Live music:</strong> Bonaventure Quartet — Atlanta's all-acoustic, Django Reinhardt–inspired swing band. Very 1930s Paris. You can listen, tap your foot, or dance.</li>
+            <li><strong>Food truck:</strong> Pop That Thang, plus all the City Springs restaurants right there</li>
+            <li><strong>Outdoor bar</strong> — beer, wine, and the drink of the month, <em>Jaws on the Rocks</em> ($12, comes with a gummy shark)</li>
+            <li>Patio tables, swinging benches, shade trees, cornhole — bring a board game</li>
+            <li><strong>Splashpad open till 10pm</strong>, so Jada has something to do the whole time</li>
+          </ul>
+          <div class="tags">
+            <span class="tag t-free">Free entry</span>
+            <span class="tag t-time">6–8pm</span>
+            <span class="tag t-drive">5 min</span>
+          </div>
+        </div>
+
+        <div class="item">
+          <h4>Competing option — Braves vs. Nationals, 7:15pm</h4>
+          <p>First game of a four-game home stand at Truist Park. The Battery is about 15 minutes away. Nationals are a soft draw, so tickets should be cheap and easy. But it overlaps with Sundown Social, so it's one or the other.</p>
+          <div class="tags"><span class="tag t-drive">~15 min</span><span class="tag t-time">7:15pm</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FRIDAY -->
+  <section class="card">
+    <div class="head">
+      <div>
+        <h3>Friday, July 31</h3>
+        <p class="sub">Casey's in — this is the night to spend real money on something rare</p>
+      </div>
+      <div class="wx"><b>91°</b>Mostly sunny</div>
+    </div>
+    <div class="body">
+
+      <div class="block">
+        <div class="label">☀️ You + Jada · daytime</div>
+        <div class="item">
+          <h4>Keep it light — we're out late</h4>
+          <ul>
+            <li><a href="https://dunwoodynature.org/">Dunwoody Nature Center</a> — free admission, sunrise to sunset, 25 acres of boardwalks and creek</li>
+            <li>Big Creek Greenway, Alpharetta — paved, shaded, free, good for bikes</li>
+            <li>Tai Chi on the City Green, 10am, free</li>
+            <li>Splashpad + City Springs</li>
+          </ul>
+          <div class="tags"><span class="tag t-free">All free</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="label">🌙 Evening · pick one</div>
+
+        <div class="star">
+          <h4>⭐ <a href="https://theinfiniteatlanta.com/">Space Explorers: THE INFINITE</a></h4>
+          <p class="meta" style="margin-bottom:8px"><span class="tag t-rare">Leaves Atlanta in August — last chance</span></p>
+          <p>Emmy Award–winning, and the largest media project ever filmed in space. You put on a headset and free-roam the <strong>actual International Space Station</strong> in 3D 360° footage shot inside and outside the real ISS, while real astronauts narrate. About 55 minutes total, 40 of it in VR — and everyone's path through it is different.</p>
+          <p>This is its East Coast premiere and it closes in August, so this really is the window.</p>
+          <ul>
+            <li><strong>Jada can do it</strong> — ages 8+, she just needs a parent-signed waiver for the full VR version</li>
+            <li><strong>20% off select tickets right now</strong> — back-to-school promo, ends Aug 2</li>
+            <li>Pullman Yards, 225 Rogers St NE (Kirkwood — not downtown), ~30 min. Parking $10–30.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag t-cost">20% off through Aug 2</span>
+            <span class="tag t-drive">~30 min</span>
+            <span class="tag t-time">~1 hour</span>
+          </div>
+          <div class="note"><b>Before we go:</b> no backpacks (small crossbody only), no hats — the headset won't fit over them — and flat shoes required. Tickets are final sale; date changes allowed up to 48 hours out.</div>
+        </div>
+
+        <p class="pick">Other options</p>
+
+        <div class="item">
+          <h4><a href="https://www.iflyworld.com/atlanta">iFLY Indoor Skydiving</a>, Marietta</h4>
+          <p>Two 60-second flights in a vertical wind tunnel, gear and orientation included. More expensive per minute than THE INFINITE, but it's a real physical thrill.</p>
+          <div class="tags"><span class="tag t-cost">~$112/person</span><span class="tag t-drive">~20 min</span></div>
+        </div>
+
+        <div class="item">
+          <h4><a href="https://sandboxvr.com/atlanta">Sandbox VR</a>, Alpharetta City Center</h4>
+          <p>Full-body VR with haptic vests, up to six of us together, about an hour on site. Current lineup includes <em>Squid Game Virtuals</em>, <em>Stranger Things: Catalyst</em> and <em>Seekers of the Shard</em>, and you get a highlight reel afterward. Probably the most fun of the three for Jada specifically.</p>
+          <div class="tags"><span class="tag t-drive">~25 min</span></div>
+          <div class="note">Check the age rating on individual titles — a few of them are horror.</div>
+        </div>
+
+        <div class="item">
+          <h4>Braves vs. Nationals, 7:15pm, Truist Park</h4>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SATURDAY -->
+  <section class="card">
+    <div class="head">
+      <div>
+        <h3>Saturday, August 1</h3>
+        <p class="sub">Everything good is before 2pm — let's have the indoor plan picked before we leave</p>
+      </div>
+      <div class="wx"><b>88°</b>50% storms after 2pm</div>
+    </div>
+    <div class="body">
+
+      <div class="block">
+        <div class="label">🌤️ Morning · all four of us · 8:30am–12pm</div>
+        <div class="star">
+          <h4>⭐ <a href="https://citysprings.com/events/sandy-springs-farmers-market-55">Sandy Springs Farmers Market — “Dog Days of Summer”</a></h4>
+          <p><strong>8:30am–12:00pm, free, rain or shine, five minutes away.</strong></p>
+          <ul>
+            <li><strong>The Oscar Mayer Wienermobile is here</strong> for photos — genuinely fun and slightly ridiculous, and it only happens when it happens</li>
+            <li>Live music from Mt Vernon Stangs, Adam Shavin and Jesse David</li>
+            <li>Local farms, artisan foods, baked goods, prepared specialty foods</li>
+            <li>“Meet Your Council” plus a few community tables</li>
+          </ul>
+          <div class="tags">
+            <span class="tag t-free">Free</span>
+            <span class="tag t-time">8:30am–12pm</span>
+            <span class="tag t-drive">5 min</span>
+          </div>
+          <div class="note">Leashed, well-behaved dogs are welcome in the plaza and sidewalk areas — but <b>not on the City Green itself</b>.</div>
+        </div>
+        <div class="item">
+          <p class="meta">If we want more outdoor time before the rain (roughly 12–2pm): Island Ford or Morgan Falls, then lunch.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="label">🌧️ Afternoon · indoor, storms likely</div>
+        <div class="item">
+          <h4>Escape room</h4>
+          <p><a href="https://atlanta.escapegameover.us/en">GAME OVER Escape Rooms</a> has locations in both Sandy Springs and Roswell with hand-built sets. Escapology (8725 Roswell Rd) and Mastermind are also right here.</p>
+          <div class="tags"><span class="tag t-cost">~$90–200 private room for 4</span></div>
+          <div class="note">Look for SUMMER or PROMO codes — 20–30% off is commonly available.</div>
+        </div>
+        <div class="item">
+          <h4><a href="https://www.immersivegamebox.com/en-US/venues/aga-avalon-atlanta">Immersive Gamebox</a>, Avalon</h4>
+          <p>Projection-mapped interactive rooms — the cheapest tech-forward option on the whole list.</p>
+          <div class="tags"><span class="tag t-cost">$20/person, or $30 for two games</span><span class="tag t-drive">~25 min</span></div>
+        </div>
+        <div class="item">
+          <h4>Andretti Marietta, or Sandbox VR if we skipped it Friday</h4>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="label">🌙 Evening</div>
+        <div class="item">
+          <h4><a href="https://www.sandyspringspac.com/events">Atlanta Festival Academy: Finale Concert</a></h4>
+          <p>At the Sandy Springs Performing Arts Center — indoor, walkable from City Springs, completely weather-proof. Parking is $10 in the deck.</p>
+          <div class="tags"><span class="tag t-drive">5 min</span></div>
+        </div>
+        <div class="item">
+          <h4>Or the Braves at 7:15pm</h4>
+          <p class="meta">A 50% storm chance makes this a gamble.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AT A GLANCE -->
+  <section class="panel">
+    <h2>The week at a glance</h2>
+    <p class="lede">Three of five days cost essentially nothing during daylight. The money lands on Friday night, which is where it should go.</p>
+    <table>
+      <thead>
+        <tr><th>Day</th><th>You + Jada</th><th>After 3pm</th><th>Evening</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="d">Tue 7/28</td><td>Fernbank, $20 ea</td><td>Topgolf, ½ price</td><td>Splashpad</td></tr>
+        <tr><td class="d">Wed 7/29</td><td>Island Ford — free</td><td>Morgan Falls — free</td><td>Dinner out</td></tr>
+        <tr><td class="d">Thu 7/30</td><td>Roswell mill — free</td><td>—</td><td>⭐ Sundown Social — free</td></tr>
+        <tr><td class="d">Fri 7/31</td><td>Dunwoody Nature — free</td><td>—</td><td>⭐ THE INFINITE</td></tr>
+        <tr><td class="d">Sat 8/1</td><td>⭐ Farmers Market — free</td><td>Escape room (rain)</td><td>Concert or Braves</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:16px">Rough total for all four of us: <b style="color:var(--ink)">$300–550</b> for the week.</div>
+  </section>
+
+  <!-- SKIPPED -->
+  <section class="panel skip">
+    <h2>Things I checked that don't work this week</h2>
+    <p class="lede">So nobody goes looking for them.</p>
+    <ul>
+      <li><b>Alive in Roswell</b> — 3rd Thursday only, so the next one is Aug 20</li>
+      <li><b>Movies by Moonlight</b> at Heritage Amphitheatre — the free 2026 series starts Aug 7, one week too late</li>
+      <li><b>Ameris Bank Amphitheatre</b> — nothing scheduled Jul 28–Aug 1</li>
+      <li><b>Braves, Tue &amp; Wed</b> — away at the Mets. The home series starts Thursday</li>
+      <li><b>Atlanta United</b> — on a long road stretch; the stadium was tied up by the World Cup</li>
+      <li><b>Back to School Bash</b> at City Springs — free and great, but it's Tue Aug 4</li>
+    </ul>
+  </section>
+
+  <!-- CHECK -->
+  <section class="panel">
+    <h2>Worth a phone call first</h2>
+    <p class="lede">Most of this is confirmed off official sources. These three are worth verifying before we drive:</p>
+    <ul class="skip">
+      <li><b>Topgolf half-price Tuesday</b> — long-running promo, but confirm it's on this week</li>
+      <li><b>Escape room and Andretti pricing</b> — my numbers came from listing sites, not their own pages</li>
+      <li><b>Sandbox VR Alpharetta</b> — pricing and title age ratings not verified</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Put together Tuesday, July 28, 2026 · dates cross-checked against official venue calendars<br>
+    Forecast from the <a href="https://forecast.weather.gov/MapClick.php?lat=33.9304&amp;lon=-84.3733">National Weather Service</a>, Sandy Springs point forecast</p>
+  </footer>
+
+</div>
 </body>
 </html>
